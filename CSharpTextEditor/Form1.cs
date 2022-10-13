@@ -16,27 +16,56 @@ namespace CSharpTextEditor
     public partial class Form1 : Form
     {
 
+        private bool bCompleted = false;
+        private bool bOnce = false;
+        private bool bRecursion = false;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void onEnableScrollPage(object sender, EventArgs e)
+        private void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
         {
-            MessageBox.Show("resized");
+            HtmlElement activeElement = HtmlViewer.Document.ActiveElement;
+
+            IHTMLDocument2 doc = (IHTMLDocument2)HtmlViewer.Document.DomDocument;
+            IHTMLElement page = (IHTMLElement)activeElement.DomElement;
+
+            if (page.className == null || !page.className.Contains("page-body"))
+                return;
+
+            // Need these two lines to keep the caret blinking
+            IHTMLTxtRange txtRange = doc.selection.createRange();
+            txtRange.select();
+
+            IDisplayPointer display;
+            ((IDisplayServices)doc).CreateDisplayPointer(out display);
+
+            uint result;
+            tagPOINT point;
+            point.x = e.MousePosition.X;
+            point.y = e.MousePosition.Y;
+
+            display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, page, 0, out result);
+
+            IHTMLCaret caret;
+            ((IDisplayServices)doc).GetCaret(out caret);
+
+            caret.MoveCaretToPointer(display, 1, _CARET_DIRECTION.CARET_DIRECTION_FORWARD);
+            caret.Show(1);
         }
 
         private void CheckForOverflowChange(HtmlElement htmlElement)
         {
             if (htmlElement.ScrollRectangle.Height > htmlElement.ClientRectangle.Height)
             {
-                // add overflow appear handling code
+                // add overflow scroll appear handling code
                 htmlElement.SetAttribute("-custom-scrollbar-visible", "true");
             }
             else if (htmlElement.GetAttribute("-custom-scrollbar-visible").Equals("true"))
             {
-                // add overflow disappear handling code
-                MessageBox.Show("scroll bar disappear");
+                // add overflow scroll disappear handling code
             }
         }
 
@@ -46,13 +75,26 @@ namespace CSharpTextEditor
             this.Focus();
             HtmlViewer.DocumentText = 
                 "<html>" +
+                "<head>" +
+                "<style>" +
+                ".page-body {" +
+                    "position: relative;" +
+                    "padding: 1cm;" + // make changeable
+                    "height: 300px;" + // as well
+                    "overflow-y: auto;" +
+                    "word-wrap: break-word;" +
+                "}" + // best to isоlate the style string
+                "</style>" +
+                "</head>" +
                 "<body style=\"background-color: gray;\">" +
                     "<div class=\"page-container\" style=\"background-color: white;\">" +
-                            "<div id=\"page-body\" style=\"position: relative; padding: 1cm; height: 300px; overflow-y: auto; word-wrap: break-word;\">" +
+                            "<div class=\"page-body\" id=\"page-body\">" +
                             "</div>"+
                     "</div>" +
                 "</body>" +
                 "</html>";
+
+            bCompleted = true;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -74,31 +116,22 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
-            IHTMLDocument2 doc = (IHTMLDocument2)HtmlViewer.Document.DomDocument;
-            IHTMLElement page = (IHTMLElement)HtmlViewer.Document.GetElementById("page-body").DomElement;
 
-            IHTMLTxtRange selectedRange = (IHTMLTxtRange)doc.selection.createRange();
-            selectedRange.moveToPoint(0, 0);
-            selectedRange.collapse(true);
-
-            IDisplayPointer display;
-            ((IDisplayServices)doc).CreateDisplayPointer(out display);
-
-            uint result;
-            tagPOINT point;
-            point.x = 135;
-            point.y = 135;
-
-            display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, page, 0, out result);
-
-            IHTMLCaret caret;
-            ((IDisplayServices)doc).GetCaret(out caret);
-            caret.MoveCaretToPointer(display, 1, _CARET_DIRECTION.CARET_DIRECTION_FORWARD);
-            caret.Show(1);
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            if (bCompleted && !bOnce)
+            {
+                HtmlViewer.Document.Click += OnDocumentGlobalClick;
+                bOnce = true;
+            }
+        }
+
+        private void InsertPageBtn_Click(object sender, EventArgs e)
+        {
+            HtmlElement pageContainer = HtmlViewer.Document.GetElementById("page-container");
+            HtmlElement pageToAdd = HtmlViewer.Document.CreateElement("div");
         }
     }
 }
