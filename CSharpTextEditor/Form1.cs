@@ -20,9 +20,29 @@ namespace CSharpTextEditor
         private bool bOnce = false;
         private bool bRecursion = false;
 
+
+        private IHTMLCaret caret;
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private bool CanInsertTextSafely(IHTMLTxtRange range)
+        {
+            if (range == null)
+                return false;
+
+            IHTMLElement parent = range.parentElement();
+            while (parent != null)
+            {
+                if (parent.className != null && parent.className.Contains("page-body"))
+                    return true;
+
+                parent = parent.parentElement;
+            }
+
+            return false;
         }
 
         private void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -49,7 +69,6 @@ namespace CSharpTextEditor
 
             display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, page, 0, out result);
 
-            IHTMLCaret caret;
             ((IDisplayServices)doc).GetCaret(out caret);
 
             caret.MoveCaretToPointer(display, 1, _CARET_DIRECTION.CARET_DIRECTION_FORWARD);
@@ -86,8 +105,8 @@ namespace CSharpTextEditor
                 "}" + // best to isоlate the style string
                 "</style>" +
                 "</head>" +
-                "<body style=\"background-color: gray;\">" +
-                    "<div class=\"page-container\" style=\"background-color: white;\">" +
+                "<body style=\"background-color: gray; -ms-user-select: none;\">" +
+                    "<div class=\"page-container\" style=\"background-color: white; -ms-user-select: none;\">" +
                             "<div class=\"page-body\" id=\"page-body\">" +
                             "</div>"+
                     "</div>" +
@@ -106,7 +125,11 @@ namespace CSharpTextEditor
                 keyCode = Char.ToLower(keyCode);
 
             HtmlElement page = HtmlViewer.Document.GetElementById("page-body");
-            page.InnerHtml += keyCode;
+
+            IHTMLTxtRange range = ((IHTMLDocument2)HtmlViewer.Document.DomDocument).selection.createRange();
+
+            if (CanInsertTextSafely(range))
+                range.pasteHTML(keyCode.ToString());
 
             CheckForOverflowChange(page);
 
