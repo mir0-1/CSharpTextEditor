@@ -34,6 +34,7 @@
             // 
             // HtmlViewer
             // 
+            this.HtmlViewer.AllowNavigation = false;
             this.HtmlViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -42,6 +43,7 @@
             this.HtmlViewer.Name = "HtmlViewer";
             this.HtmlViewer.Size = new System.Drawing.Size(776, 382);
             this.HtmlViewer.TabIndex = 0;
+            this.HtmlViewer.WebBrowserShortcutsEnabled = false;
             this.HtmlViewer.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.HtmlViewer_DocumentCompleted);
             // 
             // insertPageBtn

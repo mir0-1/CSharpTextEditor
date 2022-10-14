@@ -56,11 +56,12 @@ namespace CSharpTextEditor
 
             IHTMLDocument2 doc = (IHTMLDocument2)HtmlViewer.Document.DomDocument;
             IHTMLElement activeDomElement = (IHTMLElement)activeElement.DomElement;
+            HtmlElement page = pageContainer.GetPageFromContent(activeElement);
 
-            if (!IsPageContent(activeDomElement))
+            if (page == null)
                 return;
 
-            pageContainer.SetActivePage(pageContainer.GetPageFromContent(activeElement));
+            pageContainer.SetActivePage(page);
 
             // Need these two lines to keep the caret blinking
             IHTMLTxtRange txtRange = doc.selection.createRange();
@@ -110,12 +111,19 @@ namespace CSharpTextEditor
                     "height: 300px;" + // as well
                     "overflow-y: auto;" +
                     "word-wrap: break-word;" +
+                    "background-color: white;" +
                 "}" + // best to isоlate the style string
+                ".page-container {" +
+                    "position: relative;" +
+                "}" +
+                ".editguard {" +
+                    "-ms-user-select: none;" +
+                "}" +
                 "</style>" +
                 "</head>" +
                 "<body style=\"background-color: gray; -ms-user-select: none;\">" +
-                    "<div class=\"page-container\" style=\" -ms-user-select: none; display: block; position: relative;\">" +
-                            "<div class=\"page-body\" id=\"page-body\" style=\"background-color: white;\">" +
+                    "<div class=\"editguard page-container\">" +
+                            "<div class=\"page-body\">" +
                             "</div>"+
                     "</div>" +
                 "</body>" +
@@ -135,7 +143,7 @@ namespace CSharpTextEditor
             if (!useCaps && !isPaste)
                 keyCode = Char.ToLower(keyCode);
 
-            HtmlElement page = HtmlViewer.Document.GetElementById("page-body");
+            HtmlElement page = pageContainer.GetActivePage();
 
             IHTMLTxtRange range = ((IHTMLDocument2)HtmlViewer.Document.DomDocument).selection.createRange();
 
@@ -164,7 +172,6 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
-            pageContainer.InsertPageAfterActive();
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -178,8 +185,7 @@ namespace CSharpTextEditor
 
         private void InsertPageBtn_Click(object sender, EventArgs e)
         {
-            HtmlElement pageContainer = HtmlViewer.Document.GetElementById("page-container");
-            HtmlElement pageToAdd = HtmlViewer.Document.CreateElement("div");
+            pageContainer.InsertPageAfterActive();
         }
     }
 }
