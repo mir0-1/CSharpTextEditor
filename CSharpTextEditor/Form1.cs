@@ -21,8 +21,8 @@ namespace CSharpTextEditor
 
         private IHTMLCaret caret;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button)\s*(?:href=.*)*.*>");
-
         private ImageConverter imageConverter = new ImageConverter();
+        private PageContainer pageContainer;
 
         public Form1()
         {
@@ -59,6 +59,8 @@ namespace CSharpTextEditor
 
             if (!IsPageContent(activeDomElement))
                 return;
+
+            pageContainer.SetActivePage(pageContainer.GetPageFromContent(activeElement));
 
             // Need these two lines to keep the caret blinking
             IHTMLTxtRange txtRange = doc.selection.createRange();
@@ -104,6 +106,7 @@ namespace CSharpTextEditor
                 ".page-body {" +
                     "position: relative;" +
                     "padding: 1cm;" + // make changeable
+                    "margin: 30px;" +
                     "height: 300px;" + // as well
                     "overflow-y: auto;" +
                     "word-wrap: break-word;" +
@@ -111,14 +114,15 @@ namespace CSharpTextEditor
                 "</style>" +
                 "</head>" +
                 "<body style=\"background-color: gray; -ms-user-select: none;\">" +
-                    "<div class=\"page-container\" style=\"background-color: white; -ms-user-select: none;\">" +
-                            "<div class=\"page-body\" id=\"page-body\">" +
+                    "<div class=\"page-container\" style=\" -ms-user-select: none; display: block; position: relative;\">" +
+                            "<div class=\"page-body\" id=\"page-body\" style=\"background-color: white;\">" +
                             "</div>"+
                     "</div>" +
                 "</body>" +
                 "</html>";
 
             bCompleted = true;
+            pageContainer = new PageContainer(HtmlViewer.Document);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -160,7 +164,7 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
-            string result = imageConverter.DownloadImageBase64("https://www.codeproject.com/App_Themes/CodeProject/Img/print48.png", 10000);
+            pageContainer.InsertPageAfterActive();
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
