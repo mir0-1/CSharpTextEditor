@@ -19,8 +19,8 @@ namespace CSharpTextEditor
         private bool bCompleted = false;
         private bool bOnce = false;
 
-
         private IHTMLCaret caret;
+        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button)\s*(?:href=.*)*.*>");
 
         private ImageConverter imageConverter = new ImageConverter();
 
@@ -146,15 +146,9 @@ namespace CSharpTextEditor
                 }
                 else
                 {
-                    string pasted = Clipboard.GetText(TextDataFormat.Html);
-                    Match prohibited = Regex.Match(pasted, "<\\s*\\/{0,1}(style|script)\\s*>|<.*href=.*");
-
-                    if (prohibited.Success)
-                        return false;
-
-                    Match result = Regex.Match(pasted, "<!--StartFragment-->(.*)<!--EndFragment-->");
-
-                    range.pasteHTML(result.ToString());
+                    string content = clipboardFilter.GetFilteredContent();
+                    if (content != null)
+                        range.pasteHTML(content);
                 }
             }
 
