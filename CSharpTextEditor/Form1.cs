@@ -18,7 +18,6 @@ namespace CSharpTextEditor
 
         private bool bCompleted = false;
         private bool bOnce = false;
-        private bool bRecursion = false;
 
 
         private IHTMLCaret caret;
@@ -33,13 +32,17 @@ namespace CSharpTextEditor
             if (range == null)
                 return false;
 
-            IHTMLElement parent = range.parentElement();
-            while (parent != null)
+            return IsPageContent(range.parentElement());
+        }
+
+        private bool IsPageContent(IHTMLElement element)
+        {
+            while (element != null)
             {
-                if (parent.className != null && parent.className.Contains("page-body"))
+                if (element.className != null && element.className.Contains("page-body"))
                     return true;
 
-                parent = parent.parentElement;
+                element = element.parentElement;
             }
 
             return false;
@@ -50,9 +53,9 @@ namespace CSharpTextEditor
             HtmlElement activeElement = HtmlViewer.Document.ActiveElement;
 
             IHTMLDocument2 doc = (IHTMLDocument2)HtmlViewer.Document.DomDocument;
-            IHTMLElement page = (IHTMLElement)activeElement.DomElement;
+            IHTMLElement activeDomElement = (IHTMLElement)activeElement.DomElement;
 
-            if (page.className == null || !page.className.Contains("page-body"))
+            if (!IsPageContent(activeDomElement))
                 return;
 
             // Need these two lines to keep the caret blinking
@@ -67,7 +70,7 @@ namespace CSharpTextEditor
             point.x = e.MousePosition.X;
             point.y = e.MousePosition.Y;
 
-            display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, page, 0, out result);
+            display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, activeDomElement, 1, out result);
 
             ((IDisplayServices)doc).GetCaret(out caret);
 
@@ -120,8 +123,9 @@ namespace CSharpTextEditor
         {
             char keyCode = (char)msg.WParam;
             bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
+            bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
 
-            if (!useCaps)
+            if (!useCaps && !isPaste)
                 keyCode = Char.ToLower(keyCode);
 
             HtmlElement page = HtmlViewer.Document.GetElementById("page-body");
@@ -129,7 +133,22 @@ namespace CSharpTextEditor
             IHTMLTxtRange range = ((IHTMLDocument2)HtmlViewer.Document.DomDocument).selection.createRange();
 
             if (CanInsertTextSafely(range))
-                range.pasteHTML(keyCode.ToString());
+            {
+                if (!isPaste)
+                    range.pasteHTML(keyCode.ToString());
+                else
+                {
+                    string pasted = Clipboard.GetText(TextDataFormat.Html);
+                    Match style = Regex.Match(pasted, "<\\s*\\/{0,1}style\\s*>");
+
+                    if (style.Success)
+                        return false;
+
+                    Match result = Regex.Match(pasted, "<!--StartFragment-->(.*)<!--EndFragment-->");
+
+                    range.pasteHTML(result.ToString());
+                }
+            }
 
             CheckForOverflowChange(page);
 
