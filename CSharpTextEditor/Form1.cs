@@ -22,6 +22,8 @@ namespace CSharpTextEditor
 
         private IHTMLCaret caret;
 
+        private ImageConverter imageConverter = new ImageConverter();
+
         public Form1()
         {
             InitializeComponent();
@@ -78,7 +80,7 @@ namespace CSharpTextEditor
             caret.Show(1);
         }
 
-        private void CheckForOverflowChange(HtmlElement htmlElement)
+        private void HandleOverflowChange(HtmlElement htmlElement)
         {
             if (htmlElement.ScrollRectangle.Height > htmlElement.ClientRectangle.Height)
             {
@@ -124,6 +126,7 @@ namespace CSharpTextEditor
             char keyCode = (char)msg.WParam;
             bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
+            bool isEnter = (msg.WParam == (IntPtr)13);
 
             if (!useCaps && !isPaste)
                 keyCode = Char.ToLower(keyCode);
@@ -135,13 +138,18 @@ namespace CSharpTextEditor
             if (CanInsertTextSafely(range))
             {
                 if (!isPaste)
-                    range.pasteHTML(keyCode.ToString());
+                {
+                    if (!isEnter)
+                        range.pasteHTML(keyCode.ToString());
+                    else
+                        range.pasteHTML("<br>&#8203;");
+                }
                 else
                 {
                     string pasted = Clipboard.GetText(TextDataFormat.Html);
-                    Match style = Regex.Match(pasted, "<\\s*\\/{0,1}style\\s*>");
+                    Match prohibited = Regex.Match(pasted, "<\\s*\\/{0,1}(style|script)\\s*>|<.*href=.*");
 
-                    if (style.Success)
+                    if (prohibited.Success)
                         return false;
 
                     Match result = Regex.Match(pasted, "<!--StartFragment-->(.*)<!--EndFragment-->");
@@ -150,7 +158,7 @@ namespace CSharpTextEditor
                 }
             }
 
-            CheckForOverflowChange(page);
+            HandleOverflowChange(page);
 
             return true;
         }
@@ -158,7 +166,7 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
-
+            string result = imageConverter.DownloadImageBase64("https://www.codeproject.com/App_Themes/CodeProject/Img/print48.png", 10000);
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
