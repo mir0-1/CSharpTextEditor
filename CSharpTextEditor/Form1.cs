@@ -20,34 +20,14 @@ namespace CSharpTextEditor
         private bool bOnce = false;
 
         private IHTMLCaret caret;
-        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button)\s*(?:href=.*)*.*>");
+        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select)\s*(?:href=.*)*.*>");
         private ImageConverter imageConverter = new ImageConverter();
         private PageContainer pageContainer;
+        private DomEditGuard domEditGuard;
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private bool CanInsertTextSafely(IHTMLTxtRange range)
-        {
-            if (range == null)
-                return false;
-
-            return IsPageContent(range.parentElement());
-        }
-
-        private bool IsPageContent(IHTMLElement element)
-        {
-            while (element != null)
-            {
-                if (element.className != null && element.className.Contains("page-body"))
-                    return true;
-
-                element = element.parentElement;
-            }
-
-            return false;
         }
 
         private void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -63,7 +43,6 @@ namespace CSharpTextEditor
 
             pageContainer.SetActivePage(page);
 
-            // Need these two lines to keep the caret blinking
             IHTMLTxtRange txtRange = doc.selection.createRange();
             txtRange.select();
 
@@ -81,19 +60,6 @@ namespace CSharpTextEditor
 
             caret.MoveCaretToPointer(display, 1, _CARET_DIRECTION.CARET_DIRECTION_FORWARD);
             caret.Show(1);
-        }
-
-        private void HandleOverflowChange(HtmlElement htmlElement)
-        {
-            if (htmlElement.ScrollRectangle.Height > htmlElement.ClientRectangle.Height)
-            {
-                // add overflow scroll appear handling code
-                htmlElement.SetAttribute("-custom-scrollbar-visible", "true");
-            }
-            else if (htmlElement.GetAttribute("-custom-scrollbar-visible").Equals("true"))
-            {
-                // add overflow scroll disappear handling code
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -131,6 +97,7 @@ namespace CSharpTextEditor
 
             bCompleted = true;
             pageContainer = new PageContainer(HtmlViewer.Document);
+            domEditGuard = new DomEditGuard(pageContainer);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -138,16 +105,16 @@ namespace CSharpTextEditor
             char keyCode = (char)msg.WParam;
             bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
+            bool isUndo = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'Z';
             bool isEnter = (msg.WParam == (IntPtr)13);
 
             if (!useCaps && !isPaste)
                 keyCode = Char.ToLower(keyCode);
 
             HtmlElement page = pageContainer.GetActivePage();
-
             IHTMLTxtRange range = ((IHTMLDocument2)HtmlViewer.Document.DomDocument).selection.createRange();
 
-            if (CanInsertTextSafely(range))
+            if (domEditGuard.CanInsertTextSafely(range))
             {
                 if (!isPaste)
                 {
@@ -159,12 +126,15 @@ namespace CSharpTextEditor
                 else
                 {
                     string content = clipboardFilter.GetFilteredContent();
-                    if (content != null)
-                        range.pasteHTML(content);
+
+                    if (content == null)
+                        return false;
+
+                    range.pasteHTML(content);
                 }
             }
 
-            HandleOverflowChange(page);
+            ElementOverflowHandler.Execute(page);
 
             return true;
         }

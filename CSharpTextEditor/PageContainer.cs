@@ -26,6 +26,11 @@ namespace CSharpTextEditor
             return activePage;
         }
 
+        public bool IsActivePage(HtmlElement htmlElement)
+        {
+            return htmlElement != null && htmlElement == activePage;
+        }
+
         public bool IsPage(HtmlElement element)
         {
             return IsPage((IHTMLElement)element.DomElement);
@@ -58,12 +63,25 @@ namespace CSharpTextEditor
             return null;
         }
 
+        public IHTMLElement GetPageFromContent(IHTMLElement element)
+        {
+            while (element != null)
+            {
+                if (IsPage(element))
+                    return element;
+
+                element = element.parentElement;
+            }
+
+            return null;
+        }
+
         public void InsertPageAfterActive()
         {
             if (activePage == null)
                 return;
 
-            ((IHTMLElement)activePage.DomElement).insertAdjacentHTML("afterEnd", "<div class=\"page-body\" style=\"background-color: white;\"></div>");
+            ((IHTMLElement)activePage.DomElement).insertAdjacentHTML("afterEnd", "<div class=\"page-body\"></div>");
         }
     }
 
