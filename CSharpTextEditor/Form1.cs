@@ -102,59 +102,6 @@ namespace CSharpTextEditor
             domEditGuard = new DomEditGuard(pageContainer);
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            /*char keyCode = (char)msg.WParam;
-            bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
-            bool isCtrlActive = Control.ModifierKeys.HasFlag(Keys.Control);
-            bool isPaste = isCtrlActive && keyCode == 'V';
-            bool isEnter = (msg.WParam == (IntPtr)13);
-            bool isBackspace = (keyCode == 'Q');
-
-            if (!useCaps && !isPaste)
-                keyCode = Char.ToLower(keyCode);
-
-            HtmlElement page = pageContainer.GetActivePage();
-
-            if (domEditGuard.CanInsertTextSafely(range))
-            {
-                if (isBackspace)
-                {
-                    range.moveStart("character", -1);
-                    range.select();
-                    range.pasteHTML("");
-                    caret.Show(1);
-                }
-                else if (!isPaste)
-                {
-                    if (!isEnter)
-                    {
-                        range.pasteHTML(keyCode.ToString());
-                        caret.Show(1);
-                    }
-                    else
-                        range.pasteHTML("<br>&#8203;");
-                }
-                else
-                {
-                    string content = clipboardFilter.GetFilteredContent();
-
-
-                    if (content == null)
-                        return false;
-
-                    range.pasteHTML(content);
-                }
-            }
-
-            ElementOverflowHandler.Execute(page);
-
-            return true;*/
-
-            return false;
-        }
-
-
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
         }
@@ -191,7 +138,9 @@ namespace CSharpTextEditor
             {
                 if (isBackspace)
                 {
-                    range.moveStart("character", -1);
+                    if (range.compareEndPoints("StartToEnd", range) != -1)
+                        range.moveStart("character", -1);
+
                     range.select();
                     range.pasteHTML("");
                     caret.Show(1);
@@ -210,7 +159,6 @@ namespace CSharpTextEditor
                 {
                     string content = clipboardFilter.GetFilteredContent();
 
-
                     if (content == null)
                         return;
 
@@ -219,8 +167,6 @@ namespace CSharpTextEditor
             }
 
             ElementOverflowHandler.Execute(page);
-
-            return;
         }
     }
 }
