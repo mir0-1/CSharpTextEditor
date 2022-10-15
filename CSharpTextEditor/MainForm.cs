@@ -64,8 +64,7 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
-            ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
-            dialogForm.ShowDialog();
+            inputManager.Form1_DoubleClick(sender, e);
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

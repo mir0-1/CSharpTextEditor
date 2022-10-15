@@ -53,7 +53,7 @@ namespace CSharpTextEditor
             return "<img src=\"data:" +
                     mediaType +
                     ";base64," +
-                    Convert.ToBase64String(result) + "\">";
+                    Convert.ToBase64String(result) + "\">&#8203;";
         }
 
         private async Task<byte[]> DownloadImageInternal(string url)

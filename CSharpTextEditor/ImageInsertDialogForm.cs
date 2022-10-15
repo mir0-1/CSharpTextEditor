@@ -14,7 +14,7 @@ namespace CSharpTextEditor
     {
         private OpenFileDialog fileDialog = new OpenFileDialog();
         private ImageConverter imageConverter = new ImageConverter();
-        private string result;
+        public string result;
 
         public ImageInsertDialogForm()
         {
@@ -36,6 +36,8 @@ namespace CSharpTextEditor
 
             if (result != null)
                 DialogResult = DialogResult.OK;
+            else
+                DialogResult = DialogResult.Abort;
         }
     }
 }
