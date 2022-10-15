@@ -21,6 +21,8 @@ namespace CSharpTextEditor
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private FontDialog fontDialog = new FontDialog();
 
+        private bool doubleEditFixHack = false;
+
         public InputManager(HtmlDocument document)
         {
             this.document = document;
@@ -90,6 +92,12 @@ namespace CSharpTextEditor
                 }
                 else if (!isPaste)
                 {
+                    if (doubleEditFixHack == true)
+                    {
+                        doubleEditFixHack = false;
+                        return;
+                    }
+
                     if (!isEnter)
                     {
                         range.pasteHTML(keyCode.ToString());
@@ -97,6 +105,8 @@ namespace CSharpTextEditor
                     }
                     else
                         range.pasteHTML("<br>&#8203;");
+
+                    doubleEditFixHack = true;
                 }
                 else
                 {
