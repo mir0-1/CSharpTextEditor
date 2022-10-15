@@ -45,6 +45,7 @@
             this.HtmlViewer.TabIndex = 0;
             this.HtmlViewer.WebBrowserShortcutsEnabled = false;
             this.HtmlViewer.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.HtmlViewer_DocumentCompleted);
+            this.HtmlViewer.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HtmlViewer_PreviewKeyDown);
             // 
             // insertPageBtn
             // 
@@ -63,6 +64,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.insertPageBtn);
             this.Controls.Add(this.HtmlViewer);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
