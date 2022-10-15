@@ -60,6 +60,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="PageContainer.cs" />
     <Compile Include="ElementOverflowHandler.cs" />
     <Compile Include="Program.cs" />
