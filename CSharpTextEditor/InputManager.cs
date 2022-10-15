@@ -21,8 +21,6 @@ namespace CSharpTextEditor
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private FontDialog fontDialog = new FontDialog();
 
-        private bool doubleEditFixHack = false;
-
         public InputManager(HtmlDocument document)
         {
             this.document = document;
@@ -65,17 +63,11 @@ namespace CSharpTextEditor
             caret.Show(1);
         }
 
-        public void OnKeyDown(object sender, PreviewKeyDownEventArgs e)
+        public void OnKeyPreview(object sender, PreviewKeyDownEventArgs e)
         {
-            char keyCode = (char)e.KeyData;
-            bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
-            bool isCtrlActive = Control.ModifierKeys.HasFlag(Keys.Control);
-            bool isPaste = isCtrlActive && keyCode == 'V';
-            bool isEnter = (keyCode == (char)13);
+            char keyCode = (char)e.KeyCode;
             bool isBackspace = (keyCode == (char)8);
-
-            if (!useCaps && !isPaste)
-                keyCode = Char.ToLower(keyCode);
+            bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
 
             HtmlElement page = pageContainer.GetActivePage();
 
@@ -89,26 +81,10 @@ namespace CSharpTextEditor
                     range.select();
                     range.pasteHTML("");
                     caret.Show(1);
-                }
-                else if (!isPaste)
-                {
-                    if (doubleEditFixHack == true)
-                    {
-                        doubleEditFixHack = false;
-                        return;
-                    }
 
-                    if (!isEnter)
-                    {
-                        range.pasteHTML(keyCode.ToString());
-                        caret.Show(1);
-                    }
-                    else
-                        range.pasteHTML("<br>&#8203;");
-
-                    doubleEditFixHack = true;
+                    ElementOverflowHandler.Execute(page);
                 }
-                else
+                else if (isPaste)
                 {
                     string content = clipboardFilter.GetFilteredContent();
 
@@ -116,15 +92,36 @@ namespace CSharpTextEditor
                         return;
 
                     range.pasteHTML(content);
+
+                    ElementOverflowHandler.Execute(page);
                 }
+            }
+        }
+
+        public void OnKeyPress(object sender, HtmlElementEventArgs e)
+        {
+            char keyCode = (char)e.KeyPressedCode;
+            bool isEnter = (keyCode == (char)13);
+            bool isSpace = (keyCode == (char)32);
+
+            HtmlElement page = pageContainer.GetActivePage();
+
+            if (domEditGuard.CanInsertTextSafely(range))
+            {
+                if (!isEnter)
+                {
+                    if (isSpace)
+                        range.pasteHTML("&#160;");
+                    else
+                        range.pasteHTML(keyCode.ToString());
+
+                    caret.Show(1);
+                }
+                else
+                    range.pasteHTML("<br>&#8203;");
             }
 
             ElementOverflowHandler.Execute(page);
-        }
-
-        public void ClearFormatBtn_Click(object sender, EventArgs e)
-        {
-            
         }
 
         public void FontDialogBtn_Click(object sender, EventArgs e)

@@ -32,6 +32,7 @@ namespace CSharpTextEditor
             HtmlViewer.DocumentText = 
                 "<html>" +
                 "<head>" +
+                "<meta charset=\"utf=8\">" +
                 "<style>" +
                 ".page-body {" +
                     "position: relative;" +
@@ -67,6 +68,7 @@ namespace CSharpTextEditor
             if (bCompleted && !bOnce)
             {
                 HtmlViewer.Document.Click += OnDocumentGlobalClick;
+                HtmlViewer.Document.Body.KeyPress += OnKeyDown;
                 bOnce = true;
             }
         }
@@ -78,7 +80,12 @@ namespace CSharpTextEditor
 
         private void HtmlViewer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            inputManager.OnKeyDown(sender, e);
+            inputManager.OnKeyPreview(sender, e);
+        }
+
+        public void OnKeyDown(object sender, HtmlElementEventArgs e)
+        {
+            inputManager.OnKeyPress(sender, e);
         }
 
         private void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -89,11 +96,6 @@ namespace CSharpTextEditor
         private void FontDialogBtn_Click(object sender, EventArgs e)
         {
             inputManager.FontDialogBtn_Click(sender, e);
-        }
-
-        private void ClearFormatBtn_Click(object sender, EventArgs e)
-        {
-            inputManager.ClearFormatBtn_Click(sender, e);
         }
 
         private void InsertImageBtn_Click(object sender, EventArgs e)
