@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.IO;
 
 namespace CSharpTextEditor
 {
@@ -22,16 +23,37 @@ namespace CSharpTextEditor
                 bOnce = true;
             }
         }
-
-        public string DownloadImageBase64(string url, int timeout)
+        private static bool IsLocalPath(string p)
         {
-            Task<byte[]> t = Task.Run(() => DownloadImageInternal(url));
-            t.Wait(timeout);
+            return new Uri(p).IsFile;
+        }
 
-            return "data:" + 
-                    lastResponse.Content.Headers.ContentType.MediaType + 
+        public string FetchImageAsBase64(string url, int timeout)
+        {
+            byte[] result;
+            string mediaType;
+
+            if (!IsLocalPath(url))
+            {
+                Task<byte[]> t = Task.Run(() => DownloadImageInternal(url));
+                t.Wait(timeout);
+
+                if (!t.IsCompleted)
+                    return null;
+
+                result = t.Result;
+                mediaType = lastResponse.Content.Headers.ContentType.MediaType;
+            }
+            else
+            {
+                result = File.ReadAllBytes(url);
+                mediaType = "image/" + System.IO.Path.GetExtension(url).Replace(".", "");
+            }
+
+            return "<img src=\"data:" +
+                    mediaType +
                     ";base64," +
-                    Convert.ToBase64String(t.Result);
+                    Convert.ToBase64String(result) + "\">";
         }
 
         private async Task<byte[]> DownloadImageInternal(string url)

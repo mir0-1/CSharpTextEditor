@@ -13,14 +13,14 @@ using System.Text.RegularExpressions;
 
 namespace CSharpTextEditor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private bool bCompleted = false;
         private bool bOnce = false;
 
         private InputManager inputManager;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -64,6 +64,8 @@ namespace CSharpTextEditor
 
         private void Form1_DoubleClick(object sender, EventArgs e)
         {
+            ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
+            dialogForm.ShowDialog();
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
