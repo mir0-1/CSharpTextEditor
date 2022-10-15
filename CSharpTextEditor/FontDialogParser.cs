@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace CSharpTextEditor
 {
@@ -46,6 +47,7 @@ namespace CSharpTextEditor
 
         public static string GetFormattedHTMLString(FontDialog fontDialog, string target)
         {
+
             string style = "style=\"font-family:" + fontDialog.Font.Name + ";" +
                             FontStyleAsHTML(fontDialog.Font.Style) +
                             ColorAsHTML(fontDialog.Color) + "\"";

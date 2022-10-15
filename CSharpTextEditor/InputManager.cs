@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using mshtml;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CSharpTextEditor
 {
@@ -111,11 +112,17 @@ namespace CSharpTextEditor
             ElementOverflowHandler.Execute(page);
         }
 
+        public void ClearFormatBtn_Click(object sender, EventArgs e)
+        {
+            
+        }
+
         public void FontDialogBtn_Click(object sender, EventArgs e)
         {
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
-                range.pasteHTML(FontDialogParser.GetFormattedHTMLString(fontDialog, range.htmlText));
+                string html = FontDialogParser.GetFormattedHTMLString(fontDialog, range.text);
+                range.pasteHTML(html);
             }
         }
     }

@@ -94,5 +94,10 @@ namespace CSharpTextEditor
         {
             inputManager.FontDialogBtn_Click(sender, e);
         }
+
+        private void ClearFormatBtn_Click(object sender, EventArgs e)
+        {
+            inputManager.ClearFormatBtn_Click(sender, e);
+        }
     }
 }
