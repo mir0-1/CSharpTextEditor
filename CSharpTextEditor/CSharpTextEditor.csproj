@@ -76,6 +76,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,6 +90,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_overflow_v2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_overflow_v2_inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pages_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pages_visibility.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\font_format.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_togglevisible.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
