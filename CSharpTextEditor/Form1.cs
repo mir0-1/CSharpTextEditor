@@ -42,7 +42,7 @@ namespace CSharpTextEditor
                     "word-wrap: break-word;" +
                     "background-color: white;" +
                 "}" + // best to isоlate the style string
-                ".page-container {" +
+                ".global-page-container {" +
                     "position: relative;" +
                 "}" +
                 ".editguard {" +
@@ -51,7 +51,7 @@ namespace CSharpTextEditor
                 "</style>" +
                 "</head>" +
                 "<body style=\"background-color: gray; -ms-user-select: none;\">" +
-                    "<div class=\"editguard page-container\">" +
+                    "<div class=\"editguard global-page-container\">" +
                             "<div class=\"page-body\">" +
                             "</div>"+
                     "</div>" +

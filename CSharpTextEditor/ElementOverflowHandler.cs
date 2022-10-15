@@ -11,6 +11,9 @@ namespace CSharpTextEditor
     {
         public static void Execute(HtmlElement htmlElement)
         {
+            if (htmlElement == null)
+                return;
+
             if (htmlElement.ScrollRectangle.Height > htmlElement.ClientRectangle.Height)
             {
                 // add overflow scroll appear handling code

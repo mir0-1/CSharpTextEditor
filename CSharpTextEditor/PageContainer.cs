@@ -31,19 +31,29 @@ namespace CSharpTextEditor
             return htmlElement != null && htmlElement == activePage;
         }
 
-        public bool IsPage(HtmlElement element)
+        public bool IsPageBody(HtmlElement element)
         {
-            return IsPage((IHTMLElement)element.DomElement);
+            return ElementIsClass(element, "page-body");
         }
 
-        public bool IsPage(IHTMLElement element)
+        public bool IsPageBody(IHTMLElement element)
         {
-            return (element != null && element.className != null && element.className.Contains("page-body"));
+            return ElementIsClass(element, "page-body");
+        }
+
+        public bool ElementIsClass(IHTMLElement element, string className)
+        {
+            return (element != null && element.className != null && element.className.Contains(className));
+        }
+
+        public bool ElementIsClass(HtmlElement element, string className)
+        {
+            return ElementIsClass((IHTMLElement)element.DomElement, className);
         }
 
         public bool SetActivePage(HtmlElement newPage)
         {
-            if (!IsPage(newPage))
+            if (!IsPageBody(newPage))
                 return false;
 
             activePage = newPage;
@@ -54,7 +64,7 @@ namespace CSharpTextEditor
         {
             while (element != null)
             {
-                if (IsPage(element))
+                if (IsPageBody(element))
                     return element;
 
                 element = element.Parent;
@@ -67,7 +77,7 @@ namespace CSharpTextEditor
         {
             while (element != null)
             {
-                if (IsPage(element))
+                if (IsPageBody(element))
                     return element;
 
                 element = element.parentElement;

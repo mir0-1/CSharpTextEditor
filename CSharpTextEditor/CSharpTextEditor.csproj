@@ -134,5 +134,14 @@
   <ItemGroup>
     <None Include="Resources\format_clear.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\font_format_v3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\font_format_v4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\font_format_v5.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

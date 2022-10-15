@@ -50,7 +50,8 @@ namespace CSharpTextEditor
 
             string style = "style=\"font-family:" + fontDialog.Font.Name + ";" +
                             FontStyleAsHTML(fontDialog.Font.Style) +
-                            ColorAsHTML(fontDialog.Color) + "\"";
+                            ColorAsHTML(fontDialog.Color) + ";" +
+                            "font-size: " + fontDialog.Font.SizeInPoints + "pt;\"";
 
             return "<span " + style + ">" + target + "</span>";
         }
