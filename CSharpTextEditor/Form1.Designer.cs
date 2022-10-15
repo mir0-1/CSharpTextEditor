@@ -33,6 +33,7 @@
             this.pagePanel = new System.Windows.Forms.Panel();
             this.generalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.fontDialogBtn = new System.Windows.Forms.Button();
             this.overflowPageBtn = new System.Windows.Forms.Button();
             this.insertPageBtn = new System.Windows.Forms.Button();
@@ -72,22 +73,35 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.fontDialogBtn);
             this.panel1.Location = new System.Drawing.Point(12, 4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(186, 77);
             this.panel1.TabIndex = 7;
             // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::CSharpTextEditor.Properties.Resources.format_clear;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(80, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(71, 71);
+            this.button1.TabIndex = 7;
+            this.generalToolTip.SetToolTip(this.button1, "Изчистване на форматиране");
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // fontDialogBtn
             // 
-            this.fontDialogBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.font_format;
+            this.fontDialogBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.font_format1;
             this.fontDialogBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fontDialogBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.fontDialogBtn.Location = new System.Drawing.Point(3, 3);
             this.fontDialogBtn.Name = "fontDialogBtn";
             this.fontDialogBtn.Size = new System.Drawing.Size(71, 71);
             this.fontDialogBtn.TabIndex = 6;
-            this.generalToolTip.SetToolTip(this.fontDialogBtn, "Изтриване на активната страница");
+            this.generalToolTip.SetToolTip(this.fontDialogBtn, "Основно форматиране");
             this.fontDialogBtn.UseVisualStyleBackColor = true;
             this.fontDialogBtn.Click += new System.EventHandler(this.FontDialogBtn_Click);
             // 
@@ -181,6 +195,7 @@
         private System.Windows.Forms.Button overflowPageBtn;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button fontDialogBtn;
+        private System.Windows.Forms.Button button1;
     }
 }
 

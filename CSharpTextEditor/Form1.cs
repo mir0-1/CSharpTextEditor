@@ -17,15 +17,12 @@ namespace CSharpTextEditor
     {
         private bool bCompleted = false;
         private bool bOnce = false;
-        private FontDialog fontDialog = new FontDialog();
 
         private InputManager inputManager;
 
         public Form1()
         {
             InitializeComponent();
-            fontDialog.AllowVerticalFonts = false;
-            fontDialog.FontMustExist = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -95,7 +92,7 @@ namespace CSharpTextEditor
 
         private void FontDialogBtn_Click(object sender, EventArgs e)
         {
-            fontDialog.ShowDialog();
+            inputManager.FontDialogBtn_Click(sender, e);
         }
     }
 }

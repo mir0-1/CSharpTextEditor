@@ -18,12 +18,17 @@ namespace CSharpTextEditor
         private PageContainer pageContainer;
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
+        private FontDialog fontDialog = new FontDialog();
 
         public InputManager(HtmlDocument document)
         {
             this.document = document;
             pageContainer = new PageContainer(document);
             domEditGuard = new DomEditGuard(pageContainer);
+
+            fontDialog.AllowVerticalFonts = false;
+            fontDialog.FontMustExist = true;
+            fontDialog.ShowColor = true;
         }
 
         public void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -104,6 +109,14 @@ namespace CSharpTextEditor
             }
 
             ElementOverflowHandler.Execute(page);
+        }
+
+        public void FontDialogBtn_Click(object sender, EventArgs e)
+        {
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                range.pasteHTML(FontDialogParser.GetFormattedHTMLString(fontDialog, range.htmlText));
+            }
         }
     }
 }

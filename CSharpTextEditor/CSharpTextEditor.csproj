@@ -59,6 +59,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FontDialogParser.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="PageContainer.cs" />
@@ -68,20 +69,29 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -92,7 +102,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\page_overflow_v2.png" />
+    <None Include="Resources\font_format1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\add_page.png" />
@@ -101,7 +111,19 @@
     <None Include="Resources\delete_page.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\font_format.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_overflow_v2.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\page_overflow_v2_inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_togglevisible.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pages_settings.png" />
@@ -110,10 +132,7 @@
     <None Include="Resources\pages_visibility.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\font_format.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\page_togglevisible.png" />
+    <None Include="Resources\format_clear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
