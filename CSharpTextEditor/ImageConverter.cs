@@ -46,8 +46,15 @@ namespace CSharpTextEditor
             }
             else
             {
-                result = File.ReadAllBytes(url);
-                mediaType = "image/" + System.IO.Path.GetExtension(url).Replace(".", "");
+                try
+                {
+                    result = File.ReadAllBytes(url);
+                    mediaType = "image/" + System.IO.Path.GetExtension(url).Replace(".", "");
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
 
             return "<img src=\"data:" +
@@ -58,8 +65,16 @@ namespace CSharpTextEditor
 
         private async Task<byte[]> DownloadImageInternal(string url)
         {
-            lastResponse = await httpClient.GetAsync(url);
-            byte[] result = await lastResponse.Content.ReadAsByteArrayAsync();
+            byte[] result;
+            try
+            {
+                lastResponse = await httpClient.GetAsync(url);
+                result = await lastResponse.Content.ReadAsByteArrayAsync();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
 
             return result;
         }

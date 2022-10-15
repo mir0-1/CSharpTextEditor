@@ -33,6 +33,7 @@
             this.pagePanel = new System.Windows.Forms.Panel();
             this.generalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.insertImageBtn = new System.Windows.Forms.Button();
             this.fontDialogBtn = new System.Windows.Forms.Button();
             this.overflowPageBtn = new System.Windows.Forms.Button();
             this.insertPageBtn = new System.Windows.Forms.Button();
@@ -72,11 +73,25 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.insertImageBtn);
             this.panel1.Controls.Add(this.fontDialogBtn);
             this.panel1.Location = new System.Drawing.Point(12, 4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(186, 77);
             this.panel1.TabIndex = 7;
+            // 
+            // insertImageBtn
+            // 
+            this.insertImageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.add_image;
+            this.insertImageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.insertImageBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.insertImageBtn.Location = new System.Drawing.Point(80, 3);
+            this.insertImageBtn.Name = "insertImageBtn";
+            this.insertImageBtn.Size = new System.Drawing.Size(71, 71);
+            this.insertImageBtn.TabIndex = 7;
+            this.generalToolTip.SetToolTip(this.insertImageBtn, "Вмъкване на изображение");
+            this.insertImageBtn.UseVisualStyleBackColor = true;
+            this.insertImageBtn.Click += new System.EventHandler(this.InsertImageBtn_Click);
             // 
             // fontDialogBtn
             // 
@@ -149,7 +164,7 @@
             this.generalToolTip.SetToolTip(this.togglePageBtn, "Превключване на видимостта");
             this.togglePageBtn.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -159,10 +174,9 @@
             this.Controls.Add(this.pagePanel);
             this.Controls.Add(this.HtmlViewer);
             this.KeyPreview = true;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.DoubleClick += new System.EventHandler(this.Form1_DoubleClick);
             this.pagePanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -181,6 +195,7 @@
         private System.Windows.Forms.Button overflowPageBtn;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button fontDialogBtn;
+        private System.Windows.Forms.Button insertImageBtn;
     }
 }
 

@@ -62,11 +62,6 @@ namespace CSharpTextEditor
             inputManager = new InputManager(HtmlViewer.Document);
         }
 
-        private void Form1_DoubleClick(object sender, EventArgs e)
-        {
-            inputManager.Form1_DoubleClick(sender, e);
-        }
-
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (bCompleted && !bOnce)
@@ -99,6 +94,11 @@ namespace CSharpTextEditor
         private void ClearFormatBtn_Click(object sender, EventArgs e)
         {
             inputManager.ClearFormatBtn_Click(sender, e);
+        }
+
+        private void InsertImageBtn_Click(object sender, EventArgs e)
+        {
+            inputManager.InsertImageBtn_DoubleClick(sender, e);
         }
     }
 }

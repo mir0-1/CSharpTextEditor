@@ -118,43 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pages_visibility" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pages_visibility.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="page_overflow_v2_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\page_overflow_v2_inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="add_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="font_format_v5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\font_format_v5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="font_format" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\font_format.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="delete_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\delete_page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="page_overflow_v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_overflow_v2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="format_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\format_clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="font_format1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\font_format1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="page_togglevisible" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_togglevisible.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="font_format_v4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\font_format_v4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="page_overflow_v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\page_overflow_v2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="font_format1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\font_format1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pages_settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pages_settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pages_visibility" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pages_visibility.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="font_format_v3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\font_format_v3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="font_format_v5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\font_format_v5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="delete_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete_page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_overflow_v2_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_overflow_v2_inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_image1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_image1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

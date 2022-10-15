@@ -152,5 +152,11 @@
   <ItemGroup>
     <None Include="Resources\font_format_v5.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_image.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

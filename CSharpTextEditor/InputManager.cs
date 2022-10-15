@@ -137,7 +137,7 @@ namespace CSharpTextEditor
             }
         }
 
-        public void Form1_DoubleClick(object sender, EventArgs e)
+        public void InsertImageBtn_DoubleClick(object sender, EventArgs e)
         {
             ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
             if (dialogForm.ShowDialog() == DialogResult.OK && domEditGuard.CanInsertTextSafely(range))
