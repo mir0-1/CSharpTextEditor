@@ -20,7 +20,10 @@ namespace CSharpTextEditor
         private bool bOnce = false;
 
         private IHTMLCaret caret;
-        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select)\s*(?:href=.*)*.*>");
+        private IHTMLTxtRange range;
+        private IDisplayPointer display;
+
+        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private ImageConverter imageConverter = new ImageConverter();
         private PageContainer pageContainer;
         private DomEditGuard domEditGuard;
@@ -43,16 +46,15 @@ namespace CSharpTextEditor
 
             pageContainer.SetActivePage(page);
 
-            IHTMLTxtRange txtRange = doc.selection.createRange();
-            txtRange.select();
+            range = doc.selection.createRange();
+            range.select();
 
-            IDisplayPointer display;
             ((IDisplayServices)doc).CreateDisplayPointer(out display);
 
             uint result;
             tagPOINT point;
             point.x = e.MousePosition.X;
-            point.y = e.MousePosition.Y;
+            point.y = e.MousePosition.Y + page.ScrollTop;
 
             display.moveToPoint(point, _COORD_SYSTEM.COORD_SYSTEM_CONTENT, activeDomElement, 1, out result);
 
@@ -104,28 +106,39 @@ namespace CSharpTextEditor
         {
             char keyCode = (char)msg.WParam;
             bool useCaps = Control.IsKeyLocked(Keys.CapsLock) ^ Control.ModifierKeys.HasFlag(Keys.Shift);
-            bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
-            bool isUndo = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'Z';
+            bool isCtrlActive = Control.ModifierKeys.HasFlag(Keys.Control);
+            bool isPaste = isCtrlActive && keyCode == 'V';
             bool isEnter = (msg.WParam == (IntPtr)13);
+            bool isBackspace = (keyCode == 'Q');
 
             if (!useCaps && !isPaste)
                 keyCode = Char.ToLower(keyCode);
 
             HtmlElement page = pageContainer.GetActivePage();
-            IHTMLTxtRange range = ((IHTMLDocument2)HtmlViewer.Document.DomDocument).selection.createRange();
 
             if (domEditGuard.CanInsertTextSafely(range))
             {
-                if (!isPaste)
+                if (isBackspace)
+                {
+                    range.moveStart("character", -1);
+                    range.select();
+                    range.pasteHTML("");
+                    caret.Show(1);
+                }
+                else if (!isPaste)
                 {
                     if (!isEnter)
+                    {
                         range.pasteHTML(keyCode.ToString());
+                        caret.Show(1);
+                    }
                     else
                         range.pasteHTML("<br>&#8203;");
                 }
                 else
                 {
                     string content = clipboardFilter.GetFilteredContent();
+
 
                     if (content == null)
                         return false;
