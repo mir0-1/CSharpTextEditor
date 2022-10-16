@@ -161,7 +161,7 @@
             this.panel1.Controls.Add(this.fontDialogBtn);
             this.panel1.Location = new System.Drawing.Point(12, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 77);
+            this.panel1.Size = new System.Drawing.Size(158, 77);
             this.panel1.TabIndex = 7;
             // 
             // MainForm

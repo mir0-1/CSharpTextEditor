@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 using mshtml;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace CSharpTextEditor
 {
     class InputManager
     {
+        [DllImport("user32")]
+        private extern static int GetCaretPos(out Point p);
+
         private IHTMLCaret caret;
         private IHTMLTxtRange range;
         private IDisplayPointer display;
@@ -32,6 +37,21 @@ namespace CSharpTextEditor
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;
             fontDialog.ShowColor = true;
+        }
+
+        public static int findPosY(IHTMLElement obj)
+        {
+            int curtop = 0;
+            if (obj.offsetParent != null)
+            {
+                while (obj.offsetParent != null)
+                {
+                    curtop += obj.offsetTop;
+                    obj = obj.offsetParent;
+                }
+            }
+
+            return curtop;
         }
 
         public void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -70,6 +90,8 @@ namespace CSharpTextEditor
             char keyCode = (char)e.KeyCode;
             bool isBackspace = (keyCode == (char)8);
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
+            bool isUpArrow = (keyCode == (char)0x26);
+            bool isDownArrow = (keyCode == (char)0x28);
 
             HtmlElement page = pageContainer.GetActivePage();
 
@@ -100,6 +122,29 @@ namespace CSharpTextEditor
                     range.pasteHTML(content);
 
                     ElementOverflowHandler.Execute(page);
+
+                }
+                else if (isUpArrow)
+                {
+                    Point p;
+                    GetCaretPos(out p);
+                    range.select();
+
+                    IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
+                    range.moveToPoint(p.X, metrics.boundingTop - 3);
+                    range.select();
+                    caret.Show(1);
+                }
+                else if (isDownArrow)
+                {
+                    Point p;
+                    GetCaretPos(out p);
+                    range.select();
+
+                    IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
+                    range.moveToPoint(p.X, metrics.boundingTop + metrics.boundingHeight + 3);
+                    range.select();
+                    caret.Show(1);
                 }
             }
         }
