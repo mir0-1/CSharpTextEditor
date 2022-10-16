@@ -34,7 +34,7 @@
             this.insertPageBtn = new System.Windows.Forms.Button();
             this.pageSettingsButton = new System.Windows.Forms.Button();
             this.deletePageBtn = new System.Windows.Forms.Button();
-            this.togglePageBtn = new System.Windows.Forms.Button();
+            this.pageSearchBtn = new System.Windows.Forms.Button();
             this.generalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.insertImageBtn = new System.Windows.Forms.Button();
             this.fontDialogBtn = new System.Windows.Forms.Button();
@@ -65,7 +65,7 @@
             this.pagePanel.Controls.Add(this.insertPageBtn);
             this.pagePanel.Controls.Add(this.pageSettingsButton);
             this.pagePanel.Controls.Add(this.deletePageBtn);
-            this.pagePanel.Controls.Add(this.togglePageBtn);
+            this.pagePanel.Controls.Add(this.pageSearchBtn);
             this.pagePanel.Location = new System.Drawing.Point(353, 1);
             this.pagePanel.Name = "pagePanel";
             this.pagePanel.Size = new System.Drawing.Size(309, 74);
@@ -105,16 +105,17 @@
             this.generalToolTip.SetToolTip(this.deletePageBtn, "Изтриване на активната страница");
             this.deletePageBtn.UseVisualStyleBackColor = true;
             // 
-            // togglePageBtn
+            // pageSearchBtn
             // 
-            this.togglePageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.page_togglevisible;
-            this.togglePageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.togglePageBtn.Location = new System.Drawing.Point(157, 3);
-            this.togglePageBtn.Name = "togglePageBtn";
-            this.togglePageBtn.Size = new System.Drawing.Size(71, 71);
-            this.togglePageBtn.TabIndex = 4;
-            this.generalToolTip.SetToolTip(this.togglePageBtn, "Превключване на видимостта");
-            this.togglePageBtn.UseVisualStyleBackColor = true;
+            this.pageSearchBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.page_search_v2;
+            this.pageSearchBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pageSearchBtn.Location = new System.Drawing.Point(157, 3);
+            this.pageSearchBtn.Name = "pageSearchBtn";
+            this.pageSearchBtn.Size = new System.Drawing.Size(71, 71);
+            this.pageSearchBtn.TabIndex = 4;
+            this.generalToolTip.SetToolTip(this.pageSearchBtn, "Превключване на видимостта");
+            this.pageSearchBtn.UseVisualStyleBackColor = true;
+            this.pageSearchBtn.Click += new System.EventHandler(this.PageSearchBtn_Click);
             // 
             // insertImageBtn
             // 
@@ -189,7 +190,7 @@
         private System.Windows.Forms.WebBrowser HtmlViewer;
         private System.Windows.Forms.Button insertPageBtn;
         private System.Windows.Forms.Button deletePageBtn;
-        private System.Windows.Forms.Button togglePageBtn;
+        private System.Windows.Forms.Button pageSearchBtn;
         private System.Windows.Forms.Button pageSettingsButton;
         private System.Windows.Forms.Panel pagePanel;
         private System.Windows.Forms.ToolTip generalToolTip;

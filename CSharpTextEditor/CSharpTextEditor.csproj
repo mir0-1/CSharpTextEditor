@@ -71,8 +71,14 @@
     <Compile Include="FontDialogParser.cs" />
     <Compile Include="ImageParser.cs" />
     <Compile Include="InputManager.cs" />
-    <Compile Include="PageContainer.cs" />
+    <Compile Include="PageManager.cs" />
     <Compile Include="ElementOverflowHandler.cs" />
+    <Compile Include="PageSearchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PageSearchDialog.Designer.cs">
+      <DependentUpon>PageSearchDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ImageInsertDialogForm.resx">
@@ -80,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageSearchDialog.resx">
+      <DependentUpon>PageSearchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,6 +169,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\add_image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_search1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_search_v2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

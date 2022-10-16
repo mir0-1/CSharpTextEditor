@@ -103,59 +103,9 @@ namespace CSharpTextEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap font_format {
-            get {
-                object obj = ResourceManager.GetObject("font_format", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap font_format_v3 {
-            get {
-                object obj = ResourceManager.GetObject("font_format_v3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap font_format_v4 {
-            get {
-                object obj = ResourceManager.GetObject("font_format_v4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap font_format_v5 {
             get {
                 object obj = ResourceManager.GetObject("font_format_v5", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap font_format1 {
-            get {
-                object obj = ResourceManager.GetObject("font_format1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap format_clear {
-            get {
-                object obj = ResourceManager.GetObject("format_clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,6 +133,26 @@ namespace CSharpTextEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap page_search_v2 {
+            get {
+                object obj = ResourceManager.GetObject("page_search_v2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_search1 {
+            get {
+                object obj = ResourceManager.GetObject("page_search1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap page_togglevisible {
             get {
                 object obj = ResourceManager.GetObject("page_togglevisible", resourceCulture);
@@ -196,16 +166,6 @@ namespace CSharpTextEditor.Properties {
         internal static System.Drawing.Bitmap pages_settings {
             get {
                 object obj = ResourceManager.GetObject("pages_settings", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap pages_visibility {
-            get {
-                object obj = ResourceManager.GetObject("pages_visibility", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

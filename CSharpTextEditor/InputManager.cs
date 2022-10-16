@@ -40,20 +40,22 @@ namespace CSharpTextEditor
         private const char VK_RIGHTARROW = (char)0x27;
 
         private HtmlDocument document;
-        private PageContainer pageContainer;
+        private PageManager pageManager;
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private CustomFontDialog fontDialog = new CustomFontDialog();
         private ImageInsertDialogForm dialogForm;
+        private PageSearchDialog pageSearchDialog;
 
         private bool doubleArrowInputBugFixFlag = true;
 
         public InputManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
-            pageContainer = new PageContainer(document);
-            domEditGuard = new DomEditGuard(pageContainer);
+            pageManager = new PageManager(document);
+            domEditGuard = new DomEditGuard(pageManager);
             dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
+            pageSearchDialog = new PageSearchDialog(pageManager);
 
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;
@@ -66,12 +68,12 @@ namespace CSharpTextEditor
 
             IHTMLDocument2 doc = (IHTMLDocument2)document.DomDocument;
             IHTMLElement activeDomElement = (IHTMLElement)activeElement.DomElement;
-            HtmlElement page = pageContainer.GetPageSectionFromContent(activeElement);
+            HtmlElement page = pageManager.GetPageSectionFromContent(activeElement);
 
             if (page == null)
                 return;
 
-            pageContainer.SetActivePageSection(page);
+            pageManager.SetActivePageSection(page);
 
             range = doc.selection.createRange();
             range.select();
@@ -147,7 +149,7 @@ namespace CSharpTextEditor
             char keyCode = (char)e.KeyCode;
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
 
-            HtmlElement page = pageContainer.GetActivePageSection();
+            HtmlElement page = pageManager.GetActivePageSection();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
@@ -209,7 +211,7 @@ namespace CSharpTextEditor
             bool isEnter = (keyCode == (char)13);
             bool isSpace = (keyCode == (char)32);
 
-            HtmlElement page = pageContainer.GetActivePageSection();
+            HtmlElement page = pageManager.GetActivePageSection();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
@@ -247,7 +249,12 @@ namespace CSharpTextEditor
 
         public void InsertPageBtn_Click(object sender, EventArgs e)
         {
-            pageContainer.InsertPageAfterActive();
+            pageManager.InsertPageAfterActive();
+        }
+
+        public void PageSearchBtn_Click(object sender, EventArgs e)
+        {
+            pageSearchDialog.ShowDialog();
         }
     }
 }

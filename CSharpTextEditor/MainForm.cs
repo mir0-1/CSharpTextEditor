@@ -44,7 +44,7 @@ namespace CSharpTextEditor
                     "border-top: 2px dotted blue;" +
                 "}" +
                 ".page-container {" +
-                    "margin: 30px;" +
+                    "margin: 100px;" +
                     "background-color: white;" +
                 "}" +
                 ".page-section {" +
@@ -66,7 +66,7 @@ namespace CSharpTextEditor
                 "</style>" +
                 "</head>" +
                 "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
-                    "<div class=\"editguard global-pages-container\">" +
+                    "<div class=\"editguard global-page-container\">" +
                             "<div class=\"page-container\">" +
                                 "<div class=\"page-section page-header\">" +
                                 "</div>" +
@@ -141,6 +141,11 @@ namespace CSharpTextEditor
         {
             CustomFontDialog customFontDialog = new CustomFontDialog();
             customFontDialog.ShowDialog();
+        }
+
+        private void PageSearchBtn_Click(object sender, EventArgs e)
+        {
+            inputManager.PageSearchBtn_Click(sender, e);
         }
     }
 }
