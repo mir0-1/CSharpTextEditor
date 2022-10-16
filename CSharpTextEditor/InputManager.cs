@@ -20,6 +20,18 @@ namespace CSharpTextEditor
         private IHTMLTxtRange range;
         private IDisplayPointer display;
 
+        private enum CaretMoveHorDirection
+        {
+            FORWARD = 1,
+            BACKWARDS = -1
+        }
+
+        private enum CaretMoveVertDirection
+        {
+            UP,
+            DOWN
+        }
+
         private const char VK_BACKSPACE = (char)0x08;
         private const char VK_DELETE = (char)0x2E;
         private const char VK_UPARROW = (char)0x26;
@@ -79,13 +91,61 @@ namespace CSharpTextEditor
             caret.Show(1);
         }
 
+        private void VerticalMoveCaret(CaretMoveVertDirection direction)
+        {
+            Point p;
+            IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
+            int newY;
+
+            if (direction == CaretMoveVertDirection.UP)
+                newY = metrics.boundingTop - 3;
+            else
+                newY = metrics.boundingTop + metrics.boundingHeight + 3;
+
+            GetCaretPos(out p);
+            range.select();
+
+            metrics = (IHTMLTextRangeMetrics)range;
+            range.moveToPoint(p.X, newY);
+            range.select();
+            caret.Show(1);
+        }
+
+        private void HorizontalMoveCaret(CaretMoveHorDirection direction)
+        {
+            range.move("character", (int)direction);
+            if (domEditGuard.CanEditTextSafely(range))
+            {
+                range.select();
+                caret.Show(1);
+            }
+        }
+
+        private void CaretDeleteSelection(CaretMoveHorDirection direction, HtmlElement activePage)
+        {
+            if (range.compareEndPoints("StartToEnd", range) != -1)
+            {
+                if (direction == CaretMoveHorDirection.FORWARD)
+                    range.moveEnd("character", 1);
+                else
+                    range.moveStart("character", -1);
+            }
+
+            range.select();
+
+            if (domEditGuard.CanEditTextSafely(range))
+            {
+                range.pasteHTML("");
+                caret.Show(1);
+
+                ElementOverflowHandler.Execute(activePage);
+            }
+        }
+
         public void OnKeyPreview(object sender, PreviewKeyDownEventArgs e)
         {
             char keyCode = (char)e.KeyCode;
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
-
-            IHTMLTextRangeMetrics metrics = null;
-            Point p;
 
             HtmlElement page = pageContainer.GetActivePage();
 
@@ -107,50 +167,16 @@ namespace CSharpTextEditor
                 switch (keyCode)
                 {
                     case VK_BACKSPACE:
-                        if (range.compareEndPoints("StartToEnd", range) != -1)
-                            range.moveStart("character", -1);
-
-                        range.select();
-
-                        if (domEditGuard.CanEditTextSafely(range))
-                        {
-                            range.pasteHTML("");
-                            caret.Show(1);
-
-                            ElementOverflowHandler.Execute(page);
-                        }
+                        CaretDeleteSelection(CaretMoveHorDirection.BACKWARDS, page);
                         break;
                     case VK_DELETE: // VK_DELETE
-                        if (range.compareEndPoints("StartToEnd", range) != -1)
-                            range.moveEnd("character", 1);
-
-                        range.select();
-
-                        if (domEditGuard.CanEditTextSafely(range))
-                        {
-                            range.pasteHTML("");
-                            caret.Show(1);
-
-                            ElementOverflowHandler.Execute(page);
-                        }
+                        CaretDeleteSelection(CaretMoveHorDirection.FORWARD, page);
                         break;
                     case VK_UPARROW:
-                        GetCaretPos(out p);
-                        range.select();
-;
-                        metrics = (IHTMLTextRangeMetrics)range;
-                        range.moveToPoint(p.X, metrics.boundingTop - 3);
-                        range.select();
-                        caret.Show(1);
+                        VerticalMoveCaret(CaretMoveVertDirection.UP);
                         break;
                     case VK_DOWNARROW:
-                        GetCaretPos(out p);
-                        range.select();
-
-                        metrics = (IHTMLTextRangeMetrics)range;
-                        range.moveToPoint(p.X, metrics.boundingTop + metrics.boundingHeight + 3);
-                        range.select();
-                        caret.Show(1);
+                        VerticalMoveCaret(CaretMoveVertDirection.DOWN);
                         break;
                     case VK_LEFTARROW:
                         if (doubleArrowInputBugFixFlag)
@@ -160,12 +186,7 @@ namespace CSharpTextEditor
                         }
 
                         doubleArrowInputBugFixFlag = true;
-                        range.move("character", -1);
-                        if (domEditGuard.CanEditTextSafely(range))
-                        {
-                            range.select();
-                            caret.Show(1);
-                        }
+                        HorizontalMoveCaret(CaretMoveHorDirection.BACKWARDS);
                         break;
                     case VK_RIGHTARROW:
                         if (doubleArrowInputBugFixFlag)
@@ -175,13 +196,7 @@ namespace CSharpTextEditor
                         }
 
                         doubleArrowInputBugFixFlag = true;
-
-                        range.move("character", 1);
-                        if (domEditGuard.CanEditTextSafely(range))
-                        {
-                            range.select();
-                            caret.Show(1);
-                        }
+                        HorizontalMoveCaret(CaretMoveHorDirection.FORWARD);
                         break;
                 }
 
