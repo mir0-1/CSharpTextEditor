@@ -27,6 +27,8 @@ namespace CSharpTextEditor
         private CustomFontDialog fontDialog = new CustomFontDialog();
         private ImageInsertDialogForm dialogForm;
 
+        private bool doubleArrowInputBugFixFlag = true;
+
         public InputManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
@@ -37,21 +39,6 @@ namespace CSharpTextEditor
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;
             fontDialog.ShowColor = true;
-        }
-
-        public static int findPosY(IHTMLElement obj)
-        {
-            int curtop = 0;
-            if (obj.offsetParent != null)
-            {
-                while (obj.offsetParent != null)
-                {
-                    curtop += obj.offsetTop;
-                    obj = obj.offsetParent;
-                }
-            }
-
-            return curtop;
         }
 
         public void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
@@ -92,6 +79,8 @@ namespace CSharpTextEditor
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
             bool isUpArrow = (keyCode == (char)0x26);
             bool isDownArrow = (keyCode == (char)0x28);
+            bool isLeftArrow = (keyCode == (char)0x25);
+            bool isRightArrow = (keyCode == (char)0x27);
 
             HtmlElement page = pageContainer.GetActivePage();
 
@@ -146,6 +135,40 @@ namespace CSharpTextEditor
                     range.select();
                     caret.Show(1);
                 }
+                else if (isLeftArrow)
+                {
+                    if (doubleArrowInputBugFixFlag)
+                    {
+                        doubleArrowInputBugFixFlag = false;
+                        return;
+                    }
+
+                    doubleArrowInputBugFixFlag = true;
+                    range.move("character", -1);
+                    if (domEditGuard.CanEditTextSafely(range))
+                    {
+                        range.select();
+                        caret.Show(1);
+                    }
+                }
+                else if (isRightArrow)
+                {
+                    if (doubleArrowInputBugFixFlag)
+                    {
+                        doubleArrowInputBugFixFlag = false;
+                        return;
+                    }
+
+                    doubleArrowInputBugFixFlag = true;
+
+                    range.move("character", 1);
+                    if (domEditGuard.CanEditTextSafely(range))
+                    {
+                        range.select();
+                        caret.Show(1);
+                    }
+                }
+
             }
         }
 
