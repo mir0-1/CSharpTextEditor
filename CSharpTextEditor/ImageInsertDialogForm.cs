@@ -26,6 +26,9 @@ namespace CSharpTextEditor
         private ApplyButtonStatus applyButtonStatus = ApplyButtonStatus.NOT_PRESSED;
         private string outputHTMLInternal;
 
+        private float dpiX;
+        private float dpiY;
+
         public string outputHTML
         {
             get => outputHTMLInternal;
@@ -36,7 +39,7 @@ namespace CSharpTextEditor
         {
             InitializeComponent();
 
-            fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.JPEG)|*.BMP;*.JPG";
+            fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.JPEG)|*.BMP;*.JPG;*.JPEG";
             fileDialog.RestoreDirectory = true;
         }
 

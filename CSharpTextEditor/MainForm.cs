@@ -40,6 +40,7 @@ namespace CSharpTextEditor
                     "margin: 30px;" +
                     "height: 300px;" + // as well
                     "overflow-y: auto;" +
+                    "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
                 "}" + // best to isоlate the style string
@@ -51,7 +52,7 @@ namespace CSharpTextEditor
                 "}" +
                 "</style>" +
                 "</head>" +
-                "<body style=\"background-color: gray; -ms-user-select: none;\">" +
+                "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
                     "<div class=\"editguard global-page-container\">" +
                             "<div class=\"page-body\">" +
                             "</div>"+
