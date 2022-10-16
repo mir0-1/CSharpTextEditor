@@ -41,20 +41,22 @@ namespace CSharpTextEditor
         private const char VK_SPACE = (char)0x2D;
 
         private HtmlDocument document;
-        private PageManager pageManager;
+        private GeneralPageManager pageManager;
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private CustomFontDialog fontDialog = new CustomFontDialog();
         private ImageInsertDialogForm dialogForm;
         private PageSearchDialog pageSearchDialog;
+        private PageSettingsDialog pageSettingsDialog;
 
         public InputManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
-            pageManager = new PageManager(document);
+            pageManager = new GeneralPageManager(document);
             domEditGuard = new DomEditGuard(pageManager);
             dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
             pageSearchDialog = new PageSearchDialog(pageManager, (IHTMLDocument2)document.DomDocument);
+            pageSettingsDialog = new PageSettingsDialog(pageManager);
 
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;
@@ -170,7 +172,7 @@ namespace CSharpTextEditor
                     case VK_BACKSPACE:
                         CaretDeleteSelection(CaretMoveHorDirection.BACKWARDS, page);
                         break;
-                    case VK_DELETE: // VK_DELETE
+                    case VK_DELETE:
                         CaretDeleteSelection(CaretMoveHorDirection.FORWARD, page);
                         break;
                     case VK_UPARROW:
@@ -187,11 +189,7 @@ namespace CSharpTextEditor
                         break;
                     case VK_SPACE:
                         if (domEditGuard.CanEditTextSafely(range))
-                        {
                             range.pasteHTML("&#160;");
-                            e.IsInputKey = false;
-                            return;
-                        }
                         break;
                 }
 
@@ -201,8 +199,8 @@ namespace CSharpTextEditor
         public void OnKeyPress(object sender, HtmlElementEventArgs e)
         {
             char keyCode = (char)e.KeyPressedCode;
-            bool isEnter = (keyCode == (char)13);
-            bool isSpace = (keyCode == (char)32);
+            bool isEnter = (keyCode == (char)0x0D);
+            bool isSpace = (keyCode == (char)0x20);
 
             HtmlElement page = pageManager.GetActivePageSection();
 
@@ -210,9 +208,7 @@ namespace CSharpTextEditor
             {
                 if (!isEnter)
                 {
-                    if (!isSpace)
-                        range.pasteHTML(keyCode.ToString());
-
+                    range.pasteHTML(keyCode.ToString());
                     caret.Show(1);
                 }
                 else
@@ -246,6 +242,19 @@ namespace CSharpTextEditor
         public void PageSearchBtn_Click(object sender, EventArgs e)
         {
             pageSearchDialog.ShowDialog();
+        }
+
+        public void PageSettingsButton_Click(object sender, EventArgs e)
+        {
+            if (pageSettingsDialog.ShowDialog() == DialogResult.OK)
+            {
+                pageManager.UpdateGlobalPageStyles(pageSettingsDialog.headerHeight, 
+                                                    pageSettingsDialog.bodyHeight, 
+                                                    pageSettingsDialog.footerHeight, 
+                                                    pageSettingsDialog.pageWidth,
+                                                    pageSettingsDialog.headerEnabled,
+                                                    pageSettingsDialog.footerEnabled);
+            }
         }
     }
 }

@@ -9,9 +9,9 @@ namespace CSharpTextEditor
 {
     class DomEditGuard
     {
-        private PageManager pageContainer;
+        private GeneralPageManager pageContainer;
 
-        public DomEditGuard(PageManager pageContainer)
+        public DomEditGuard(GeneralPageManager pageContainer)
         {
             this.pageContainer = pageContainer;
         }

@@ -94,6 +94,7 @@
             this.pageSettingsButton.TabIndex = 5;
             this.generalToolTip.SetToolTip(this.pageSettingsButton, "Общи настройки за страниците");
             this.pageSettingsButton.UseVisualStyleBackColor = true;
+            this.pageSettingsButton.Click += new System.EventHandler(this.PageSettingsButton_Click);
             // 
             // deletePageBtn
             // 

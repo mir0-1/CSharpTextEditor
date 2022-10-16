@@ -13,10 +13,10 @@ namespace CSharpTextEditor
 {
     partial class PageSearchDialog : Form
     {
-        private PageManager pageManager;
+        private GeneralPageManager pageManager;
         private IHTMLDocument2 doc;
 
-        public PageSearchDialog(PageManager pageManager, IHTMLDocument2 doc)
+        public PageSearchDialog(GeneralPageManager pageManager, IHTMLDocument2 doc)
         {
             InitializeComponent();
 

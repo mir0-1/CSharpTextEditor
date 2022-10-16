@@ -71,7 +71,13 @@
     <Compile Include="FontDialogParser.cs" />
     <Compile Include="ImageParser.cs" />
     <Compile Include="InputManager.cs" />
-    <Compile Include="PageManager.cs" />
+    <Compile Include="GeneralPageManager.cs" />
+    <Compile Include="PageSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PageSettingsDialog.Designer.cs">
+      <DependentUpon>PageSettingsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SectionOverflowHandler.cs" />
     <Compile Include="PageSearchDialog.cs">
       <SubType>Form</SubType>
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PageSearchDialog.resx">
       <DependentUpon>PageSearchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageSettingsDialog.resx">
+      <DependentUpon>PageSettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>

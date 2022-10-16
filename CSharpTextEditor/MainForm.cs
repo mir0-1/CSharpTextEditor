@@ -37,15 +37,15 @@ namespace CSharpTextEditor
                 "<style>" +
                 ".page-body {" +
                     "padding: 1cm;" +
-                    "height: 222.75mm;" +
+                    "height: 223mm;" +
                 "}" +
                 ".page-header {" +
-                    "height: 37.125mm;" +
-                    "border-bottom: 2px dotted blue;" +
+                    "height: 37mm;" +
+                    "border-bottom: 2px dotted;" +
                 "}" +
                 ".page-footer {" +
-                    "height: 37.125mm;" +
-                    "border-top: 2px dotted blue;" +
+                    "height: 37mm;" +
+                    "border-top: 2px dotted;" +
                 "}" +
                 ".page-container {" +
                     "background-color: red;" +
@@ -74,12 +74,12 @@ namespace CSharpTextEditor
                 "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
                     "<div class=\"editguard global-page-container\">" +
                             "<div class=\"page-container\">" +
-                                "<div class=\"page-section page-header\">" +
-                                "</div>" +
-                                "<div class=\"page-section page-body\">" +
-                                "</div>" +
-                                "<div class=\"page-section page-footer\">" +
-                                "</div>" +
+                                    "<div class=\"page-section page-header\">" +
+                                    "</div>" +
+                                    "<div class=\"page-section page-body\">" +
+                                    "</div>" +
+                                    "<div class=\"page-section page-footer\">" +
+                                    "</div>" +
                             "</div>" +
                     "</div>" +
                 "</body>" +
@@ -87,26 +87,26 @@ namespace CSharpTextEditor
 
             bCompleted = true;
 
-            float dpiX, dpiY;
-
-            Graphics g = this.CreateGraphics();
-            try
-            {
-                dpiX = g.DpiX;
-                dpiY = g.DpiY;
-            }
-            finally
-            {
-                g.Dispose();
-            }
-
-            inputManager = new InputManager(HtmlViewer.Document, dpiX, dpiY);
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            float dpiX, dpiY;
             if (bCompleted && !bOnce)
             {
+                Graphics g = this.CreateGraphics();
+                try
+                {
+                    dpiX = g.DpiX;
+                    dpiY = g.DpiY;
+                }
+                finally
+                {
+                    g.Dispose();
+                }
+
+                inputManager = new InputManager(HtmlViewer.Document, dpiX, dpiY);
+
                 HtmlViewer.Document.Click += OnDocumentGlobalClick;
                 HtmlViewer.Document.Body.KeyPress += OnKeyDown;
                 bOnce = true;
@@ -153,5 +153,9 @@ namespace CSharpTextEditor
             inputManager.PageSearchBtn_Click(sender, e);
         }
 
+        private void PageSettingsButton_Click(object sender, EventArgs e)
+        {
+            inputManager.PageSettingsButton_Click(sender, e);
+        }
     }
 }

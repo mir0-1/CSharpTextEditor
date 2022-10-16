@@ -8,13 +8,57 @@ using mshtml;
 
 namespace CSharpTextEditor
 {
-    class PageManager
+    class GeneralPageManager
     {
         private HtmlDocument document;
         private HtmlElement activePageSection;
         private HtmlElement prevActivePageSection =  null;
 
-        public PageManager(HtmlDocument document)
+        private int headerHeight = 37;
+        private int footerHeight = 37;
+        private int bodyHeight = 223;
+        private int pageWidth = 210;
+
+        private bool headerEnabled = true;
+        private bool footerEnabled = true;
+
+        public string headerCss
+        {
+            get => headerEnabled ? "height:" + headerHeight + "mm;" : "display:none;";
+        }
+        public string footerCss
+        {
+            get => footerEnabled ? "height:" + footerHeight + "mm;" : "display:none;";
+        }
+        public string bodyCss
+        {
+            get => "height:" + bodyHeight + "mm;";
+        }
+        public string pageContainerCss
+        {
+            get => "width:" + pageWidth + "mm;";
+        }
+
+        public int headerHeightInt
+        {
+            get => headerHeight;
+        }
+
+        public int footerHeightInt
+        {
+            get => footerHeight;
+        }
+
+        public int bodyHeightInt
+        {
+            get => bodyHeight;
+        }
+        public int pageWidthInt
+        {
+            get => pageWidth;
+        }
+
+        public GeneralPageManager(HtmlDocument document)
         {
             this.document = document;
         }
@@ -27,7 +71,7 @@ namespace CSharpTextEditor
             return activePageSection;
         }
 
-        public void UpdateHeadersFooters()
+        public void SyncHeadersFootersContent()
         {
             HtmlElement globalPageContainer = GetGlobalPageContainer();
 
@@ -36,9 +80,6 @@ namespace CSharpTextEditor
 
             bool isHeader = IsHeaderSection(activePageSection);
             bool isFooter = IsFooterSection(activePageSection);
-
-            if (!isHeader && !isFooter)
-                return;
 
             if (isHeader)
             {
@@ -51,7 +92,7 @@ namespace CSharpTextEditor
                     }
                 }
             }
-            else
+            else if (isFooter)
             {
                 foreach (HtmlElement pageContainer in globalPageContainer.Children)
                 {
@@ -101,10 +142,18 @@ namespace CSharpTextEditor
 
         public HtmlElement GetPageContainerFooter(HtmlElement pageContainer)
         {
-            if (pageContainer == null || pageContainer.Children == null || pageContainer.Children.Count < 3)
+            if (pageContainer == null || pageContainer.Children == null || pageContainer.Children.Count < 2)
                 return null;
 
             return pageContainer.Children[2];
+        }
+
+        public HtmlElement GetPageContainerBody(HtmlElement pageContainer)
+        {
+            if (pageContainer == null || pageContainer.Children == null || pageContainer.Children.Count < 3)
+                return null;
+
+            return pageContainer.Children[1];
         }
 
         public bool IsActivePageSection(HtmlElement htmlElement)
@@ -169,7 +218,7 @@ namespace CSharpTextEditor
 
             if (Object.ReferenceEquals(prevActivePageSection, activePageSection) && activePageSection != null && prevActivePageSection != null)
             {
-                UpdateHeadersFooters();
+                SyncHeadersFootersContent();
             }
 
             activePageSection = newPage;
@@ -232,13 +281,50 @@ namespace CSharpTextEditor
 
             ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend",
                             "<div class=\"page-container\">" +
-                                "<div class=\"page-section page-header\">" + header.InnerHtml +
+                                "<div class=\"page-section page-header\" style=\"" + headerCss + "\">" + header.InnerHtml +
                                 "</div>" +
-                                "<div class=\"page-section page-body\">" +
+                                "<div class=\"page-section page-body\" style=\"" + bodyCss + "\">" +
                                 "</div>" +
-                                "<div class=\"page-section page-footer\">" + footer.InnerHtml +
+                                "<div class=\"page-section page-footer\" style=\"" + footerCss + "\">" + footer.InnerHtml +
                                 "</div>" +
                             "</div>");
+        }
+
+        public void UpdateGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled)
+        {
+            if (headerEnabled)
+                this.headerHeight = headerHeight;
+
+            if (footerEnabled)
+                this.footerHeight = footerHeight;
+
+            this.bodyHeight = bodyHeight;
+            this.pageWidth = pageWidth;
+
+            this.headerEnabled = headerEnabled;
+            this.footerEnabled = footerEnabled;
+
+            if (document == null)
+                return;
+
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+
+            if (globalPageContainer == null)
+                return;
+
+            foreach (HtmlElement pageContainer in globalPageContainer.Children)
+            {
+                HtmlElement header = GetPageContainerHeader(pageContainer);
+                header.Style = headerCss;
+
+                HtmlElement footer = GetPageContainerFooter(pageContainer);
+                footer.Style = footerCss;
+
+                HtmlElement body = GetPageContainerBody(pageContainer);
+                body.Style = bodyCss;
+
+                pageContainer.Style = pageContainerCss;
+            }
         }
     }
 
