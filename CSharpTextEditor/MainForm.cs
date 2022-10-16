@@ -139,8 +139,7 @@ namespace CSharpTextEditor
 
         private void MainForm_DoubleClick(object sender, EventArgs e)
         {
-            CustomFontDialog customFontDialog = new CustomFontDialog();
-            customFontDialog.ShowDialog();
+
         }
 
         private void PageSearchBtn_Click(object sender, EventArgs e)

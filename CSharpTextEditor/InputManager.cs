@@ -55,7 +55,7 @@ namespace CSharpTextEditor
             pageManager = new PageManager(document);
             domEditGuard = new DomEditGuard(pageManager);
             dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
-            pageSearchDialog = new PageSearchDialog(pageManager);
+            pageSearchDialog = new PageSearchDialog(pageManager, (IHTMLDocument2)document.DomDocument);
 
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;

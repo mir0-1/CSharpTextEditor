@@ -88,6 +88,7 @@
             this.buttonSearchTextGlobal.TabIndex = 5;
             this.buttonSearchTextGlobal.Text = "Търсене текст";
             this.buttonSearchTextGlobal.UseVisualStyleBackColor = true;
+            this.buttonSearchTextGlobal.Click += new System.EventHandler(this.ButtonSearchTextGlobal_Click);
             // 
             // PageSearchDialog
             // 

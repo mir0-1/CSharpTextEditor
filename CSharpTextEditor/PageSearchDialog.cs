@@ -7,18 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using mshtml;
 
 namespace CSharpTextEditor
 {
     partial class PageSearchDialog : Form
     {
         private PageManager pageManager;
+        private IHTMLDocument2 doc;
 
-        public PageSearchDialog(PageManager pageManager)
+        public PageSearchDialog(PageManager pageManager, IHTMLDocument2 doc)
         {
             InitializeComponent();
 
             this.pageManager = pageManager;
+            this.doc = doc;
         }
 
         private void PageSearch_Click(object sender, EventArgs e)
@@ -32,6 +35,15 @@ namespace CSharpTextEditor
             }
 
             pageContainer.ScrollIntoView(true);
+        }
+
+        private void ButtonSearchTextGlobal_Click(object sender, EventArgs e)
+        {
+            IHTMLTxtRange range = doc.selection.createRange();
+
+            range.collapse(false);
+            range.findText(pageSearchTextBox.Text);
+            range.select();
         }
     }
 }
