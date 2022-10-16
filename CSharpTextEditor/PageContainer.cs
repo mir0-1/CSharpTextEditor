@@ -95,7 +95,7 @@ namespace CSharpTextEditor
         {
             while (element != null)
             {
-                if (IsPageSection(element))
+                if (IsPageContainer(element))
                     return element;
 
                 element = element.Parent;
@@ -109,7 +109,21 @@ namespace CSharpTextEditor
             if (activePageSection == null)
                 return;
 
-            ((IHTMLElement)activePageSection.DomElement).insertAdjacentHTML("afterEnd", "<div class=\"page-body\"></div>");
+            HtmlElement activePageContainer = GetPageContainerFromContent(activePageSection);
+
+            if (activePageContainer == null)
+                return;
+
+
+            ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterEnd",
+                    "<div class=\"page-container\">" +
+                                "<div class=\"page-section page-header\">" +
+                                "</div>" +
+                                "<div class=\"page-section page-body\">" +
+                                "</div>" +
+                                "<div class=\"page-section page-footer\">" +
+                                "</div>" +
+                            "</div>");
         }
     }
 

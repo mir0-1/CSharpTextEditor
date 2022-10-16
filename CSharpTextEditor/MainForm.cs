@@ -109,7 +109,7 @@ namespace CSharpTextEditor
 
         private void InsertPageBtn_Click(object sender, EventArgs e)
         {
-            //pageContainer.InsertPageAfterActive();
+            inputManager.InsertPageBtn_Click(sender, e);
         }
 
         private void HtmlViewer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -134,7 +134,7 @@ namespace CSharpTextEditor
 
         private void InsertImageBtn_Click(object sender, EventArgs e)
         {
-            inputManager.InsertImageBtn_DoubleClick(sender, e);
+            inputManager.InsertImageBtn_Click(sender, e);
         }
 
         private void MainForm_DoubleClick(object sender, EventArgs e)

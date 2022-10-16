@@ -239,10 +239,15 @@ namespace CSharpTextEditor
             }
         }
 
-        public void InsertImageBtn_DoubleClick(object sender, EventArgs e)
+        public void InsertImageBtn_Click(object sender, EventArgs e)
         {
             if (dialogForm.ShowDialog() == DialogResult.OK && domEditGuard.CanEditTextSafely(range))
                 range.pasteHTML(dialogForm.outputHTML);
+        }
+
+        public void InsertPageBtn_Click(object sender, EventArgs e)
+        {
+            pageContainer.InsertPageAfterActive();
         }
     }
 }
