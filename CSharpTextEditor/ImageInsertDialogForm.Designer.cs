@@ -34,9 +34,11 @@
             this.OpenFilePCBtn = new System.Windows.Forms.Button();
             this.imageWidthLabel = new System.Windows.Forms.Label();
             this.imageHeightLabel = new System.Windows.Forms.Label();
-            this.imageWidthTextbox = new System.Windows.Forms.TextBox();
-            this.imageHeightTextbox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.imageWidthInput = new System.Windows.Forms.NumericUpDown();
+            this.imageHeightInput = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.imageWidthInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageHeightInput)).BeginInit();
             this.SuspendLayout();
             // 
             // urlTextBox
@@ -96,22 +98,6 @@
             this.imageHeightLabel.TabIndex = 5;
             this.imageHeightLabel.Text = "Дължина (мм)";
             // 
-            // imageWidthTextbox
-            // 
-            this.imageWidthTextbox.Enabled = false;
-            this.imageWidthTextbox.Location = new System.Drawing.Point(281, 154);
-            this.imageWidthTextbox.Name = "imageWidthTextbox";
-            this.imageWidthTextbox.Size = new System.Drawing.Size(110, 20);
-            this.imageWidthTextbox.TabIndex = 6;
-            // 
-            // imageHeightTextbox
-            // 
-            this.imageHeightTextbox.Enabled = false;
-            this.imageHeightTextbox.Location = new System.Drawing.Point(281, 188);
-            this.imageHeightTextbox.Name = "imageHeightTextbox";
-            this.imageHeightTextbox.Size = new System.Drawing.Size(110, 20);
-            this.imageHeightTextbox.TabIndex = 7;
-            // 
             // okButton
             // 
             this.okButton.Location = new System.Drawing.Point(43, 225);
@@ -122,14 +108,40 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
+            // imageWidthInput
+            // 
+            this.imageWidthInput.Enabled = false;
+            this.imageWidthInput.Location = new System.Drawing.Point(271, 150);
+            this.imageWidthInput.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.imageWidthInput.Name = "imageWidthInput";
+            this.imageWidthInput.Size = new System.Drawing.Size(120, 20);
+            this.imageWidthInput.TabIndex = 9;
+            // 
+            // imageHeightInput
+            // 
+            this.imageHeightInput.Enabled = false;
+            this.imageHeightInput.Location = new System.Drawing.Point(271, 181);
+            this.imageHeightInput.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.imageHeightInput.Name = "imageHeightInput";
+            this.imageHeightInput.Size = new System.Drawing.Size(120, 20);
+            this.imageHeightInput.TabIndex = 10;
+            // 
             // ImageInsertDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 331);
+            this.Controls.Add(this.imageHeightInput);
+            this.Controls.Add(this.imageWidthInput);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.imageHeightTextbox);
-            this.Controls.Add(this.imageWidthTextbox);
             this.Controls.Add(this.imageHeightLabel);
             this.Controls.Add(this.imageWidthLabel);
             this.Controls.Add(this.OpenFilePCBtn);
@@ -142,6 +154,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Вмъкване на изображение";
             this.Load += new System.EventHandler(this.ImageInsertDialogForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.imageWidthInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageHeightInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,8 +169,8 @@
         private System.Windows.Forms.Button OpenFilePCBtn;
         private System.Windows.Forms.Label imageWidthLabel;
         private System.Windows.Forms.Label imageHeightLabel;
-        private System.Windows.Forms.TextBox imageWidthTextbox;
-        private System.Windows.Forms.TextBox imageHeightTextbox;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.NumericUpDown imageWidthInput;
+        private System.Windows.Forms.NumericUpDown imageHeightInput;
     }
 }

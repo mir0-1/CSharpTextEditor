@@ -56,10 +56,10 @@ namespace CSharpTextEditor
                 return;
             }
 
-            imageWidthTextbox.Text = imageParser.width.ToString();
-            imageHeightTextbox.Text = imageParser.height.ToString();
-            imageWidthTextbox.Enabled = true;
-            imageHeightTextbox.Enabled = true;
+            imageWidthInput.Value = imageParser.width;
+            imageHeightInput.Value = imageParser.height;
+            imageWidthInput.Enabled = true;
+            imageHeightInput.Enabled = true;
             outputHTMLInternal = imageParser.outputString;
             applyButtonStatus = ApplyButtonStatus.OK;
         }
@@ -72,10 +72,10 @@ namespace CSharpTextEditor
         private void UrlTextBox_TextChanged(object sender, EventArgs e)
         {
             applyButtonStatus = ApplyButtonStatus.NOT_PRESSED;
-            imageWidthTextbox.Enabled = false;
-            imageHeightTextbox.Enabled = false;
-            imageWidthTextbox.Text = "";
-            imageHeightTextbox.Text = "";
+            imageWidthInput.Enabled = false;
+            imageHeightInput.Enabled = false;
+            imageWidthInput.Text = "";
+            imageHeightInput.Text = "";
         }
 
         private void OkButton_Click(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace CSharpTextEditor
             {
                 StringBuilder sb = new StringBuilder(outputHTMLInternal);
                 sb.Remove(0, 4);
-                sb.Insert(0, "<img width=\"" + imageWidthTextbox.Text + "\" height=\"" + imageHeightTextbox.Text + "\" ");
+                sb.Insert(0, "<img width=\"" + imageWidthInput.Text + "\" height=\"" + imageHeightInput.Text + "\" ");
                 outputHTMLInternal = sb.ToString();
                 DialogResult = DialogResult.OK;
             }
