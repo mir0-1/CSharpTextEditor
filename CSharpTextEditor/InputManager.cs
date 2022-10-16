@@ -20,6 +20,7 @@ namespace CSharpTextEditor
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private CustomFontDialog fontDialog = new CustomFontDialog();
+        private ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
 
         public InputManager(HtmlDocument document)
         {
@@ -140,11 +141,8 @@ namespace CSharpTextEditor
 
         public void InsertImageBtn_DoubleClick(object sender, EventArgs e)
         {
-            ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
             if (dialogForm.ShowDialog() == DialogResult.OK && domEditGuard.CanEditTextSafely(range))
-            {
-                range.pasteHTML(dialogForm.result);
-            }
+                range.pasteHTML(dialogForm.outputHTML);
         }
     }
 }
