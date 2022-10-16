@@ -90,7 +90,7 @@ namespace CSharpTextEditor
             ((IDisplayServices)doc).GetCaret(out caret);
 
             caret.MoveCaretToPointer(display, 1, _CARET_DIRECTION.CARET_DIRECTION_FORWARD);
-            caret.Show(1);
+            caret.Show(0);
         }
 
         private void VerticalMoveCaret(CaretMoveVertDirection direction)

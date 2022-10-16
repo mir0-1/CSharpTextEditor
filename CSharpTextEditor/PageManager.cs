@@ -51,6 +51,17 @@ namespace CSharpTextEditor
                     }
                 }
             }
+            else
+            {
+                foreach (HtmlElement pageContainer in globalPageContainer.Children)
+                {
+                    HtmlElement footer = GetPageContainerFooter(pageContainer);
+                    if (footer != null && footer != activePageSection)
+                    {
+                        footer.InnerHtml = activePageSection.InnerHtml;
+                    }
+                }
+            }
         }
 
         public HtmlElement GetGlobalPageContainer()
@@ -158,7 +169,7 @@ namespace CSharpTextEditor
 
             if (Object.ReferenceEquals(prevActivePageSection, activePageSection) && activePageSection != null && prevActivePageSection != null)
             {
-                //UpdateHeadersFooters();
+                UpdateHeadersFooters();
             }
 
             activePageSection = newPage;
@@ -216,14 +227,16 @@ namespace CSharpTextEditor
             if (activePageContainer == null)
                 return;
 
+            HtmlElement header = GetPageContainerHeader(activePageContainer);
+            HtmlElement footer = GetPageContainerFooter(activePageContainer);
 
             ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend",
                             "<div class=\"page-container\">" +
-                                "<div class=\"page-section page-header\">" +
+                                "<div class=\"page-section page-header\">" + header.InnerHtml +
                                 "</div>" +
                                 "<div class=\"page-section page-body\">" +
                                 "</div>" +
-                                "<div class=\"page-section page-footer\">" +
+                                "<div class=\"page-section page-footer\">" + footer.InnerHtml +
                                 "</div>" +
                             "</div>");
         }
