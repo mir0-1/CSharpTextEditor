@@ -11,34 +11,39 @@ namespace CSharpTextEditor
     class PageContainer
     {
         private HtmlDocument document;
-        private HtmlElement activePage;
+        private HtmlElement activePageSection;
 
         public PageContainer(HtmlDocument document)
         {
             this.document = document;
         }
 
-        public HtmlElement GetActivePage()
+        public HtmlElement GetActivePageSection()
         {
             if (document == null)
                 return null;
 
-            return activePage;
+            return activePageSection;
         }
 
-        public bool IsActivePage(HtmlElement htmlElement)
+        public bool IsActivePageSection(HtmlElement htmlElement)
         {
-            return htmlElement != null && htmlElement == activePage;
+            return htmlElement != null && htmlElement == activePageSection;
         }
 
-        public bool IsPageBody(HtmlElement element)
+        public bool IsPageSection(HtmlElement element)
         {
-            return ElementIsClass(element, "page-body");
+            return ElementIsClass(element, "page-section");
         }
 
-        public bool IsPageBody(IHTMLElement element)
+        public bool IsPageSection(IHTMLElement element)
         {
-            return ElementIsClass(element, "page-body");
+            return ElementIsClass(element, "page-section");
+        }
+
+        public bool IsPageContainer(HtmlElement element)
+        {
+            return ElementIsClass(element, "page-container");
         }
 
         public bool ElementIsClass(IHTMLElement element, string className)
@@ -51,20 +56,20 @@ namespace CSharpTextEditor
             return ElementIsClass((IHTMLElement)element.DomElement, className);
         }
 
-        public bool SetActivePage(HtmlElement newPage)
+        public bool SetActivePageSection(HtmlElement newPage)
         {
-            if (!IsPageBody(newPage))
+            if (!IsPageSection(newPage))
                 return false;
 
-            activePage = newPage;
+            activePageSection = newPage;
             return true;
         }
 
-        public HtmlElement GetPageFromContent(HtmlElement element)
+        public HtmlElement GetPageSectionFromContent(HtmlElement element)
         {
             while (element != null)
             {
-                if (IsPageBody(element))
+                if (IsPageSection(element))
                     return element;
 
                 element = element.Parent;
@@ -73,11 +78,11 @@ namespace CSharpTextEditor
             return null;
         }
 
-        public IHTMLElement GetPageFromContent(IHTMLElement element)
+        public IHTMLElement GetPageSectionFromContent(IHTMLElement element)
         {
             while (element != null)
             {
-                if (IsPageBody(element))
+                if (IsPageSection(element))
                     return element;
 
                 element = element.parentElement;
@@ -86,12 +91,25 @@ namespace CSharpTextEditor
             return null;
         }
 
+        public HtmlElement GetPageContainerFromContent(HtmlElement element)
+        {
+            while (element != null)
+            {
+                if (IsPageSection(element))
+                    return element;
+
+                element = element.Parent;
+            }
+
+            return null;
+        }
+
         public void InsertPageAfterActive()
         {
-            if (activePage == null)
+            if (activePageSection == null)
                 return;
 
-            ((IHTMLElement)activePage.DomElement).insertAdjacentHTML("afterEnd", "<div class=\"page-body\"></div>");
+            ((IHTMLElement)activePageSection.DomElement).insertAdjacentHTML("afterEnd", "<div class=\"page-body\"></div>");
         }
     }
 

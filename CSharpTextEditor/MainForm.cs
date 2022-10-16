@@ -29,22 +29,35 @@ namespace CSharpTextEditor
         {
             this.BringToFront();
             this.Focus();
-            HtmlViewer.DocumentText = 
+            HtmlViewer.DocumentText =
                 "<html>" +
                 "<head>" +
                 "<meta charset=\"utf=8\">" +
                 "<style>" +
                 ".page-body {" +
+                    "padding: 1cm;" +
+                "}" +
+                ".page-header {" +
+                    "border-bottom: 2px dotted blue;" +
+                "}" +
+                ".page-footer {" +
+                    "border-top: 2px dotted blue;" +
+                "}" +
+                ".page-container {" +
+                    "margin: 30px;" +
+                    "background-color: white;" +
+                "}" +
+                ".page-section {" +
                     "position: relative;" +
                     "padding: 1cm;" + // make changeable
-                    "margin: 30px;" +
+                    //"margin: 30px;" +
                     "height: 300px;" + // as well
                     "overflow-y: auto;" +
                     "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
                 "}" + // best to isоlate the style string
-                ".global-page-container {" +
+                ".global-pages-container {" +
                     "position: relative;" +
                 "}" +
                 ".editguard {" +
@@ -53,9 +66,15 @@ namespace CSharpTextEditor
                 "</style>" +
                 "</head>" +
                 "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
-                    "<div class=\"editguard global-page-container\">" +
-                            "<div class=\"page-body\">" +
-                            "</div>"+
+                    "<div class=\"editguard global-pages-container\">" +
+                            "<div class=\"page-container\">" +
+                                "<div class=\"page-section page-header\">" +
+                                "</div>" +
+                                "<div class=\"page-section page-body\">" +
+                                "</div>"+
+                                "<div class=\"page-section page-footer\">" +
+                                "</div>" +
+                            "</div>" +
                     "</div>" +
                 "</body>" +
                 "</html>";

@@ -21,7 +21,7 @@ namespace CSharpTextEditor
             if (range == null)
                 return false;
 
-            return pageContainer.GetPageFromContent(range.parentElement()) != null;
+            return pageContainer.GetPageSectionFromContent(range.parentElement()) != null;
         }
     }
 }

@@ -66,12 +66,12 @@ namespace CSharpTextEditor
 
             IHTMLDocument2 doc = (IHTMLDocument2)document.DomDocument;
             IHTMLElement activeDomElement = (IHTMLElement)activeElement.DomElement;
-            HtmlElement page = pageContainer.GetPageFromContent(activeElement);
+            HtmlElement page = pageContainer.GetPageSectionFromContent(activeElement);
 
             if (page == null)
                 return;
 
-            pageContainer.SetActivePage(page);
+            pageContainer.SetActivePageSection(page);
 
             range = doc.selection.createRange();
             range.select();
@@ -147,7 +147,7 @@ namespace CSharpTextEditor
             char keyCode = (char)e.KeyCode;
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
 
-            HtmlElement page = pageContainer.GetActivePage();
+            HtmlElement page = pageContainer.GetActivePageSection();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
@@ -209,7 +209,7 @@ namespace CSharpTextEditor
             bool isEnter = (keyCode == (char)13);
             bool isSpace = (keyCode == (char)32);
 
-            HtmlElement page = pageContainer.GetActivePage();
+            HtmlElement page = pageContainer.GetActivePageSection();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
