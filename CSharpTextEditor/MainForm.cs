@@ -61,21 +61,7 @@ namespace CSharpTextEditor
                 "</html>";
 
             bCompleted = true;
-
-            float dpiX, dpiY;
-
-            Graphics g = this.CreateGraphics();
-            try
-            {
-                dpiX = g.DpiX;
-                dpiY = g.DpiY;
-            }
-            finally
-            {
-                g.Dispose();
-            }
-
-            inputManager = new InputManager(HtmlViewer.Document, dpiX, dpiY);
+            inputManager = new InputManager(HtmlViewer.Document);
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

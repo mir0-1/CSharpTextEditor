@@ -20,14 +20,13 @@ namespace CSharpTextEditor
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private CustomFontDialog fontDialog = new CustomFontDialog();
-        private ImageInsertDialogForm dialogForm;
+        private ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
 
-        public InputManager(HtmlDocument document, float dpiX, float dpiY)
+        public InputManager(HtmlDocument document)
         {
             this.document = document;
             pageContainer = new PageContainer(document);
             domEditGuard = new DomEditGuard(pageContainer);
-            dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
 
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;

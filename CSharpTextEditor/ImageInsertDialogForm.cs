@@ -29,24 +29,18 @@ namespace CSharpTextEditor
         private float dpiX;
         private float dpiY;
 
-        const float mmPerInch = 25.4f;
-        const int webDownloadTimeoutMS = 10000;
-
         public string outputHTML
         {
             get => outputHTMLInternal;
         }
 
 
-        public ImageInsertDialogForm(float dpiX, float dpiY)
+        public ImageInsertDialogForm()
         {
             InitializeComponent();
 
             fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.JPEG)|*.BMP;*.JPG;*.JPEG";
             fileDialog.RestoreDirectory = true;
-
-            this.dpiX = dpiX;
-            this.dpiY = dpiY;
         }
 
         private void OpenFilePCBtn_Click(object sender, EventArgs e)
@@ -55,19 +49,9 @@ namespace CSharpTextEditor
                 urlTextBox.Text = fileDialog.FileName;
         }
 
-        private decimal PixelsToMM(int pixel, float dpi)
-        {
-            return (decimal)Math.Round(((float)pixel / dpi) * mmPerInch);
-        }
-
-        private decimal MMToPixels(decimal mm, float dpi)
-        {
-            return (decimal)Math.Round(((float)mm / mmPerInch) * dpi);
-        }
-
         private void ApplyButton_Click(object sender, EventArgs e)
         {
-            operationSuccess = imageParser.FetchImageAsBase64(urlTextBox.Text, webDownloadTimeoutMS);
+            operationSuccess = imageParser.FetchImageAsBase64(urlTextBox.Text, 10000);
 
             if (operationSuccess == false)
             {
@@ -75,8 +59,8 @@ namespace CSharpTextEditor
                 return;
             }
 
-            imageWidthInput.Value = PixelsToMM(imageParser.width, dpiX);
-            imageHeightInput.Value = PixelsToMM(imageParser.height, dpiY);
+            imageWidthInput.Value = imageParser.width;
+            imageHeightInput.Value = imageParser.height;
             imageWidthInput.Enabled = true;
             imageHeightInput.Enabled = true;
             outputHTMLInternal = imageParser.outputString;
@@ -106,7 +90,7 @@ namespace CSharpTextEditor
             {
                 StringBuilder sb = new StringBuilder(outputHTMLInternal);
                 sb.Remove(0, 4);
-                sb.Insert(0, "<img width=\"" + MMToPixels(imageWidthInput.Value, dpiX).ToString() + "\" height=\"" + MMToPixels(imageHeightInput.Value, dpiY) + "\" ");
+                sb.Insert(0, "<img width=\"" + imageWidthInput.Text + "\" height=\"" + imageHeightInput.Text + "\" ");
                 outputHTMLInternal = sb.ToString();
                 DialogResult = DialogResult.OK;
             }
