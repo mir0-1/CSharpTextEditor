@@ -12,6 +12,7 @@ namespace CSharpTextEditor
     {
         private HtmlDocument document;
         private HtmlElement activePageSection;
+        private HtmlElement prevActivePageSection =  null;
 
         public PageManager(HtmlDocument document)
         {
@@ -26,6 +27,32 @@ namespace CSharpTextEditor
             return activePageSection;
         }
 
+        public void UpdateHeadersFooters()
+        {
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+
+            if (globalPageContainer == null)
+                return;
+
+            bool isHeader = IsHeaderSection(activePageSection);
+            bool isFooter = IsFooterSection(activePageSection);
+
+            if (!isHeader && !isFooter)
+                return;
+
+            if (isHeader)
+            {
+                foreach (HtmlElement pageContainer in globalPageContainer.Children)
+                {
+                    HtmlElement header = GetPageContainerHeader(pageContainer);
+                    if (header != null && header != activePageSection)
+                    {
+                        header.InnerHtml = activePageSection.InnerHtml;
+                    }
+                }
+            }
+        }
+
         public HtmlElement GetGlobalPageContainer()
         {
             foreach (HtmlElement element in document.Body.Children)
@@ -35,6 +62,38 @@ namespace CSharpTextEditor
             }
 
             return null;
+        }
+
+        public HtmlElement GetPageContainerHeader(HtmlElement pageContainer)
+        {
+            if (pageContainer == null || pageContainer.Children == null || pageContainer.Children.Count == 0)
+                return null;
+
+            return pageContainer.Children[0];
+        }
+
+        public bool IsHeaderSection(HtmlElement pageSection)
+        {
+            if (pageSection == null)
+                return false;
+
+            return ElementIsClass(pageSection, "page-header");
+        }
+
+        public bool IsFooterSection(HtmlElement pageSection)
+        {
+            if (pageSection == null)
+                return false;
+
+            return ElementIsClass(pageSection, "page-footer");
+        }
+
+        public HtmlElement GetPageContainerFooter(HtmlElement pageContainer)
+        {
+            if (pageContainer == null || pageContainer.Children == null || pageContainer.Children.Count < 3)
+                return null;
+
+            return pageContainer.Children[2];
         }
 
         public bool IsActivePageSection(HtmlElement htmlElement)
@@ -75,7 +134,12 @@ namespace CSharpTextEditor
         public HtmlElement GetIthPageContainer(int index)
         {
             int i = 0;
-            foreach (HtmlElement element in GetGlobalPageContainer().Children)
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+
+            if (globalPageContainer == null)
+                return null;
+
+            foreach (HtmlElement element in globalPageContainer.Children)
             {
                 if (IsPageContainer(element))
                     i++;
@@ -92,7 +156,14 @@ namespace CSharpTextEditor
             if (!IsPageSection(newPage))
                 return false;
 
+            if (Object.ReferenceEquals(prevActivePageSection, activePageSection) && activePageSection != null && prevActivePageSection != null)
+            {
+                //UpdateHeadersFooters();
+            }
+
             activePageSection = newPage;
+            prevActivePageSection = activePageSection;
+
             return true;
         }
 
@@ -146,8 +217,8 @@ namespace CSharpTextEditor
                 return;
 
 
-            ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterEnd",
-                    "<div class=\"page-container\">" +
+            ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend",
+                            "<div class=\"page-container\">" +
                                 "<div class=\"page-section page-header\">" +
                                 "</div>" +
                                 "<div class=\"page-section page-body\">" +

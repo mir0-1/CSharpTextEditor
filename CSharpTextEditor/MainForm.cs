@@ -36,22 +36,25 @@ namespace CSharpTextEditor
                 "<style>" +
                 ".page-body {" +
                     "padding: 1cm;" +
+                    "height: 300px;" +
                 "}" +
                 ".page-header {" +
+                    "height: 300px;" +
                     "border-bottom: 2px dotted blue;" +
                 "}" +
                 ".page-footer {" +
+                    "height: 300px;" +
                     "border-top: 2px dotted blue;" +
                 "}" +
                 ".page-container {" +
-                    "margin: 100px;" +
-                    "background-color: white;" +
+                    "margin-top: 100px;" +
+                    "background-color: red;" +
+                    "width: 300px;"+
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
                     "padding: 1cm;" + // make changeable
-                    //"margin: 30px;" +
-                    "height: 300px;" + // as well
+                                      //"margin: 30px;" +
                     "overflow-y: auto;" +
                     "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
@@ -71,7 +74,7 @@ namespace CSharpTextEditor
                                 "<div class=\"page-section page-header\">" +
                                 "</div>" +
                                 "<div class=\"page-section page-body\">" +
-                                "</div>"+
+                                "</div>" +
                                 "<div class=\"page-section page-footer\">" +
                                 "</div>" +
                             "</div>" +

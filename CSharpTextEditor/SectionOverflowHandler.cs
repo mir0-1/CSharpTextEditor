@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CSharpTextEditor
 {
-    class ElementOverflowHandler
+    class SectionOverflowHandler
     {
         public static void Execute(HtmlElement htmlElement)
         {

@@ -140,7 +140,7 @@ namespace CSharpTextEditor
                 range.pasteHTML("");
                 caret.Show(1);
 
-                ElementOverflowHandler.Execute(activePage);
+                SectionOverflowHandler.Execute(activePage);
             }
         }
 
@@ -162,7 +162,7 @@ namespace CSharpTextEditor
 
                     range.pasteHTML(content);
 
-                    ElementOverflowHandler.Execute(page);
+                    SectionOverflowHandler.Execute(page);
                     return;
                 }
 
@@ -228,7 +228,7 @@ namespace CSharpTextEditor
                     range.pasteHTML("<br>&#8203;");
             }
 
-            ElementOverflowHandler.Execute(page);
+            SectionOverflowHandler.Execute(page);
         }
 
         public void FontDialogBtn_Click(object sender, EventArgs e)
