@@ -30,6 +30,7 @@ namespace CSharpTextEditor
             this.BringToFront();
             this.Focus();
             HtmlViewer.DocumentText =
+                "<!DOCTYPE html>" +
                 "<html>" +
                 "<head>" +
                 "<meta charset=\"utf=8\">" +
@@ -47,18 +48,20 @@ namespace CSharpTextEditor
                     "border-top: 2px dotted blue;" +
                 "}" +
                 ".page-container {" +
-                    "margin-top: 100px;" +
                     "background-color: red;" +
-                    "width: 300px;"+
+                    "width: 300px;" +
+                    "margin: 0 auto;" +
+                    "margin-top: 100px;" +
+                    "text-align: center;" +
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
-                    "padding: 1cm;" + // make changeable
-                                      //"margin: 30px;" +
+                    "padding: 1cm;" +
                     "overflow-y: auto;" +
                     "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
+                    "text-align: left;" +
                 "}" + // best to isоlate the style string
                 ".global-pages-container {" +
                     "position: relative;" +
