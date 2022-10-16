@@ -38,6 +38,7 @@ namespace CSharpTextEditor
         private const char VK_DOWNARROW = (char)0x28;
         private const char VK_LEFTARROW = (char)0x25;
         private const char VK_RIGHTARROW = (char)0x27;
+        private const char VK_SPACE = (char)0x2D;
 
         private HtmlDocument document;
         private PageManager pageManager;
@@ -46,8 +47,6 @@ namespace CSharpTextEditor
         private CustomFontDialog fontDialog = new CustomFontDialog();
         private ImageInsertDialogForm dialogForm;
         private PageSearchDialog pageSearchDialog;
-
-        private bool doubleArrowInputBugFixFlag = true;
 
         public InputManager(HtmlDocument document, float dpiX, float dpiY)
         {
@@ -181,24 +180,18 @@ namespace CSharpTextEditor
                         VerticalMoveCaret(CaretMoveVertDirection.DOWN);
                         break;
                     case VK_LEFTARROW:
-                        if (doubleArrowInputBugFixFlag)
-                        {
-                            doubleArrowInputBugFixFlag = false;
-                            return;
-                        }
-
-                        doubleArrowInputBugFixFlag = true;
                         HorizontalMoveCaret(CaretMoveHorDirection.BACKWARDS);
                         break;
                     case VK_RIGHTARROW:
-                        if (doubleArrowInputBugFixFlag)
+                        HorizontalMoveCaret(CaretMoveHorDirection.FORWARD);
+                        break;
+                    case VK_SPACE:
+                        if (domEditGuard.CanEditTextSafely(range))
                         {
-                            doubleArrowInputBugFixFlag = false;
+                            range.pasteHTML("&#160;");
+                            e.IsInputKey = false;
                             return;
                         }
-
-                        doubleArrowInputBugFixFlag = true;
-                        HorizontalMoveCaret(CaretMoveHorDirection.FORWARD);
                         break;
                 }
 
@@ -217,9 +210,7 @@ namespace CSharpTextEditor
             {
                 if (!isEnter)
                 {
-                    if (isSpace)
-                        range.pasteHTML("&#160;");
-                    else
+                    if (!isSpace)
                         range.pasteHTML(keyCode.ToString());
 
                     caret.Show(1);

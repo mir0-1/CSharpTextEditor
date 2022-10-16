@@ -37,19 +37,19 @@ namespace CSharpTextEditor
                 "<style>" +
                 ".page-body {" +
                     "padding: 1cm;" +
-                    "height: 300px;" +
+                    "height: 222.75mm;" +
                 "}" +
                 ".page-header {" +
-                    "height: 300px;" +
+                    "height: 37.125mm;" +
                     "border-bottom: 2px dotted blue;" +
                 "}" +
                 ".page-footer {" +
-                    "height: 300px;" +
+                    "height: 37.125mm;" +
                     "border-top: 2px dotted blue;" +
                 "}" +
                 ".page-container {" +
                     "background-color: red;" +
-                    "width: 300px;" +
+                    "width: 210mm;" +
                     "margin: 0 auto;" +
                     "margin-top: 100px;" +
                     "text-align: center;" +
@@ -152,5 +152,6 @@ namespace CSharpTextEditor
         {
             inputManager.PageSearchBtn_Click(sender, e);
         }
+
     }
 }
