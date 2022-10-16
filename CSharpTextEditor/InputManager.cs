@@ -20,6 +20,13 @@ namespace CSharpTextEditor
         private IHTMLTxtRange range;
         private IDisplayPointer display;
 
+        private const char VK_BACKSPACE = (char)0x08;
+        private const char VK_DELETE = (char)0x2E;
+        private const char VK_UPARROW = (char)0x26;
+        private const char VK_DOWNARROW = (char)0x28;
+        private const char VK_LEFTARROW = (char)0x25;
+        private const char VK_RIGHTARROW = (char)0x27;
+
         private HtmlDocument document;
         private PageContainer pageContainer;
         private DomEditGuard domEditGuard;
@@ -75,34 +82,16 @@ namespace CSharpTextEditor
         public void OnKeyPreview(object sender, PreviewKeyDownEventArgs e)
         {
             char keyCode = (char)e.KeyCode;
-            bool isBackspace = (keyCode == (char)8);
             bool isPaste = Control.ModifierKeys.HasFlag(Keys.Control) && keyCode == 'V';
-            bool isUpArrow = (keyCode == (char)0x26);
-            bool isDownArrow = (keyCode == (char)0x28);
-            bool isLeftArrow = (keyCode == (char)0x25);
-            bool isRightArrow = (keyCode == (char)0x27);
-            bool isDelete = (keyCode == (char)0x2E);
+
+            IHTMLTextRangeMetrics metrics = null;
+            Point p;
 
             HtmlElement page = pageContainer.GetActivePage();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
-                if (isBackspace)
-                {
-                    if (range.compareEndPoints("StartToEnd", range) != -1)
-                        range.moveStart("character", -1);
-
-                    range.select();
-
-                    if (domEditGuard.CanEditTextSafely(range))
-                    {
-                        range.pasteHTML("");
-                        caret.Show(1);
-
-                        ElementOverflowHandler.Execute(page);
-                    }
-                }
-                else if (isPaste)
+                if (isPaste)
                 {
                     string content = clipboardFilter.GetFilteredContent();
 
@@ -112,77 +101,88 @@ namespace CSharpTextEditor
                     range.pasteHTML(content);
 
                     ElementOverflowHandler.Execute(page);
-
+                    return;
                 }
-                else if (isUpArrow)
-                {
-                    Point p;
-                    GetCaretPos(out p);
-                    range.select();
 
-                    IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
-                    range.moveToPoint(p.X, metrics.boundingTop - 3);
-                    range.select();
-                    caret.Show(1);
-                }
-                else if (isDownArrow)
+                switch (keyCode)
                 {
-                    Point p;
-                    GetCaretPos(out p);
-                    range.select();
+                    case VK_BACKSPACE:
+                        if (range.compareEndPoints("StartToEnd", range) != -1)
+                            range.moveStart("character", -1);
 
-                    IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
-                    range.moveToPoint(p.X, metrics.boundingTop + metrics.boundingHeight + 3);
-                    range.select();
-                    caret.Show(1);
-                }
-                else if (isLeftArrow)
-                {
-                    if (doubleArrowInputBugFixFlag)
-                    {
-                        doubleArrowInputBugFixFlag = false;
-                        return;
-                    }
+                        range.select();
 
-                    doubleArrowInputBugFixFlag = true;
-                    range.move("character", -1);
-                    if (domEditGuard.CanEditTextSafely(range))
-                    {
+                        if (domEditGuard.CanEditTextSafely(range))
+                        {
+                            range.pasteHTML("");
+                            caret.Show(1);
+
+                            ElementOverflowHandler.Execute(page);
+                        }
+                        break;
+                    case VK_DELETE: // VK_DELETE
+                        if (range.compareEndPoints("StartToEnd", range) != -1)
+                            range.moveEnd("character", 1);
+
+                        range.select();
+
+                        if (domEditGuard.CanEditTextSafely(range))
+                        {
+                            range.pasteHTML("");
+                            caret.Show(1);
+
+                            ElementOverflowHandler.Execute(page);
+                        }
+                        break;
+                    case VK_UPARROW:
+                        GetCaretPos(out p);
+                        range.select();
+;
+                        metrics = (IHTMLTextRangeMetrics)range;
+                        range.moveToPoint(p.X, metrics.boundingTop - 3);
                         range.select();
                         caret.Show(1);
-                    }
-                }
-                else if (isRightArrow)
-                {
-                    if (doubleArrowInputBugFixFlag)
-                    {
-                        doubleArrowInputBugFixFlag = false;
-                        return;
-                    }
+                        break;
+                    case VK_DOWNARROW:
+                        GetCaretPos(out p);
+                        range.select();
 
-                    doubleArrowInputBugFixFlag = true;
-
-                    range.move("character", 1);
-                    if (domEditGuard.CanEditTextSafely(range))
-                    {
+                        metrics = (IHTMLTextRangeMetrics)range;
+                        range.moveToPoint(p.X, metrics.boundingTop + metrics.boundingHeight + 3);
                         range.select();
                         caret.Show(1);
-                    }
-                }
-                else if (isDelete)
-                {
-                    if (range.compareEndPoints("StartToEnd", range) != -1)
-                        range.moveEnd("character", 1);
+                        break;
+                    case VK_LEFTARROW:
+                        if (doubleArrowInputBugFixFlag)
+                        {
+                            doubleArrowInputBugFixFlag = false;
+                            return;
+                        }
 
-                    range.select();
+                        doubleArrowInputBugFixFlag = true;
+                        range.move("character", -1);
+                        if (domEditGuard.CanEditTextSafely(range))
+                        {
+                            range.select();
+                            caret.Show(1);
+                        }
+                        break;
+                    case VK_RIGHTARROW:
+                        if (doubleArrowInputBugFixFlag)
+                        {
+                            doubleArrowInputBugFixFlag = false;
+                            return;
+                        }
 
-                    if (domEditGuard.CanEditTextSafely(range))
-                    {
-                        range.pasteHTML("");
-                        caret.Show(1);
+                        doubleArrowInputBugFixFlag = true;
 
-                        ElementOverflowHandler.Execute(page);
-                    }
+                        range.move("character", 1);
+                        if (domEditGuard.CanEditTextSafely(range))
+                        {
+                            range.select();
+                            caret.Show(1);
+                        }
+                        break;
                 }
 
             }
