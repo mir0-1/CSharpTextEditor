@@ -102,5 +102,11 @@ namespace CSharpTextEditor
         {
             inputManager.InsertImageBtn_DoubleClick(sender, e);
         }
+
+        private void MainForm_DoubleClick(object sender, EventArgs e)
+        {
+            CustomFontDialog customFontDialog = new CustomFontDialog();
+            customFontDialog.ShowDialog();
+        }
     }
 }

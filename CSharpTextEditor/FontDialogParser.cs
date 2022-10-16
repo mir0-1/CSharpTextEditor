@@ -42,16 +42,35 @@ namespace CSharpTextEditor
 
         private static string ColorAsHTML(Color color)
         {
-            return String.Format("color=#{0:x2}{1:x2}{2:x2};", color.R, color.G, color.B);
+            return String.Format("color=#{0:x2}{1:x2}{2:x2}", color.R, color.G, color.B);
         }
 
-        public static string GetFormattedHTMLString(FontDialog fontDialog, string target)
+        private static string TextAlignAsHTML(TextAlign textAlign)
         {
+            switch (textAlign)
+            {
+                case TextAlign.DEFAULT: return null;
+                case TextAlign.CENTER: return "text-align: center; width: 100%";
+                case TextAlign.LEFT: return "text-align: left; width: 100%";
+                case TextAlign.RIGHT: return "text-align: right; width: 100%";
+            }
+
+            return null;
+        }
+
+        public static string GetFormattedHTMLString(CustomFontDialog fontDialog, string target)
+        {
+            string textAlign = TextAlignAsHTML(fontDialog.textAlign);
 
             string style = "style=\"font-family:" + fontDialog.Font.Name + ";" +
                             FontStyleAsHTML(fontDialog.Font.Style) +
                             ColorAsHTML(fontDialog.Color) + ";" +
-                            "font-size: " + fontDialog.Font.SizeInPoints + "pt;\"";
+                            "font-size: " + fontDialog.Font.SizeInPoints + "pt;";
+
+            if (textAlign != null)
+                style += textAlign;
+
+            style += ";\"";
 
             return "<span " + style + ">" + target + "</span>";
         }

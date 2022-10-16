@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClipboardHTMLFilter.cs" />
+    <Compile Include="CustomFontDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DomEditGuard.cs" />
     <Compile Include="ImageInsertDialogForm.cs">
       <SubType>Form</SubType>
@@ -66,7 +69,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FontDialogParser.cs" />
-    <Compile Include="ImageConverter.cs" />
+    <Compile Include="ImageParser.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="PageContainer.cs" />
     <Compile Include="ElementOverflowHandler.cs" />

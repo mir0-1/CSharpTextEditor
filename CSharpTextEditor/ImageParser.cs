@@ -8,13 +8,13 @@ using System.IO;
 
 namespace CSharpTextEditor
 {
-    class ImageConverter
+    class ImageParser
     {
         private static bool bOnce = false;
         private static HttpClient httpClient = new HttpClient(new HttpClientHandler() { UseProxy = false, Proxy = null, MaxResponseHeadersLength = 10000 });
         private HttpResponseMessage lastResponse;
 
-        public ImageConverter()
+        public ImageParser()
         {
             if (!bOnce)
             {

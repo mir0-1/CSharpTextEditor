@@ -19,7 +19,7 @@ namespace CSharpTextEditor
         private PageContainer pageContainer;
         private DomEditGuard domEditGuard;
         private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
-        private FontDialog fontDialog = new FontDialog();
+        private CustomFontDialog fontDialog = new CustomFontDialog();
 
         public InputManager(HtmlDocument document)
         {
@@ -71,7 +71,7 @@ namespace CSharpTextEditor
 
             HtmlElement page = pageContainer.GetActivePage();
 
-            if (domEditGuard.CanInsertTextSafely(range))
+            if (domEditGuard.CanEditTextSafely(range))
             {
                 if (isBackspace)
                 {
@@ -79,10 +79,14 @@ namespace CSharpTextEditor
                         range.moveStart("character", -1);
 
                     range.select();
-                    range.pasteHTML("");
-                    caret.Show(1);
 
-                    ElementOverflowHandler.Execute(page);
+                    if (domEditGuard.CanEditTextSafely(range))
+                    {
+                        range.pasteHTML("");
+                        caret.Show(1);
+
+                        ElementOverflowHandler.Execute(page);
+                    }
                 }
                 else if (isPaste)
                 {
@@ -106,7 +110,7 @@ namespace CSharpTextEditor
 
             HtmlElement page = pageContainer.GetActivePage();
 
-            if (domEditGuard.CanInsertTextSafely(range))
+            if (domEditGuard.CanEditTextSafely(range))
             {
                 if (!isEnter)
                 {
@@ -129,7 +133,7 @@ namespace CSharpTextEditor
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
                 string html = FontDialogParser.GetFormattedHTMLString(fontDialog, range.text);
-                if (domEditGuard.CanInsertTextSafely(range))
+                if (domEditGuard.CanEditTextSafely(range))
                     range.pasteHTML(html);
             }
         }
@@ -137,7 +141,7 @@ namespace CSharpTextEditor
         public void InsertImageBtn_DoubleClick(object sender, EventArgs e)
         {
             ImageInsertDialogForm dialogForm = new ImageInsertDialogForm();
-            if (dialogForm.ShowDialog() == DialogResult.OK && domEditGuard.CanInsertTextSafely(range))
+            if (dialogForm.ShowDialog() == DialogResult.OK && domEditGuard.CanEditTextSafely(range))
             {
                 range.pasteHTML(dialogForm.result);
             }

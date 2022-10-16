@@ -31,15 +31,15 @@
             this.components = new System.ComponentModel.Container();
             this.HtmlViewer = new System.Windows.Forms.WebBrowser();
             this.pagePanel = new System.Windows.Forms.Panel();
-            this.generalToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.insertImageBtn = new System.Windows.Forms.Button();
-            this.fontDialogBtn = new System.Windows.Forms.Button();
-            this.overflowPageBtn = new System.Windows.Forms.Button();
             this.insertPageBtn = new System.Windows.Forms.Button();
             this.pageSettingsButton = new System.Windows.Forms.Button();
             this.deletePageBtn = new System.Windows.Forms.Button();
             this.togglePageBtn = new System.Windows.Forms.Button();
+            this.generalToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.insertImageBtn = new System.Windows.Forms.Button();
+            this.fontDialogBtn = new System.Windows.Forms.Button();
+            this.overflowPageBtn = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pagePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -70,54 +70,6 @@
             this.pagePanel.Name = "pagePanel";
             this.pagePanel.Size = new System.Drawing.Size(309, 74);
             this.pagePanel.TabIndex = 6;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.insertImageBtn);
-            this.panel1.Controls.Add(this.fontDialogBtn);
-            this.panel1.Location = new System.Drawing.Point(12, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 77);
-            this.panel1.TabIndex = 7;
-            // 
-            // insertImageBtn
-            // 
-            this.insertImageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.add_image;
-            this.insertImageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.insertImageBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.insertImageBtn.Location = new System.Drawing.Point(80, 3);
-            this.insertImageBtn.Name = "insertImageBtn";
-            this.insertImageBtn.Size = new System.Drawing.Size(71, 71);
-            this.insertImageBtn.TabIndex = 7;
-            this.generalToolTip.SetToolTip(this.insertImageBtn, "Вмъкване на изображение");
-            this.insertImageBtn.UseVisualStyleBackColor = true;
-            this.insertImageBtn.Click += new System.EventHandler(this.InsertImageBtn_Click);
-            // 
-            // fontDialogBtn
-            // 
-            this.fontDialogBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.font_format_v5;
-            this.fontDialogBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.fontDialogBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.fontDialogBtn.Location = new System.Drawing.Point(3, 3);
-            this.fontDialogBtn.Name = "fontDialogBtn";
-            this.fontDialogBtn.Size = new System.Drawing.Size(71, 71);
-            this.fontDialogBtn.TabIndex = 6;
-            this.generalToolTip.SetToolTip(this.fontDialogBtn, "Основно форматиране");
-            this.fontDialogBtn.UseVisualStyleBackColor = true;
-            this.fontDialogBtn.Click += new System.EventHandler(this.FontDialogBtn_Click);
-            // 
-            // overflowPageBtn
-            // 
-            this.overflowPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.overflowPageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.page_overflow_v2_inactive;
-            this.overflowPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.overflowPageBtn.Enabled = false;
-            this.overflowPageBtn.Location = new System.Drawing.Point(717, 4);
-            this.overflowPageBtn.Name = "overflowPageBtn";
-            this.overflowPageBtn.Size = new System.Drawing.Size(71, 71);
-            this.overflowPageBtn.TabIndex = 6;
-            this.generalToolTip.SetToolTip(this.overflowPageBtn, "Преглеждане на препълнените страници");
-            this.overflowPageBtn.UseVisualStyleBackColor = true;
             // 
             // insertPageBtn
             // 
@@ -164,6 +116,54 @@
             this.generalToolTip.SetToolTip(this.togglePageBtn, "Превключване на видимостта");
             this.togglePageBtn.UseVisualStyleBackColor = true;
             // 
+            // insertImageBtn
+            // 
+            this.insertImageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.add_image;
+            this.insertImageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.insertImageBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.insertImageBtn.Location = new System.Drawing.Point(80, 3);
+            this.insertImageBtn.Name = "insertImageBtn";
+            this.insertImageBtn.Size = new System.Drawing.Size(71, 71);
+            this.insertImageBtn.TabIndex = 7;
+            this.generalToolTip.SetToolTip(this.insertImageBtn, "Вмъкване на изображение");
+            this.insertImageBtn.UseVisualStyleBackColor = true;
+            this.insertImageBtn.Click += new System.EventHandler(this.InsertImageBtn_Click);
+            // 
+            // fontDialogBtn
+            // 
+            this.fontDialogBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.font_format_v5;
+            this.fontDialogBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.fontDialogBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.fontDialogBtn.Location = new System.Drawing.Point(3, 3);
+            this.fontDialogBtn.Name = "fontDialogBtn";
+            this.fontDialogBtn.Size = new System.Drawing.Size(71, 71);
+            this.fontDialogBtn.TabIndex = 6;
+            this.generalToolTip.SetToolTip(this.fontDialogBtn, "Основно форматиране");
+            this.fontDialogBtn.UseVisualStyleBackColor = true;
+            this.fontDialogBtn.Click += new System.EventHandler(this.FontDialogBtn_Click);
+            // 
+            // overflowPageBtn
+            // 
+            this.overflowPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.overflowPageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.page_overflow_v2_inactive;
+            this.overflowPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.overflowPageBtn.Enabled = false;
+            this.overflowPageBtn.Location = new System.Drawing.Point(717, 4);
+            this.overflowPageBtn.Name = "overflowPageBtn";
+            this.overflowPageBtn.Size = new System.Drawing.Size(71, 71);
+            this.overflowPageBtn.TabIndex = 6;
+            this.generalToolTip.SetToolTip(this.overflowPageBtn, "Преглеждане на препълнените страници");
+            this.overflowPageBtn.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.insertImageBtn);
+            this.panel1.Controls.Add(this.fontDialogBtn);
+            this.panel1.Location = new System.Drawing.Point(12, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(186, 77);
+            this.panel1.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,6 +177,7 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.DoubleClick += new System.EventHandler(this.MainForm_DoubleClick);
             this.pagePanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

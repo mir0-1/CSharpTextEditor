@@ -87,6 +87,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Вмъкване на изображение";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.ImageInsertDialogForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

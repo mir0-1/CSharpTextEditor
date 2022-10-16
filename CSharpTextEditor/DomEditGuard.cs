@@ -16,7 +16,7 @@ namespace CSharpTextEditor
             this.pageContainer = pageContainer;
         }
 
-        public bool CanInsertTextSafely(IHTMLTxtRange range)
+        public bool CanEditTextSafely(IHTMLTxtRange range)
         {
             if (range == null)
                 return false;

@@ -13,7 +13,7 @@ namespace CSharpTextEditor
     public partial class ImageInsertDialogForm : Form
     {
         private OpenFileDialog fileDialog = new OpenFileDialog();
-        private ImageConverter imageConverter = new ImageConverter();
+        private ImageParser imageParser = new ImageParser();
         public string result;
 
         public ImageInsertDialogForm()
@@ -32,12 +32,17 @@ namespace CSharpTextEditor
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            result = imageConverter.FetchImageAsBase64(urlTextBox.Text, 10000);
+            result = imageParser.FetchImageAsBase64(urlTextBox.Text, 10000);
 
             if (result != null)
                 DialogResult = DialogResult.OK;
             else
                 DialogResult = DialogResult.Abort;
+        }
+
+        private void ImageInsertDialogForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
