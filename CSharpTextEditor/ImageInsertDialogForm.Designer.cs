@@ -62,11 +62,11 @@
             // 
             // applyButton
             // 
-            this.applyButton.Location = new System.Drawing.Point(160, 225);
+            this.applyButton.Location = new System.Drawing.Point(126, 225);
             this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(81, 34);
+            this.applyButton.Size = new System.Drawing.Size(149, 34);
             this.applyButton.TabIndex = 2;
-            this.applyButton.Text = "Приложи";
+            this.applyButton.Text = "Промени ширина/дължина";
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             // 

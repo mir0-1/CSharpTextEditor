@@ -44,7 +44,17 @@ namespace CSharpTextEditor
         }
         private static bool IsLocalPath(string p)
         {
-            return new Uri(p).IsFile;
+            bool result = false;
+            try
+            {
+                result = new Uri(p).IsFile;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return result;
         }
 
         public bool FetchImageAsBase64(string url, int timeout)
@@ -59,7 +69,7 @@ namespace CSharpTextEditor
                 Task<byte[]> t = Task.Run(() => DownloadImageInternal(url));
                 t.Wait(timeout);
 
-                if (!t.IsCompleted)
+                if (!t.IsCompleted || t.Result == null)
                     return false;
 
                 resultBytes = t.Result;
