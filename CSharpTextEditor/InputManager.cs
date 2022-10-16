@@ -81,6 +81,7 @@ namespace CSharpTextEditor
             bool isDownArrow = (keyCode == (char)0x28);
             bool isLeftArrow = (keyCode == (char)0x25);
             bool isRightArrow = (keyCode == (char)0x27);
+            bool isDelete = (keyCode == (char)0x2E);
 
             HtmlElement page = pageContainer.GetActivePage();
 
@@ -166,6 +167,21 @@ namespace CSharpTextEditor
                     {
                         range.select();
                         caret.Show(1);
+                    }
+                }
+                else if (isDelete)
+                {
+                    if (range.compareEndPoints("StartToEnd", range) != -1)
+                        range.moveEnd("character", 1);
+
+                    range.select();
+
+                    if (domEditGuard.CanEditTextSafely(range))
+                    {
+                        range.pasteHTML("");
+                        caret.Show(1);
+
+                        ElementOverflowHandler.Execute(page);
                     }
                 }
 
