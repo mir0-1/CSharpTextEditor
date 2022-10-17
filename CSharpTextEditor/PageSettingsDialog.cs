@@ -38,6 +38,9 @@ namespace CSharpTextEditor
             footerHeightInput.Value = pageManager.footerHeightInt;
             bodyHeightInput.Value = pageManager.bodyHeightInt;
             pageWidthInput.Value = pageManager.pageWidthInt;
+
+            headerCheckbox.Checked = pageManager.headerEnabledBool;
+            footerCheckbox.Checked = pageManager.footerEnabledBool;
         }
 
         private void HeightControls_ValueChanged(Object sender, EventArgs e)

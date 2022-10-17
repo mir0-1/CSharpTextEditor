@@ -12,6 +12,7 @@ namespace CSharpTextEditor
     {
         private GeneralPageManager pageManager;
         private SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private OpenFileDialog openFileDialog = new OpenFileDialog();
 
         public DocFileIOManager(GeneralPageManager pageManager)
         {
@@ -19,9 +20,12 @@ namespace CSharpTextEditor
 
             saveFileDialog.Filter = "XML Document | *.xml";
             saveFileDialog.DefaultExt = "xml";
+
+            openFileDialog.Filter = saveFileDialog.Filter;
+            openFileDialog.DefaultExt = saveFileDialog.DefaultExt;
         }
 
-        public void Save()
+        public void SaveToFile()
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -73,6 +77,41 @@ namespace CSharpTextEditor
 
                 doc.Root.Add(globalPageContainer);
                 doc.Save(saveFileDialog.FileName);
+            }
+        }
+
+        public void OpenFromFile()
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                XDocument doc = XDocument.Load(openFileDialog.FileName);
+                XElement docMeta = doc.Root.Element("DocMeta");
+
+                int headerHeight = Int32.Parse(docMeta.Element("HeaderHeight").Value);
+                int bodyHeight = Int32.Parse(docMeta.Element("BodyHeight").Value);
+                int footerHeight = Int32.Parse(docMeta.Element("FooterHeight").Value);
+                int pageContainerWidth = Int32.Parse(docMeta.Element("PageContainerWidth").Value);
+
+                bool headerEnabled = Boolean.Parse(docMeta.Element("HeaderEnabled").Value);
+                bool footerEnabled = Boolean.Parse(docMeta.Element("FooterEnabled").Value);
+
+                pageManager.UpdateGlobalPageStyles(
+                        headerHeight,
+                        bodyHeight,
+                        footerHeight,
+                        pageContainerWidth,
+                        headerEnabled,
+                        footerEnabled
+               );
+
+                /*XElement headerXML = docMeta.Element("HeaderContents");
+                XElement footerXML = docMeta.Element("FooterContents");
+                XElement globalPageContainerXML = doc.Root.Element("GlobalPageContainer");
+
+                HtmlElement globalPageContainer = pageManager.GetGlobalPageContainer();
+
+                XNode pageContainerIterator = globalPageContainerXML.FirstNode;*/
+
             }
         }
     }

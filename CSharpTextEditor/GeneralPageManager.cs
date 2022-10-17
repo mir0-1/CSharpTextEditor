@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
+using System.Text.RegularExpressions;
 
 namespace CSharpTextEditor
 {
@@ -24,11 +25,11 @@ namespace CSharpTextEditor
 
         public string headerCss
         {
-            get => headerEnabled ? "height:" + headerHeight + "mm;" : "display:none;";
+            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "display:none;display:none;";
         }
         public string footerCss
         {
-            get => footerEnabled ? "height:" + footerHeight + "mm;" : "display:none;";
+            get => footerEnabled ? ("height:" + footerHeight + "mm;") : "display:none;display:none;";
         }
         public string bodyCss
         {
@@ -275,6 +276,16 @@ namespace CSharpTextEditor
             return null;
         }
 
+        string ReplaceFirst(string text, string search, string replace)
+        {
+            int pos = text.IndexOf(search);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
+
         public void InsertPageAfterActive()
         {
             if (activePageSection == null)
@@ -301,6 +312,9 @@ namespace CSharpTextEditor
 
         public void UpdateGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled)
         {
+            this.headerEnabled = headerEnabled;
+            this.footerEnabled = footerEnabled;
+
             if (headerEnabled)
                 this.headerHeight = headerHeight;
 
@@ -309,9 +323,6 @@ namespace CSharpTextEditor
 
             this.bodyHeight = bodyHeight;
             this.pageWidth = pageWidth;
-
-            this.headerEnabled = headerEnabled;
-            this.footerEnabled = footerEnabled;
 
             if (document == null)
                 return;
@@ -324,10 +335,13 @@ namespace CSharpTextEditor
             foreach (HtmlElement pageContainer in globalPageContainer.Children)
             {
                 HtmlElement header = GetPageContainerHeader(pageContainer);
-                header.Style = headerCss;
+                // бъг с header.Style, алтернатива:
+                header.SetAttribute("_style", headerCss);
+                header.OuterHtml = ReplaceFirst(header.OuterHtml, "_style", "style");
 
                 HtmlElement footer = GetPageContainerFooter(pageContainer);
-                footer.Style = footerCss;
+                header.SetAttribute("_style", footerCss);
+                footer.OuterHtml = footer.OuterHtml.Replace("_style", "style");
 
                 HtmlElement body = GetPageContainerBody(pageContainer);
                 body.Style = bodyCss;

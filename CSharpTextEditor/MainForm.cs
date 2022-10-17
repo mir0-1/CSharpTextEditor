@@ -50,8 +50,8 @@ namespace CSharpTextEditor
                 ".page-container {" +
                     "background-color: red;" +
                     "width: 210mm;" +
-                    "margin: 0 auto;" +
                     "margin-top: 100px;" +
+                    "margin: 0 auto;" +
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
@@ -60,6 +60,7 @@ namespace CSharpTextEditor
                     "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
+                    "width: 100%;" +
                 "}" + // best to isоlate the style string
                 ".global-pages-container {" +
                     "position: relative;" +
@@ -71,7 +72,7 @@ namespace CSharpTextEditor
                 "</style>" +
                 "</head>" +
                 "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
-                    "<div class=\"editguard global-page-container\">" +
+                         "<div class=\"editguard global-page-container\">" +
                             "<div class=\"page-container\">" +
                                     "<div class=\"page-section page-header\">" +
                                     "</div>" +
@@ -160,6 +161,11 @@ namespace CSharpTextEditor
         private void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
             ioManager.SaveAsMenuItem_Click(sender, e);
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            ioManager.OpenMenuItem_Click(sender, e);
         }
     }
 }

@@ -267,7 +267,12 @@ namespace CSharpTextEditor
 
         public void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
-            docIoManager.Save();
+            docIoManager.SaveToFile();
+        }
+
+        public void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            docIoManager.OpenFromFile();
         }
     }
 }

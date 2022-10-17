@@ -204,6 +204,7 @@
             this.openMenuItem.Name = "openMenuItem";
             this.openMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openMenuItem.Text = "Отвори...";
+            this.openMenuItem.Click += new System.EventHandler(this.OpenMenuItem_Click);
             // 
             // saveAsMenuItem
             // 
