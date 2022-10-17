@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace CSharpTextEditor
 {
-    class InputManager
+    class GeneralIOManager
     {
         [DllImport("user32")]
         private extern static int GetCaretPos(out Point p);
@@ -19,6 +19,8 @@ namespace CSharpTextEditor
         private IHTMLCaret caret;
         private IHTMLTxtRange range;
         private IDisplayPointer display;
+
+        private bool bOnce = false;
 
         private enum CaretMoveHorDirection
         {
@@ -48,8 +50,9 @@ namespace CSharpTextEditor
         private ImageInsertDialogForm dialogForm;
         private PageSearchDialog pageSearchDialog;
         private PageSettingsDialog pageSettingsDialog;
+        private DocFileIOManager docIoManager;
 
-        public InputManager(HtmlDocument document, float dpiX, float dpiY)
+        public GeneralIOManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
             pageManager = new GeneralPageManager(document);
@@ -57,6 +60,7 @@ namespace CSharpTextEditor
             dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
             pageSearchDialog = new PageSearchDialog(pageManager, (IHTMLDocument2)document.DomDocument);
             pageSettingsDialog = new PageSettingsDialog(pageManager);
+            docIoManager = new DocFileIOManager(pageManager);
 
             fontDialog.AllowVerticalFonts = false;
             fontDialog.FontMustExist = true;
@@ -79,7 +83,11 @@ namespace CSharpTextEditor
             range = doc.selection.createRange();
             range.select();
 
-            ((IDisplayServices)doc).CreateDisplayPointer(out display);
+            if (bOnce == false)
+            {
+                ((IDisplayServices)doc).CreateDisplayPointer(out display);
+                bOnce = true;
+            }
 
             uint result;
             tagPOINT point;
@@ -255,6 +263,11 @@ namespace CSharpTextEditor
                                                     pageSettingsDialog.headerEnabled,
                                                     pageSettingsDialog.footerEnabled);
             }
+        }
+
+        public void SaveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            docIoManager.Save();
         }
     }
 }

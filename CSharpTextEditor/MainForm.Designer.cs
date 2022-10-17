@@ -40,8 +40,14 @@
             this.fontDialogBtn = new System.Windows.Forms.Button();
             this.overflowPageBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagePanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // HtmlViewer
@@ -51,10 +57,10 @@
             this.HtmlViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.HtmlViewer.Location = new System.Drawing.Point(12, 81);
+            this.HtmlViewer.Location = new System.Drawing.Point(12, 110);
             this.HtmlViewer.MinimumSize = new System.Drawing.Size(20, 20);
             this.HtmlViewer.Name = "HtmlViewer";
-            this.HtmlViewer.Size = new System.Drawing.Size(776, 357);
+            this.HtmlViewer.Size = new System.Drawing.Size(776, 353);
             this.HtmlViewer.TabIndex = 0;
             this.HtmlViewer.WebBrowserShortcutsEnabled = false;
             this.HtmlViewer.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.HtmlViewer_DocumentCompleted);
@@ -67,7 +73,7 @@
             this.pagePanel.Controls.Add(this.pageSettingsButton);
             this.pagePanel.Controls.Add(this.deletePageBtn);
             this.pagePanel.Controls.Add(this.pageSearchBtn);
-            this.pagePanel.Location = new System.Drawing.Point(353, 1);
+            this.pagePanel.Location = new System.Drawing.Point(359, 27);
             this.pagePanel.Name = "pagePanel";
             this.pagePanel.Size = new System.Drawing.Size(309, 74);
             this.pagePanel.TabIndex = 6;
@@ -151,7 +157,7 @@
             this.overflowPageBtn.BackgroundImage = global::CSharpTextEditor.Properties.Resources.page_overflow_v2_inactive;
             this.overflowPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.overflowPageBtn.Enabled = false;
-            this.overflowPageBtn.Location = new System.Drawing.Point(717, 4);
+            this.overflowPageBtn.Location = new System.Drawing.Point(717, 27);
             this.overflowPageBtn.Name = "overflowPageBtn";
             this.overflowPageBtn.Size = new System.Drawing.Size(71, 71);
             this.overflowPageBtn.TabIndex = 6;
@@ -162,10 +168,49 @@
             // 
             this.panel1.Controls.Add(this.insertImageBtn);
             this.panel1.Controls.Add(this.fontDialogBtn);
-            this.panel1.Location = new System.Drawing.Point(12, 4);
+            this.panel1.Location = new System.Drawing.Point(12, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(158, 77);
             this.panel1.TabIndex = 7;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.файлToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newMenuItem,
+            this.openMenuItem,
+            this.saveAsMenuItem});
+            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // newMenuItem
+            // 
+            this.newMenuItem.Name = "newMenuItem";
+            this.newMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newMenuItem.Text = "Нов";
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.Name = "openMenuItem";
+            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openMenuItem.Text = "Отвори...";
+            // 
+            // saveAsMenuItem
+            // 
+            this.saveAsMenuItem.Name = "saveAsMenuItem";
+            this.saveAsMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsMenuItem.Text = "Запиши като...";
+            this.saveAsMenuItem.Click += new System.EventHandler(this.SaveAsMenuItem_Click);
             // 
             // MainForm
             // 
@@ -176,14 +221,19 @@
             this.Controls.Add(this.overflowPageBtn);
             this.Controls.Add(this.pagePanel);
             this.Controls.Add(this.HtmlViewer);
+            this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Тесктообработващ редактор";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.DoubleClick += new System.EventHandler(this.MainForm_DoubleClick);
             this.pagePanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -200,6 +250,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button fontDialogBtn;
         private System.Windows.Forms.Button insertImageBtn;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsMenuItem;
     }
 }
 

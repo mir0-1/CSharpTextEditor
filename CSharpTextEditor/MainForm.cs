@@ -18,7 +18,7 @@ namespace CSharpTextEditor
         private bool bCompleted = false;
         private bool bOnce = false;
 
-        private InputManager inputManager;
+        private GeneralIOManager ioManager;
 
         public MainForm()
         {
@@ -52,7 +52,6 @@ namespace CSharpTextEditor
                     "width: 210mm;" +
                     "margin: 0 auto;" +
                     "margin-top: 100px;" +
-                    "text-align: center;" +
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
@@ -61,10 +60,10 @@ namespace CSharpTextEditor
                     "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
-                    "text-align: left;" +
                 "}" + // best to isоlate the style string
                 ".global-pages-container {" +
                     "position: relative;" +
+                    "text-align: center" +
                 "}" +
                 ".editguard {" +
                     "-ms-user-select: none;" +
@@ -105,7 +104,7 @@ namespace CSharpTextEditor
                     g.Dispose();
                 }
 
-                inputManager = new InputManager(HtmlViewer.Document, dpiX, dpiY);
+                ioManager = new GeneralIOManager(HtmlViewer.Document, dpiX, dpiY);
 
                 HtmlViewer.Document.Click += OnDocumentGlobalClick;
                 HtmlViewer.Document.Body.KeyPress += OnKeyDown;
@@ -115,32 +114,32 @@ namespace CSharpTextEditor
 
         private void InsertPageBtn_Click(object sender, EventArgs e)
         {
-            inputManager.InsertPageBtn_Click(sender, e);
+            ioManager.InsertPageBtn_Click(sender, e);
         }
 
         private void HtmlViewer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            inputManager.OnKeyPreview(sender, e);
+            ioManager.OnKeyPreview(sender, e);
         }
 
         public void OnKeyDown(object sender, HtmlElementEventArgs e)
         {
-            inputManager.OnKeyPress(sender, e);
+            ioManager.OnKeyPress(sender, e);
         }
 
         private void OnDocumentGlobalClick(object sender, HtmlElementEventArgs e)
         {
-            inputManager.OnDocumentGlobalClick(sender, e);
+            ioManager.OnDocumentGlobalClick(sender, e);
         }
 
         private void FontDialogBtn_Click(object sender, EventArgs e)
         {
-            inputManager.FontDialogBtn_Click(sender, e);
+            ioManager.FontDialogBtn_Click(sender, e);
         }
 
         private void InsertImageBtn_Click(object sender, EventArgs e)
         {
-            inputManager.InsertImageBtn_Click(sender, e);
+            ioManager.InsertImageBtn_Click(sender, e);
         }
 
         private void MainForm_DoubleClick(object sender, EventArgs e)
@@ -150,12 +149,17 @@ namespace CSharpTextEditor
 
         private void PageSearchBtn_Click(object sender, EventArgs e)
         {
-            inputManager.PageSearchBtn_Click(sender, e);
+            ioManager.PageSearchBtn_Click(sender, e);
         }
 
         private void PageSettingsButton_Click(object sender, EventArgs e)
         {
-            inputManager.PageSettingsButton_Click(sender, e);
+            ioManager.PageSettingsButton_Click(sender, e);
+        }
+
+        private void SaveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            ioManager.SaveAsMenuItem_Click(sender, e);
         }
     }
 }

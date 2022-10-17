@@ -50,9 +50,9 @@ namespace CSharpTextEditor
             switch (textAlign)
             {
                 case TextAlign.DEFAULT: return null;
-                case TextAlign.CENTER: return "text-align: center; width: 100%";
-                case TextAlign.LEFT: return "text-align: left; width: 100%";
-                case TextAlign.RIGHT: return "text-align: right; width: 100%";
+                case TextAlign.CENTER: return "text-align: center; width: 100%; display:block";
+                case TextAlign.LEFT: return "text-align: left; width: 100%; display:block";
+                case TextAlign.RIGHT: return "text-align: right; width: 100%; display:block";
             }
 
             return null;

@@ -58,6 +58,15 @@ namespace CSharpTextEditor
             get => pageWidth;
         }
 
+        public bool headerEnabledBool
+        {
+            get => headerEnabled;
+        }
+        public bool footerEnabledBool
+        {
+            get => footerEnabled;
+        }
+
         public GeneralPageManager(HtmlDocument document)
         {
             this.document = document;
