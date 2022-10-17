@@ -96,7 +96,7 @@ namespace CSharpTextEditor
                 bool headerEnabled = Boolean.Parse(docMeta.Element("HeaderEnabled").Value);
                 bool footerEnabled = Boolean.Parse(docMeta.Element("FooterEnabled").Value);
 
-                pageManager.UpdateGlobalPageStyles(
+                pageManager.SetGlobalPageStyles(
                         headerHeight,
                         bodyHeight,
                         footerHeight,
@@ -130,14 +130,7 @@ namespace CSharpTextEditor
 
                 globalPageContainer.InnerHtml = readPageContainers.ToString();
 
-                pageManager.UpdateGlobalPageStyles(
-                        headerHeight,
-                        bodyHeight,
-                        footerHeight,
-                        pageContainerWidth,
-                        headerEnabled,
-                        footerEnabled
-                );
+                pageManager.RefreshGlobalPageStyles();
             }
         }
     }

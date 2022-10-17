@@ -256,12 +256,14 @@ namespace CSharpTextEditor
         {
             if (pageSettingsDialog.ShowDialog() == DialogResult.OK)
             {
-                pageManager.UpdateGlobalPageStyles(pageSettingsDialog.headerHeight, 
+                
+                pageManager.SetGlobalPageStyles(pageSettingsDialog.headerHeight, 
                                                     pageSettingsDialog.bodyHeight, 
                                                     pageSettingsDialog.footerHeight, 
                                                     pageSettingsDialog.pageWidth,
                                                     pageSettingsDialog.headerEnabled,
                                                     pageSettingsDialog.footerEnabled);
+                pageManager.RefreshGlobalPageStyles();
             }
         }
 

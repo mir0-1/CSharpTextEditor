@@ -42,10 +42,12 @@ namespace CSharpTextEditor
                 ".page-header {" +
                     "height: 37mm;" +
                     "border-bottom: 2px dotted;" +
+                    "overflow-x: hidden;" + 
                 "}" +
                 ".page-footer {" +
                     "height: 37mm;" +
                     "border-top: 2px dotted;" +
+                    "overflow-x: hidden;" +
                 "}" +
                 ".page-container {" +
                     "background-color: red;" +
@@ -57,7 +59,6 @@ namespace CSharpTextEditor
                     "position: relative;" +
                     "padding: 1cm;" +
                     "overflow-y: auto;" +
-                    "overflow-x: hidden;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
                     "width: 100%;" +

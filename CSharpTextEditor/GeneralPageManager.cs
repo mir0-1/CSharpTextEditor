@@ -25,7 +25,7 @@ namespace CSharpTextEditor
 
         public string headerCss
         {
-            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0";
         }
         public string footerCss
         {
@@ -310,7 +310,7 @@ namespace CSharpTextEditor
                             "</div>");
         }
 
-        public void UpdateGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled)
+        public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled)
         {
             this.headerEnabled = headerEnabled;
             this.footerEnabled = footerEnabled;
@@ -323,7 +323,10 @@ namespace CSharpTextEditor
 
             this.bodyHeight = bodyHeight;
             this.pageWidth = pageWidth;
+        }
 
+        public void RefreshGlobalPageStyles()
+        {
             if (document == null)
                 return;
 
@@ -335,7 +338,6 @@ namespace CSharpTextEditor
             foreach (HtmlElement pageContainer in globalPageContainer.Children)
             {
                 HtmlElement header = GetPageContainerHeader(pageContainer);
-                // бъг с header.Style, алтернатива:
                 header.Style = headerCss;
 
                 HtmlElement footer = GetPageContainerFooter(pageContainer);
