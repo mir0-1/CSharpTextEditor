@@ -35,6 +35,8 @@ namespace CSharpTextEditor
                 if (anyPageContainer == null)
                     return;
 
+                pageManager.SyncHeadersFootersContent();
+
                 HtmlElement header = pageManager.GetPageContainerHeader(anyPageContainer);
                 HtmlElement footer = pageManager.GetPageContainerFooter(anyPageContainer);
 

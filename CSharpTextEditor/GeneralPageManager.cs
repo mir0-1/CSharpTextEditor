@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iText.Html2pdf;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using mshtml;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
 
 namespace CSharpTextEditor
 {
@@ -32,11 +36,11 @@ namespace CSharpTextEditor
 
         public string headerCss
         {
-            get => headerEnabled ? ("height:" + UnitConverter.MMToPixels(headerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => headerEnabled ? ("height:" + UnitConverter.MMToPixels(headerHeightMM, dpiY) + "px;page-break-inside:avoid;page-break-before:avoid;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string footerCss
         {
-            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;page-break-inside:avoid;page-break-before:avoid;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string bodyCss
         {
@@ -195,7 +199,23 @@ namespace CSharpTextEditor
 
         public void GeneratePDF()
         {
+            ConverterProperties properties = new ConverterProperties();
+
+            IList<IElement> elements = HtmlConverter.ConvertToElements(activePageSection.Document.Body.InnerHtml, properties);
+            PdfDocument pdf = new PdfDocument(new PdfWriter("output.pdf"));
+            pdf.SetTagged();
             
+            
+
+            Document document = new Document(pdf, new PageSize(pageWidth * 0.0394f *72f, (headerHeight + bodyHeight +footerHeight)* 0.0394f * 72f));
+            document.SetMargins(0, 0, 0, 0);
+
+            foreach (IElement element in elements)
+            {
+                document.Add((IBlockElement)element);
+            }
+            document.Close();
+
         }
 
         public bool IsFooterSection(HtmlElement pageSection)

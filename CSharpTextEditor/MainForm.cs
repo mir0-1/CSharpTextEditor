@@ -10,8 +10,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using mshtml;
 using System.Text.RegularExpressions;
-using PdfSharp;
-using PdfSharp.Pdf;
 
 namespace CSharpTextEditor
 {

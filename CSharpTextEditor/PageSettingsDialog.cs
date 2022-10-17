@@ -42,6 +42,7 @@ namespace CSharpTextEditor
 
             headerCheckbox.Checked = pageManager.headerEnabledBool;
             footerCheckbox.Checked = pageManager.footerEnabledBool;
+            showBordersCheckbox.Checked = pageManager.bordersEnabledBool;
         }
 
         private void HeightControls_ValueChanged(Object sender, EventArgs e)

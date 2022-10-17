@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Drawing;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace CSharpTextEditor
 {

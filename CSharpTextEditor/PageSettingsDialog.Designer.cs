@@ -169,7 +169,7 @@
             // 
             // pageWidthInput
             // 
-            this.pageWidthInput.Location = new System.Drawing.Point(157, 28);
+            this.pageWidthInput.Location = new System.Drawing.Point(6, 29);
             this.pageWidthInput.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -223,7 +223,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 263);
+            this.ClientSize = new System.Drawing.Size(509, 274);
             this.Controls.Add(this.showBordersCheckbox);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.totalPageWidthGroupBox);
