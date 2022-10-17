@@ -168,5 +168,10 @@ namespace CSharpTextEditor
         {
             ioManager.OpenMenuItem_Click(sender, e);
         }
+
+        private void DeletePageBtn_Click(object sender, EventArgs e)
+        {
+            ioManager.DeletePageBtn_Click(sender, e);
+        }
     }
 }

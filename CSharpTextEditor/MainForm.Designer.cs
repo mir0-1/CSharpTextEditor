@@ -112,6 +112,7 @@
             this.deletePageBtn.TabIndex = 3;
             this.generalToolTip.SetToolTip(this.deletePageBtn, "Изтриване на активната страница");
             this.deletePageBtn.UseVisualStyleBackColor = true;
+            this.deletePageBtn.Click += new System.EventHandler(this.DeletePageBtn_Click);
             // 
             // pageSearchBtn
             // 
@@ -196,20 +197,20 @@
             // newMenuItem
             // 
             this.newMenuItem.Name = "newMenuItem";
-            this.newMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newMenuItem.Size = new System.Drawing.Size(155, 22);
             this.newMenuItem.Text = "Нов";
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openMenuItem.Text = "Отвори...";
             this.openMenuItem.Click += new System.EventHandler(this.OpenMenuItem_Click);
             // 
             // saveAsMenuItem
             // 
             this.saveAsMenuItem.Name = "saveAsMenuItem";
-            this.saveAsMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsMenuItem.Size = new System.Drawing.Size(155, 22);
             this.saveAsMenuItem.Text = "Запиши като...";
             this.saveAsMenuItem.Click += new System.EventHandler(this.SaveAsMenuItem_Click);
             // 

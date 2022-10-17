@@ -81,6 +81,26 @@ namespace CSharpTextEditor
             return activePageSection;
         }
 
+        public void DeleteActivePage()
+        {
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+
+            if (globalPageContainer == null || globalPageContainer.Children == null || globalPageContainer.Children.Count <= 1)
+                return;
+
+            HtmlElement pageSection = GetActivePageSection();
+
+            if (pageSection == null)
+                return;
+
+            HtmlElement pageContainer = GetPageContainerFromContent(pageSection);
+
+            if (pageContainer == null)
+                return;
+
+            DeletePageContainer(pageContainer);
+        }
+
         public void SyncHeadersFootersContent()
         {
             HtmlElement globalPageContainer = GetGlobalPageContainer();
@@ -276,14 +296,13 @@ namespace CSharpTextEditor
             return null;
         }
 
-        string ReplaceFirst(string text, string search, string replace)
+        public void DeletePageContainer(HtmlElement element)
         {
-            int pos = text.IndexOf(search);
-            if (pos < 0)
-            {
-                return text;
-            }
-            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+            if (element == null)
+                return;
+
+            if (IsPageContainer(element))
+                element.OuterHtml = "";
         }
 
         public void InsertPageAfterActive()

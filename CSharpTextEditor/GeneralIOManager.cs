@@ -276,5 +276,9 @@ namespace CSharpTextEditor
         {
             docIoManager.OpenFromFile();
         }
+        public void DeletePageBtn_Click(object sender, EventArgs e)
+        {
+            pageManager.DeleteActivePage();
+        }
     }
 }
