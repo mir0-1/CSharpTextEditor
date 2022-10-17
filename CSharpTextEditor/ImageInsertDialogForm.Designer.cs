@@ -153,7 +153,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Вмъкване на изображение";
-            this.Load += new System.EventHandler(this.ImageInsertDialogForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageWidthInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageHeightInput)).EndInit();
             this.ResumeLayout(false);

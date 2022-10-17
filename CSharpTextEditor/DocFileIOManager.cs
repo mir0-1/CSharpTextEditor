@@ -50,12 +50,13 @@ namespace CSharpTextEditor
                 XDocument doc = new XDocument(
                     new XElement("Root",
                         new XElement("DocMeta",
-                            new XElement("HeaderHeight", pageManager.headerHeightInt),
-                            new XElement("FooterHeight", pageManager.footerHeightInt),
-                            new XElement("BodyHeight", pageManager.bodyHeightInt),
-                            new XElement("PageContainerWidth", pageManager.pageWidthInt),
+                            new XElement("HeaderHeight", pageManager.headerHeightMM),
+                            new XElement("FooterHeight", pageManager.footerHeightMM),
+                            new XElement("BodyHeight", pageManager.bodyHeightMM),
+                            new XElement("PageContainerWidth", pageManager.pageWidthMM),
                             new XElement("HeaderEnabled", pageManager.headerEnabledBool),
                             new XElement("FooterEnabled", pageManager.footerEnabledBool),
+                            new XElement("BordersEnabled", pageManager.bordersEnabledBool),
                             new XElement("HeaderContents", header.InnerHtml),
                             new XElement("FooterContents", footer.InnerHtml)
                         )
@@ -95,6 +96,7 @@ namespace CSharpTextEditor
 
                 bool headerEnabled = Boolean.Parse(docMeta.Element("HeaderEnabled").Value);
                 bool footerEnabled = Boolean.Parse(docMeta.Element("FooterEnabled").Value);
+                bool bordersEnabled = Boolean.Parse(docMeta.Element("BordersEnabled").Value);
 
                 pageManager.SetGlobalPageStyles(
                         headerHeight,
@@ -102,7 +104,8 @@ namespace CSharpTextEditor
                         footerHeight,
                         pageContainerWidth,
                         headerEnabled,
-                        footerEnabled
+                        footerEnabled,
+                        bordersEnabled
                );
 
                 XElement headerXML = docMeta.Element("HeaderContents");
@@ -117,14 +120,7 @@ namespace CSharpTextEditor
 
                 while (pageContainerIterator != null)
                 {
-                    readPageContainers.Append("<div class=\"page-container\">" +
-                                "<div class=\"page-section page-header\" style=\"" + pageManager.headerCss + "\">" + headerXML.Value +
-                                "</div>" +
-                                "<div class=\"page-section page-body\" style=\"" + pageManager.bodyCss + "\">" + ((XElement)pageContainerIterator).Value +
-                                "</div>" +
-                                "<div class=\"page-section page-footer\" style=\"" + pageManager.footerCss + "\">" + footerXML.Value +
-                                "</div>" +
-                            "</div>");
+                    readPageContainers.Append(pageManager.CreatePageHTMLWithContent(headerXML.Value, ((XElement)pageContainerIterator).Value, footerXML.Value));
                     pageContainerIterator = pageContainerIterator.NextNode;
                 }
 

@@ -21,6 +21,7 @@ namespace CSharpTextEditor
 
         public bool headerEnabled;
         public bool footerEnabled;
+        public bool bordersEnabled;
 
         public PageSettingsDialog(GeneralPageManager pageManager)
         {
@@ -34,10 +35,10 @@ namespace CSharpTextEditor
             footerHeightInput.ValueChanged += HeightControls_ValueChanged;
             bodyHeightInput.ValueChanged += HeightControls_ValueChanged;
 
-            headerHeightInput.Value = pageManager.headerHeightInt;
-            footerHeightInput.Value = pageManager.footerHeightInt;
-            bodyHeightInput.Value = pageManager.bodyHeightInt;
-            pageWidthInput.Value = pageManager.pageWidthInt;
+            headerHeightInput.Value = pageManager.headerHeightMM;
+            footerHeightInput.Value = pageManager.footerHeightMM;
+            bodyHeightInput.Value = pageManager.bodyHeightMM;
+            pageWidthInput.Value = pageManager.pageWidthMM;
 
             headerCheckbox.Checked = pageManager.headerEnabledBool;
             footerCheckbox.Checked = pageManager.footerEnabledBool;
@@ -70,6 +71,7 @@ namespace CSharpTextEditor
 
             headerEnabled = headerCheckbox.Checked;
             footerEnabled = footerCheckbox.Checked;
+            bordersEnabled = showBordersCheckbox.Checked;
 
             DialogResult = DialogResult.OK;
         }

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace CSharpTextEditor
 {
@@ -55,7 +56,7 @@ namespace CSharpTextEditor
         public GeneralIOManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
-            pageManager = new GeneralPageManager(document);
+            pageManager = new GeneralPageManager(document, dpiX, dpiY);
             domEditGuard = new DomEditGuard(pageManager);
             dialogForm = new ImageInsertDialogForm(dpiX, dpiY);
             pageSearchDialog = new PageSearchDialog(pageManager, (IHTMLDocument2)document.DomDocument);
@@ -134,15 +135,15 @@ namespace CSharpTextEditor
 
         private void CaretDeleteSelection(CaretMoveHorDirection direction, HtmlElement activePage)
         {
-            if (range.compareEndPoints("StartToEnd", range) != -1)
+            if (domEditGuard.CanEditTextSafely(range))
             {
                 if (direction == CaretMoveHorDirection.FORWARD)
                     range.moveEnd("character", 1);
                 else
                     range.moveStart("character", -1);
-            }
 
-            range.select();
+                range.select();
+            }
 
             if (domEditGuard.CanEditTextSafely(range))
             {
@@ -262,9 +263,15 @@ namespace CSharpTextEditor
                                                     pageSettingsDialog.footerHeight, 
                                                     pageSettingsDialog.pageWidth,
                                                     pageSettingsDialog.headerEnabled,
-                                                    pageSettingsDialog.footerEnabled);
+                                                    pageSettingsDialog.footerEnabled,
+                                                    pageSettingsDialog.bordersEnabled);
                 pageManager.RefreshGlobalPageStyles();
             }
+        }
+
+        public void MainForm_DoubleClick(object sender, EventArgs e)
+        {
+            pageManager.GeneratePDF();
         }
 
         public void SaveAsMenuItem_Click(object sender, EventArgs e)
@@ -279,6 +286,11 @@ namespace CSharpTextEditor
         public void DeletePageBtn_Click(object sender, EventArgs e)
         {
             pageManager.DeleteActivePage();
+        }
+
+        public void NewMenuItem_Click(object sender, EventArgs e)
+        {
+            pageManager.NewPageClearAll();
         }
     }
 }

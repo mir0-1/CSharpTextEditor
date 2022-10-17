@@ -39,6 +39,7 @@
             this.pageWidthInput = new System.Windows.Forms.NumericUpDown();
             this.totalPageWidthGroupBox = new System.Windows.Forms.GroupBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.showBordersCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.headerHeightInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.footerHeightInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bodyHeightInput)).BeginInit();
@@ -191,16 +192,16 @@
             // totalPageWidthGroupBox
             // 
             this.totalPageWidthGroupBox.Controls.Add(this.pageWidthInput);
-            this.totalPageWidthGroupBox.Location = new System.Drawing.Point(28, 134);
+            this.totalPageWidthGroupBox.Location = new System.Drawing.Point(356, 134);
             this.totalPageWidthGroupBox.Name = "totalPageWidthGroupBox";
-            this.totalPageWidthGroupBox.Size = new System.Drawing.Size(451, 66);
+            this.totalPageWidthGroupBox.Size = new System.Drawing.Size(123, 66);
             this.totalPageWidthGroupBox.TabIndex = 9;
             this.totalPageWidthGroupBox.TabStop = false;
             this.totalPageWidthGroupBox.Text = "Обща ширина, mm";
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(202, 218);
+            this.okButton.Location = new System.Drawing.Point(404, 228);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 10;
@@ -208,11 +209,22 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
+            // showBordersCheckbox
+            // 
+            this.showBordersCheckbox.AutoSize = true;
+            this.showBordersCheckbox.Location = new System.Drawing.Point(28, 183);
+            this.showBordersCheckbox.Name = "showBordersCheckbox";
+            this.showBordersCheckbox.Size = new System.Drawing.Size(156, 17);
+            this.showBordersCheckbox.TabIndex = 11;
+            this.showBordersCheckbox.Text = "Очертаване на границите";
+            this.showBordersCheckbox.UseVisualStyleBackColor = true;
+            // 
             // PageSettingsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 263);
+            this.Controls.Add(this.showBordersCheckbox);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.totalPageWidthGroupBox);
             this.Controls.Add(this.totalHeightGroupBox);
@@ -251,5 +263,6 @@
         private System.Windows.Forms.NumericUpDown pageWidthInput;
         private System.Windows.Forms.GroupBox totalPageWidthGroupBox;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.CheckBox showBordersCheckbox;
     }
 }

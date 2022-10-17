@@ -75,18 +75,14 @@ namespace CSharpTextEditor
                 return;
             }
 
-            imageWidthInput.Value = PixelsToMM(imageParser.width, dpiX);
-            imageHeightInput.Value = PixelsToMM(imageParser.height, dpiY);
+            imageWidthInput.Value = UnitConverter.PixelsToMM(imageParser.width, dpiX);
+            imageHeightInput.Value = UnitConverter.PixelsToMM(imageParser.height, dpiY);
             imageWidthInput.Enabled = true;
             imageHeightInput.Enabled = true;
             outputHTMLInternal = imageParser.outputString;
             applyButtonStatus = ApplyButtonStatus.OK;
         }
 
-        private void ImageInsertDialogForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void UrlTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -106,7 +102,7 @@ namespace CSharpTextEditor
             {
                 StringBuilder sb = new StringBuilder(outputHTMLInternal);
                 sb.Remove(0, 4);
-                sb.Insert(0, "<img width=\"" + MMToPixels(imageWidthInput.Value, dpiX).ToString() + "\" height=\"" + MMToPixels(imageHeightInput.Value, dpiY) + "\" ");
+                sb.Insert(0, "<img width=\"" + UnitConverter.MMToPixels(imageWidthInput.Value, dpiX).ToString() + "\" height=\"" + MMToPixels(imageHeightInput.Value, dpiY) + "\" ");
                 outputHTMLInternal = sb.ToString();
                 DialogResult = DialogResult.OK;
             }

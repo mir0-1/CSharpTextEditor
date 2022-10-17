@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using mshtml;
 using System.Text.RegularExpressions;
+using PdfSharp;
+using PdfSharp.Pdf;
 
 namespace CSharpTextEditor
 {
@@ -36,28 +38,24 @@ namespace CSharpTextEditor
                 "<meta charset=\"utf=8\">" +
                 "<style>" +
                 ".page-body {" +
-                    "padding: 1cm;" +
                     "height: 223mm;" +
                 "}" +
                 ".page-header {" +
                     "height: 37mm;" +
-                    "border-bottom: 2px dotted;" +
                     "overflow-x: hidden;" + 
                 "}" +
                 ".page-footer {" +
                     "height: 37mm;" +
-                    "border-top: 2px dotted;" +
                     "overflow-x: hidden;" +
                 "}" +
                 ".page-container {" +
-                    "background-color: red;" +
+                    "background-color: gray;" +
                     "width: 210mm;" +
                     "margin: 0 auto;" +
                     "margin-top: 100px;" +
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
-                    "padding: 1cm;" +
                     "overflow-y: auto;" +
                     "word-wrap: break-word;" +
                     "background-color: white;" +
@@ -74,20 +72,11 @@ namespace CSharpTextEditor
                 "</head>" +
                 "<body style=\"position: relative; background-color: gray; -ms-user-select: none; overflow-x: hidden;\">" +
                          "<div class=\"editguard global-page-container\">" +
-                            "<div class=\"page-container\">" +
-                                    "<div class=\"page-section page-header\">" +
-                                    "</div>" +
-                                    "<div class=\"page-section page-body\">" +
-                                    "</div>" +
-                                    "<div class=\"page-section page-footer\">" +
-                                    "</div>" +
-                            "</div>" +
-                    "</div>" +
+                          "</div>" +
                 "</body>" +
                 "</html>";
 
             bCompleted = true;
-
         }
 
         private void HtmlViewer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -110,6 +99,7 @@ namespace CSharpTextEditor
 
                 HtmlViewer.Document.Click += OnDocumentGlobalClick;
                 HtmlViewer.Document.Body.KeyPress += OnKeyDown;
+                ioManager.NewMenuItem_Click(null, null);
                 bOnce = true;
             }
         }
@@ -146,7 +136,7 @@ namespace CSharpTextEditor
 
         private void MainForm_DoubleClick(object sender, EventArgs e)
         {
-
+            ioManager.MainForm_DoubleClick(sender, e);
         }
 
         private void PageSearchBtn_Click(object sender, EventArgs e)
@@ -172,6 +162,11 @@ namespace CSharpTextEditor
         private void DeletePageBtn_Click(object sender, EventArgs e)
         {
             ioManager.DeletePageBtn_Click(sender, e);
+        }
+
+        private void NewMenuItem_Click(object sender, EventArgs e)
+        {
+            ioManager.NewMenuItem_Click(sender, e);
         }
     }
 }

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
-using System.Text.RegularExpressions;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
 
 namespace CSharpTextEditor
 {
@@ -19,42 +21,47 @@ namespace CSharpTextEditor
         private int footerHeight = 37;
         private int bodyHeight = 223;
         private int pageWidth = 210;
+        private const int padding = 5;
 
         private bool headerEnabled = true;
         private bool footerEnabled = true;
+        private bool bordersEnabled = false;
+
+        private float dpiX;
+        private float dpiY;
 
         public string headerCss
         {
-            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0";
+            get => headerEnabled ? ("height:" + UnitConverter.MMToPixels(headerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string footerCss
         {
-            get => footerEnabled ? ("height:" + footerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string bodyCss
         {
-            get => "height:" + bodyHeight + "mm;";
+            get => "height:" + UnitConverter.MMToPixels(bodyHeightMM, dpiY) + "px;padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";
         }
         public string pageContainerCss
         {
-            get => "width:" + pageWidth + "mm;";
+            get => "width:" + UnitConverter.MMToPixels(pageWidthMM, dpiX) + "px;padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";
         }
 
-        public int headerHeightInt
+        public int headerHeightMM
         {
             get => headerHeight;
         }
 
-        public int footerHeightInt
+        public int footerHeightMM
         {
             get => footerHeight;
         }
 
-        public int bodyHeightInt
+        public int bodyHeightMM
         {
             get => bodyHeight;
         }
-        public int pageWidthInt
+        public int pageWidthMM
         {
             get => pageWidth;
         }
@@ -68,9 +75,16 @@ namespace CSharpTextEditor
             get => footerEnabled;
         }
 
-        public GeneralPageManager(HtmlDocument document)
+        public bool bordersEnabledBool
+        {
+            get => bordersEnabled;
+        }
+
+        public GeneralPageManager(HtmlDocument document, float dpiX, float dpiY)
         {
             this.document = document;
+            this.dpiX = dpiX;
+            this.dpiY = dpiY;
         }
 
         public HtmlElement GetActivePageSection()
@@ -99,6 +113,23 @@ namespace CSharpTextEditor
                 return;
 
             DeletePageContainer(pageContainer);
+        }
+
+        public void DeleteAllPages()
+        {
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+            globalPageContainer.InnerHtml = "";
+        }
+
+        public string GetEmptyPageHTMLTemplate()
+        {
+            return CreatePageHTMLWithContent("", "", "");
+        }
+
+        public void NewPageClearAll()
+        {
+            HtmlElement globalPageContainer = GetGlobalPageContainer();
+            globalPageContainer.InnerHtml = GetEmptyPageHTMLTemplate();
         }
 
         public void SyncHeadersFootersContent()
@@ -160,6 +191,11 @@ namespace CSharpTextEditor
                 return false;
 
             return ElementIsClass(pageSection, "page-header");
+        }
+
+        public void GeneratePDF()
+        {
+            
         }
 
         public bool IsFooterSection(HtmlElement pageSection)
@@ -241,6 +277,27 @@ namespace CSharpTextEditor
             return null;
         }
 
+        public string CreatePageHTMLWithContent(string headerHtml, string bodyHtml, string footerHtml)
+        {
+            if (headerHtml == null)
+                headerHtml = "";
+
+            if (bodyHtml == null)
+                bodyHtml = "";
+
+            if (footerHtml == null)
+                footerHtml = "";
+
+            return "<div class=\"editguard page-container\" style=\"" + pageContainerCss + "\">" +
+                    "<div class=\"page-section page-header\" style=\"" + headerCss + "\">" + headerHtml +
+                    "</div>" +
+                    "<div class=\"page-section page-body\" style=\"" + bodyCss + "\">" + bodyHtml +
+                    "</div>" +
+                    "<div class=\"page-section page-footer\" style=\"" + footerCss + "\">" + footerHtml +
+                    "</div>" +
+                "</div>";
+        }
+
         public bool SetActivePageSection(HtmlElement newPage)
         {
             if (!IsPageSection(newPage))
@@ -318,21 +375,14 @@ namespace CSharpTextEditor
             HtmlElement header = GetPageContainerHeader(activePageContainer);
             HtmlElement footer = GetPageContainerFooter(activePageContainer);
 
-            ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend",
-                            "<div class=\"page-container\">" +
-                                "<div class=\"page-section page-header\" style=\"" + headerCss + "\">" + header.InnerHtml +
-                                "</div>" +
-                                "<div class=\"page-section page-body\" style=\"" + bodyCss + "\">" +
-                                "</div>" +
-                                "<div class=\"page-section page-footer\" style=\"" + footerCss + "\">" + footer.InnerHtml +
-                                "</div>" +
-                            "</div>");
+            ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend", CreatePageHTMLWithContent(header.InnerHtml, "", footer.InnerHtml));
         }
 
-        public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled)
+        public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled, bool bordersEnabled)
         {
             this.headerEnabled = headerEnabled;
             this.footerEnabled = footerEnabled;
+            this.bordersEnabled = bordersEnabled;
 
             if (headerEnabled)
                 this.headerHeight = headerHeight;

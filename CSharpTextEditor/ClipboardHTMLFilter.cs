@@ -28,14 +28,15 @@ namespace CSharpTextEditor
 
         public string GetFilteredContent()
         {
+            string pasted;
             if (filter == null)
-                return null;
+                return Clipboard.GetText(TextDataFormat.Text);
 
-            string pasted = Clipboard.GetText(TextDataFormat.Html);
+            pasted = Clipboard.GetText(TextDataFormat.Html);
             Match prohibited = Regex.Match(pasted, filter, RegexOptions.Singleline);
 
             if (prohibited.Success)
-                return null;
+                return Clipboard.GetText(TextDataFormat.Text);
 
             Match result = Regex.Match(pasted, "<!--StartFragment-->(.*)<!--EndFragment-->", RegexOptions.Singleline);
 
