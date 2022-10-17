@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using mshtml;
 
 namespace CSharpTextEditor
 {
@@ -104,14 +105,39 @@ namespace CSharpTextEditor
                         footerEnabled
                );
 
-                /*XElement headerXML = docMeta.Element("HeaderContents");
+                XElement headerXML = docMeta.Element("HeaderContents");
                 XElement footerXML = docMeta.Element("FooterContents");
                 XElement globalPageContainerXML = doc.Root.Element("GlobalPageContainer");
 
                 HtmlElement globalPageContainer = pageManager.GetGlobalPageContainer();
+                globalPageContainer.InnerHtml = "";
+                StringBuilder readPageContainers = new StringBuilder();
 
-                XNode pageContainerIterator = globalPageContainerXML.FirstNode;*/
+                XNode pageContainerIterator = globalPageContainerXML.FirstNode;
 
+                while (pageContainerIterator != null)
+                {
+                    readPageContainers.Append("<div class=\"page-container\">" +
+                                "<div class=\"page-section page-header\" style=\"" + pageManager.headerCss + "\">" + headerXML.Value +
+                                "</div>" +
+                                "<div class=\"page-section page-body\" style=\"" + pageManager.bodyCss + "\">" + ((XElement)pageContainerIterator).Value +
+                                "</div>" +
+                                "<div class=\"page-section page-footer\" style=\"" + pageManager.footerCss + "\">" + footerXML.Value +
+                                "</div>" +
+                            "</div>");
+                    pageContainerIterator = pageContainerIterator.NextNode;
+                }
+
+                globalPageContainer.InnerHtml = readPageContainers.ToString();
+
+                pageManager.UpdateGlobalPageStyles(
+                        headerHeight,
+                        bodyHeight,
+                        footerHeight,
+                        pageContainerWidth,
+                        headerEnabled,
+                        footerEnabled
+                );
             }
         }
     }

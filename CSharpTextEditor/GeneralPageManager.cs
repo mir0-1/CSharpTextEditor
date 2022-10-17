@@ -25,11 +25,11 @@ namespace CSharpTextEditor
 
         public string headerCss
         {
-            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "display:none;display:none;";
+            get => headerEnabled ? ("height:" + headerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string footerCss
         {
-            get => footerEnabled ? ("height:" + footerHeight + "mm;") : "display:none;display:none;";
+            get => footerEnabled ? ("height:" + footerHeight + "mm;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string bodyCss
         {
@@ -329,19 +329,17 @@ namespace CSharpTextEditor
 
             HtmlElement globalPageContainer = GetGlobalPageContainer();
 
-            if (globalPageContainer == null)
+            if (globalPageContainer == null || globalPageContainer.Children == null || globalPageContainer.Children.Count == 0)
                 return;
 
             foreach (HtmlElement pageContainer in globalPageContainer.Children)
             {
                 HtmlElement header = GetPageContainerHeader(pageContainer);
                 // бъг с header.Style, алтернатива:
-                header.SetAttribute("_style", headerCss);
-                header.OuterHtml = ReplaceFirst(header.OuterHtml, "_style", "style");
+                header.Style = headerCss;
 
                 HtmlElement footer = GetPageContainerFooter(pageContainer);
-                header.SetAttribute("_style", footerCss);
-                footer.OuterHtml = footer.OuterHtml.Replace("_style", "style");
+                footer.Style = footerCss;
 
                 HtmlElement body = GetPageContainerBody(pageContainer);
                 body.Style = bodyCss;

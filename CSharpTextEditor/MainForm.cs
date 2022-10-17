@@ -50,8 +50,8 @@ namespace CSharpTextEditor
                 ".page-container {" +
                     "background-color: red;" +
                     "width: 210mm;" +
-                    "margin-top: 100px;" +
                     "margin: 0 auto;" +
+                    "margin-top: 100px;" +
                 "}" +
                 ".page-section {" +
                     "position: relative;" +
