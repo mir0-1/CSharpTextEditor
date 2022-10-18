@@ -104,7 +104,6 @@ namespace CSharpTextEditor
 
         private void VerticalMoveCaret(CaretMoveVertDirection direction)
         {
-            Point p;
             IHTMLTextRangeMetrics metrics = (IHTMLTextRangeMetrics)range;
             int newY;
 
@@ -113,11 +112,8 @@ namespace CSharpTextEditor
             else
                 newY = metrics.boundingTop + metrics.boundingHeight + 3;
 
-            GetCaretPos(out p);
-            range.select();
-
             metrics = (IHTMLTextRangeMetrics)range;
-            range.moveToPoint(p.X, newY);
+            range.moveToPoint(metrics.boundingLeft, newY);
             range.select();
             caret.Show(1);
         }
