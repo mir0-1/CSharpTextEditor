@@ -40,7 +40,7 @@ namespace CSharpTextEditor
         private const char VK_DOWNARROW = (char)0x28;
         private const char VK_LEFTARROW = (char)0x25;
         private const char VK_RIGHTARROW = (char)0x27;
-        private const char VK_SPACE = (char)0x2D;
+        private const char VK_SPACE = (char)0x20;
 
         private HtmlDocument document;
         private GeneralPageManager pageManager;
@@ -148,8 +148,6 @@ namespace CSharpTextEditor
             {
                 range.pasteHTML("");
                 caret.Show(1);
-
-                SectionOverflowHandler.Execute(activePage);
             }
         }
 
@@ -171,7 +169,6 @@ namespace CSharpTextEditor
 
                     range.pasteHTML(content);
 
-                    SectionOverflowHandler.Execute(page);
                     return;
                 }
 
@@ -208,9 +205,6 @@ namespace CSharpTextEditor
         {
             char keyCode = (char)e.KeyPressedCode;
             bool isEnter = (keyCode == (char)0x0D);
-            bool isSpace = (keyCode == (char)0x20);
-
-            HtmlElement page = pageManager.GetActivePageSection();
 
             if (domEditGuard.CanEditTextSafely(range))
             {
@@ -223,7 +217,6 @@ namespace CSharpTextEditor
                     range.pasteHTML("<br>&#8203;");
             }
 
-            SectionOverflowHandler.Execute(page);
         }
 
         public void FontDialogBtn_Click(object sender, EventArgs e)
@@ -268,7 +261,7 @@ namespace CSharpTextEditor
             }
         }
 
-        public void MainForm_DoubleClick(object sender, EventArgs e)
+        public void PdfExportMenuItem_DoubleClick(object sender, EventArgs e)
         {
             pageManager.GeneratePDF();
         }

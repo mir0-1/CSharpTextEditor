@@ -133,6 +133,10 @@ namespace CSharpTextEditor
         public void NewPageClearAll()
         {
             HtmlElement globalPageContainer = GetGlobalPageContainer();
+
+            if (globalPageContainer == null)
+                return;
+
             globalPageContainer.InnerHtml = GetEmptyPageHTMLTemplate();
         }
 

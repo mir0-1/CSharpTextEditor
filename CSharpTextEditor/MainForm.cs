@@ -19,6 +19,7 @@ namespace CSharpTextEditor
         private bool bOnce = false;
 
         private GeneralIOManager ioManager;
+        private AboutDialog aboutDialog = new AboutDialog();
 
         public MainForm()
         {
@@ -36,14 +37,11 @@ namespace CSharpTextEditor
                 "<meta charset=\"utf=8\">" +
                 "<style>" +
                 ".page-body {" +
-                    "height: 223mm;" +
                 "}" +
                 ".page-header {" +
-                    "height: 37mm;" +
                     "overflow-x: hidden;" + 
                 "}" +
                 ".page-footer {" +
-                    "height: 37mm;" +
                     "overflow-x: hidden;" +
                 "}" +
                 ".page-container {" +
@@ -96,7 +94,7 @@ namespace CSharpTextEditor
                 ioManager = new GeneralIOManager(HtmlViewer.Document, dpiX, dpiY);
 
                 HtmlViewer.Document.Click += OnDocumentGlobalClick;
-                HtmlViewer.Document.Body.KeyPress += OnKeyDown;
+                HtmlViewer.Document.Body.KeyPress += OnKeyPress;
                 ioManager.NewMenuItem_Click(null, null);
                 bOnce = true;
             }
@@ -112,7 +110,7 @@ namespace CSharpTextEditor
             ioManager.OnKeyPreview(sender, e);
         }
 
-        public void OnKeyDown(object sender, HtmlElementEventArgs e)
+        public void OnKeyPress(object sender, HtmlElementEventArgs e)
         {
             ioManager.OnKeyPress(sender, e);
         }
@@ -134,7 +132,7 @@ namespace CSharpTextEditor
 
         private void MainForm_DoubleClick(object sender, EventArgs e)
         {
-            ioManager.MainForm_DoubleClick(sender, e);
+            
         }
 
         private void PageSearchBtn_Click(object sender, EventArgs e)
@@ -165,6 +163,41 @@ namespace CSharpTextEditor
         private void NewMenuItem_Click(object sender, EventArgs e)
         {
             ioManager.NewMenuItem_Click(sender, e);
+        }
+
+        private void InsertImageMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertImageBtn_Click(sender, e);
+        }
+
+        private void AddPageMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertPageBtn_Click(sender, e);
+        }
+
+        private void DeletePageMenuItem_Click(object sender, EventArgs e)
+        {
+            DeletePageBtn_Click(sender, e);
+        }
+
+        private void PageSearchMenuItem_Click(object sender, EventArgs e)
+        {
+            PageSearchBtn_Click(sender, e);
+        }
+
+        private void PageSettingsMenuItem_Click(object sender, EventArgs e)
+        {
+            PageSettingsButton_Click(sender, e);
+        }
+
+        private void PdfExportMenuItem_Click(object sender, EventArgs e)
+        {
+            ioManager.PdfExportMenuItem_DoubleClick(sender, e);
+        }
+
+        private void HelpMenuItem_Click(object sender, EventArgs e)
+        {
+            aboutDialog.ShowDialog();
         }
     }
 }
