@@ -21,76 +21,60 @@ namespace CSharpTextEditor
         private HtmlElement activePageSection;
         private HtmlElement prevActivePageSection =  null;
 
-        private int headerHeight = 37;
-        private int footerHeight = 37;
-        private int bodyHeight = 223;
-        private int pageWidth = 210;
-        private const int padding = 5;
+        private int headerHeightInternal = 140;
+        private int footerHeightInternal = 140;
+        private int bodyHeightInternal = 843;
+        private int pageWidthInternal = 794;
+        private const int xmargins = 94;
+        private const int ymargins = 94;
 
-        private bool headerEnabled = true;
-        private bool footerEnabled = true;
-        private bool bordersEnabled = false;
+        private bool headerEnabledInternal = true;
+        private bool footerEnabledInternal = true;
+        private bool bordersEnabledInternal = false;
 
         private float dpiX;
         private float dpiY;
 
         public string headerCss
         {
-            get
-            {
-                return headerEnabled ?
-                        ("height:" +
-                        UnitConverter.MMToPixels(headerHeightMM, dpiY) +
-                        "px;" +
-                        (bordersEnabled ? "border:1px dashed;" : "") /*+ "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;"*/)
-                        : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
-            }
+             get => headerEnabledInternal ? ("height:" + (headerHeightInternal) + "px;background-color:white;" + 
+                                    (bordersEnabledInternal ? "border:1px dashed;" : "")
+                                    ): "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string footerCss
         {
-            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") /*+ "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;"*/) : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => footerEnabledInternal ? ("height:" + (footerHeightInternal) + "px;background-color:white;" +
+                       (bordersEnabledInternal ? "border:1px dashed;" : "")
+                       ):"position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string bodyCss
         {
-            get => "height:" + UnitConverter.MMToPixels(bodyHeightMM, dpiY) + "px;";/*padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";*/
+            get => "height:" + bodyHeightInternal + "px;background-color:white;";
         }
-        public string pageContainerCss
-        {
-            get => "width:" + UnitConverter.MMToPixels(pageWidthMM, dpiX) + "px;";/*padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";*/
-        }
+        public string pageContainerCss => "background-color:white;width: " +
+                                            (pageWidthInternal) + "px;" +
+                                            "padding-left:" + xmargins + "px;" +
+                                            "padding-top:" + ymargins + "px;" +
+                                            "padding-right:" + xmargins + "px;" +
+                                            "padding-bottom:" + ymargins + "px;";
 
-        public int headerHeightMM
-        {
-            get => headerHeight;
-        }
+        public bool headerEnabledBool => headerEnabledInternal;
+        public bool footerEnabledBool  => footerEnabledInternal;
 
-        public int footerHeightMM
-        {
-            get => footerHeight;
-        }
+        public bool bordersEnabledBool => bordersEnabledInternal;
 
-        public int bodyHeightMM
-        {
-            get => bodyHeight;
-        }
-        public int pageWidthMM
-        {
-            get => pageWidth;
-        }
+        public int headerHeight => headerHeightInternal;
+        public int footerHeight => footerHeightInternal;
+        public int bodyHeight => bodyHeightInternal;
+        public int pageWidth => pageWidthInternal;
 
-        public bool headerEnabledBool
-        {
-            get => headerEnabled;
-        }
-        public bool footerEnabledBool
-        {
-            get => footerEnabled;
-        }
+        public int headerHeightMM => (int)UnitConverter.PixelsToMM(headerHeightInternal, dpiY);
+        public int footerHeightMM => (int)UnitConverter.PixelsToMM(footerHeightInternal, dpiY);
+        public int bodyHeightMM => (int)UnitConverter.PixelsToMM(bodyHeightInternal, dpiY);
+        public int pageWidthMM => (int)UnitConverter.PixelsToMM(pageWidthInternal, dpiX);
+        public int xmarginsMM => (int)UnitConverter.PixelsToMM(xmargins, dpiX);
+        public int ymarginsMM => (int)UnitConverter.PixelsToMM(ymargins, dpiY);
 
-        public bool bordersEnabledBool
-        {
-            get => bordersEnabled;
-        }
 
         public GeneralPageManager(HtmlDocument document, float dpiX, float dpiY)
         {
@@ -217,7 +201,7 @@ namespace CSharpTextEditor
             PdfDocument pdf = new PdfDocument(new PdfWriter("output.pdf"));
             pdf.SetTagged();
 
-            Document document = new Document(pdf, new PageSize(pageWidth * 0.0394f *72f, (headerHeight + bodyHeight + footerHeight)* 0.0394f * 72f));
+            Document document = new Document(pdf, new PageSize((pageWidthMM + 2*xmarginsMM) * 0.0394f *72f, (headerHeightMM + bodyHeightMM + footerHeightMM + 2*ymarginsMM)* 0.0394f * 72f));
             document.SetMargins(0, 0, 0, 0);
 
 
@@ -411,18 +395,18 @@ namespace CSharpTextEditor
 
         public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled, bool bordersEnabled)
         {
-            this.headerEnabled = headerEnabled;
-            this.footerEnabled = footerEnabled;
-            this.bordersEnabled = bordersEnabled;
+            this.headerEnabledInternal = headerEnabled;
+            this.footerEnabledInternal = footerEnabled;
+            this.bordersEnabledInternal = bordersEnabled;
 
             if (headerEnabled)
-                this.headerHeight = headerHeight;
+                this.headerHeightInternal = (int)UnitConverter.MMToPixels(headerHeight, dpiY);
 
             if (footerEnabled)
-                this.footerHeight = footerHeight;
+                this.footerHeightInternal = (int)UnitConverter.MMToPixels(footerHeight, dpiY);
 
-            this.bodyHeight = bodyHeight;
-            this.pageWidth = pageWidth;
+            this.bodyHeightInternal = (int)UnitConverter.MMToPixels(bodyHeight, dpiY);
+            this.pageWidthInternal = (int)UnitConverter.MMToPixels(pageWidth, dpiX);
         }
 
         public void RefreshGlobalPageStyles()

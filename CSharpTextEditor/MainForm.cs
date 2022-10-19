@@ -46,7 +46,6 @@ namespace CSharpTextEditor
                 "}" +
                 ".page-container {" +
                     "background-color: gray;" +
-                    "width: 210mm;" +
                     "margin: 0 auto;" +
                     "margin-top: 100px;" +
                 "}" +
