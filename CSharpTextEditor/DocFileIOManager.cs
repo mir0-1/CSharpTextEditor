@@ -60,7 +60,9 @@ namespace CSharpTextEditor
                             new XElement("FooterEnabled", pageManager.footerEnabledBool),
                             new XElement("BordersEnabled", pageManager.bordersEnabledBool),
                             new XElement("HeaderContents", header.InnerHtml),
-                            new XElement("FooterContents", footer.InnerHtml)
+                            new XElement("FooterContents", footer.InnerHtml),
+                            new XElement("MarginsX", pageManager.xmarginsMM),
+                            new XElement("MarginsY", pageManager.ymarginsMM)
                         )
                     )
                 );
@@ -95,6 +97,8 @@ namespace CSharpTextEditor
                 int bodyHeight = Int32.Parse(docMeta.Element("BodyHeight").Value);
                 int footerHeight = Int32.Parse(docMeta.Element("FooterHeight").Value);
                 int pageContainerWidth = Int32.Parse(docMeta.Element("PageContainerWidth").Value);
+                int marginsX = Int32.Parse(docMeta.Element("MarginsX").Value);
+                int marginsY = Int32.Parse(docMeta.Element("MarginsY").Value);
 
                 bool headerEnabled = Boolean.Parse(docMeta.Element("HeaderEnabled").Value);
                 bool footerEnabled = Boolean.Parse(docMeta.Element("FooterEnabled").Value);
@@ -107,7 +111,9 @@ namespace CSharpTextEditor
                         pageContainerWidth,
                         headerEnabled,
                         footerEnabled,
-                        bordersEnabled
+                        bordersEnabled,
+                        marginsX,
+                        marginsY
                );
 
                 XElement headerXML = docMeta.Element("HeaderContents");

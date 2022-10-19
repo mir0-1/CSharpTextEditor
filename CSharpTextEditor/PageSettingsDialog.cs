@@ -18,6 +18,8 @@ namespace CSharpTextEditor
         public int headerHeight;
         public int footerHeight;
         public int bodyHeight;
+        public int xmargins;
+        public int ymargins;
 
         public bool headerEnabled;
         public bool footerEnabled;
@@ -34,11 +36,15 @@ namespace CSharpTextEditor
             headerHeightInput.ValueChanged += HeightControls_ValueChanged;
             footerHeightInput.ValueChanged += HeightControls_ValueChanged;
             bodyHeightInput.ValueChanged += HeightControls_ValueChanged;
+            marginsInputX.ValueChanged += HeightControls_ValueChanged;
+            marginsInputY.ValueChanged += HeightControls_ValueChanged;
 
             headerHeightInput.Value = pageManager.headerHeightMM;
             footerHeightInput.Value = pageManager.footerHeightMM;
             bodyHeightInput.Value = pageManager.bodyHeightMM;
             pageWidthInput.Value = pageManager.pageWidthMM;
+            marginsInputX.Value = pageManager.xmarginsMM;
+            marginsInputY.Value = pageManager.ymarginsMM;
 
             headerCheckbox.Checked = pageManager.headerEnabledBool;
             footerCheckbox.Checked = pageManager.footerEnabledBool;
@@ -69,6 +75,8 @@ namespace CSharpTextEditor
             headerHeight = (int)headerHeightInput.Value;
             footerHeight = (int)footerHeightInput.Value;
             bodyHeight = (int)bodyHeightInput.Value;
+            xmargins = (int)marginsInputX.Value;
+            ymargins = (int)marginsInputY.Value;
 
             headerEnabled = headerCheckbox.Checked;
             footerEnabled = footerCheckbox.Checked;

@@ -40,12 +40,18 @@
             this.totalPageWidthGroupBox = new System.Windows.Forms.GroupBox();
             this.okButton = new System.Windows.Forms.Button();
             this.showBordersCheckbox = new System.Windows.Forms.CheckBox();
+            this.marginsXLabel = new System.Windows.Forms.Label();
+            this.marginsInputX = new System.Windows.Forms.NumericUpDown();
+            this.marginsYLabel = new System.Windows.Forms.Label();
+            this.marginsInputY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.headerHeightInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.footerHeightInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bodyHeightInput)).BeginInit();
             this.totalHeightGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageWidthInput)).BeginInit();
             this.totalPageWidthGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.marginsInputX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marginsInputY)).BeginInit();
             this.SuspendLayout();
             // 
             // headerCheckbox
@@ -154,15 +160,15 @@
             this.totalHeightGroupBox.Controls.Add(this.totalHeightLabel);
             this.totalHeightGroupBox.Location = new System.Drawing.Point(356, 12);
             this.totalHeightGroupBox.Name = "totalHeightGroupBox";
-            this.totalHeightGroupBox.Size = new System.Drawing.Size(123, 100);
+            this.totalHeightGroupBox.Size = new System.Drawing.Size(155, 100);
             this.totalHeightGroupBox.TabIndex = 6;
             this.totalHeightGroupBox.TabStop = false;
-            this.totalHeightGroupBox.Text = "Обща дължина, mm";
+            this.totalHeightGroupBox.Text = "Дължина без отстъп, mm";
             // 
             // totalHeightLabel
             // 
             this.totalHeightLabel.AutoSize = true;
-            this.totalHeightLabel.Location = new System.Drawing.Point(33, 46);
+            this.totalHeightLabel.Location = new System.Drawing.Point(67, 46);
             this.totalHeightLabel.Name = "totalHeightLabel";
             this.totalHeightLabel.Size = new System.Drawing.Size(0, 13);
             this.totalHeightLabel.TabIndex = 0;
@@ -192,12 +198,12 @@
             // totalPageWidthGroupBox
             // 
             this.totalPageWidthGroupBox.Controls.Add(this.pageWidthInput);
-            this.totalPageWidthGroupBox.Location = new System.Drawing.Point(356, 134);
+            this.totalPageWidthGroupBox.Location = new System.Drawing.Point(356, 148);
             this.totalPageWidthGroupBox.Name = "totalPageWidthGroupBox";
-            this.totalPageWidthGroupBox.Size = new System.Drawing.Size(123, 66);
+            this.totalPageWidthGroupBox.Size = new System.Drawing.Size(155, 66);
             this.totalPageWidthGroupBox.TabIndex = 9;
             this.totalPageWidthGroupBox.TabStop = false;
-            this.totalPageWidthGroupBox.Text = "Обща ширина, mm";
+            this.totalPageWidthGroupBox.Text = "Ширина без отстъп, mm";
             // 
             // okButton
             // 
@@ -212,18 +218,84 @@
             // showBordersCheckbox
             // 
             this.showBordersCheckbox.AutoSize = true;
-            this.showBordersCheckbox.Location = new System.Drawing.Point(28, 183);
+            this.showBordersCheckbox.Location = new System.Drawing.Point(28, 232);
             this.showBordersCheckbox.Name = "showBordersCheckbox";
             this.showBordersCheckbox.Size = new System.Drawing.Size(156, 17);
             this.showBordersCheckbox.TabIndex = 11;
             this.showBordersCheckbox.Text = "Очертаване на границите";
             this.showBordersCheckbox.UseVisualStyleBackColor = true;
             // 
+            // marginsXLabel
+            // 
+            this.marginsXLabel.AutoSize = true;
+            this.marginsXLabel.Location = new System.Drawing.Point(25, 150);
+            this.marginsXLabel.Name = "marginsXLabel";
+            this.marginsXLabel.Size = new System.Drawing.Size(145, 13);
+            this.marginsXLabel.TabIndex = 12;
+            this.marginsXLabel.Text = "Хор. полета за отстъп (mm)";
+            // 
+            // marginsInputX
+            // 
+            this.marginsInputX.Location = new System.Drawing.Point(228, 148);
+            this.marginsInputX.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.marginsInputX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.marginsInputX.Name = "marginsInputX";
+            this.marginsInputX.Size = new System.Drawing.Size(103, 20);
+            this.marginsInputX.TabIndex = 13;
+            this.marginsInputX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // marginsYLabel
+            // 
+            this.marginsYLabel.AutoSize = true;
+            this.marginsYLabel.Location = new System.Drawing.Point(25, 184);
+            this.marginsYLabel.Name = "marginsYLabel";
+            this.marginsYLabel.Size = new System.Drawing.Size(150, 13);
+            this.marginsYLabel.TabIndex = 14;
+            this.marginsYLabel.Text = "Верт. полета за отстъп (mm)";
+            // 
+            // marginsInputY
+            // 
+            this.marginsInputY.Location = new System.Drawing.Point(228, 182);
+            this.marginsInputY.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.marginsInputY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.marginsInputY.Name = "marginsInputY";
+            this.marginsInputY.Size = new System.Drawing.Size(103, 20);
+            this.marginsInputY.TabIndex = 15;
+            this.marginsInputY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // PageSettingsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 274);
+            this.ClientSize = new System.Drawing.Size(550, 274);
+            this.Controls.Add(this.marginsInputY);
+            this.Controls.Add(this.marginsYLabel);
+            this.Controls.Add(this.marginsInputX);
+            this.Controls.Add(this.marginsXLabel);
             this.Controls.Add(this.showBordersCheckbox);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.totalPageWidthGroupBox);
@@ -245,6 +317,8 @@
             this.totalHeightGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageWidthInput)).EndInit();
             this.totalPageWidthGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.marginsInputX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marginsInputY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +338,9 @@
         private System.Windows.Forms.GroupBox totalPageWidthGroupBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.CheckBox showBordersCheckbox;
+        private System.Windows.Forms.Label marginsXLabel;
+        private System.Windows.Forms.NumericUpDown marginsInputX;
+        private System.Windows.Forms.Label marginsYLabel;
+        private System.Windows.Forms.NumericUpDown marginsInputY;
     }
 }

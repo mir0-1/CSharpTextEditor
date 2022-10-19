@@ -25,8 +25,8 @@ namespace CSharpTextEditor
         private int footerHeightInternal = 140;
         private int bodyHeightInternal = 843;
         private int pageWidthInternal = 794;
-        private const int xmargins = 94;
-        private const int ymargins = 94;
+        private int xmarginsInternal = 94;
+        private int ymarginsInternal = 94;
 
         private bool headerEnabledInternal = true;
         private bool footerEnabledInternal = true;
@@ -53,27 +53,27 @@ namespace CSharpTextEditor
         }
         public string pageContainerCss => "background-color:white;width: " +
                                             (pageWidthInternal) + "px;" +
-                                            "padding-left:" + xmargins + "px;" +
-                                            "padding-top:" + ymargins + "px;" +
-                                            "padding-right:" + xmargins + "px;" +
-                                            "padding-bottom:" + ymargins + "px;";
+                                            "padding-left:" + xmarginsInternal + "px;" +
+                                            "padding-top:" + ymarginsInternal + "px;" +
+                                            "padding-right:" + xmarginsInternal + "px;" +
+                                            "padding-bottom:" + ymarginsInternal + "px;";
 
         public bool headerEnabledBool => headerEnabledInternal;
         public bool footerEnabledBool  => footerEnabledInternal;
-
         public bool bordersEnabledBool => bordersEnabledInternal;
-
         public int headerHeight => headerHeightInternal;
         public int footerHeight => footerHeightInternal;
         public int bodyHeight => bodyHeightInternal;
         public int pageWidth => pageWidthInternal;
+        public int xmargins => xmarginsInternal;
+        public int ymargins => ymarginsInternal;
 
         public int headerHeightMM => (int)UnitConverter.PixelsToMM(headerHeightInternal, dpiY);
         public int footerHeightMM => (int)UnitConverter.PixelsToMM(footerHeightInternal, dpiY);
         public int bodyHeightMM => (int)UnitConverter.PixelsToMM(bodyHeightInternal, dpiY);
         public int pageWidthMM => (int)UnitConverter.PixelsToMM(pageWidthInternal, dpiX);
-        public int xmarginsMM => (int)UnitConverter.PixelsToMM(xmargins, dpiX);
-        public int ymarginsMM => (int)UnitConverter.PixelsToMM(ymargins, dpiY);
+        public int xmarginsMM => (int)UnitConverter.PixelsToMM(xmarginsInternal, dpiX);
+        public int ymarginsMM => (int)UnitConverter.PixelsToMM(ymarginsInternal, dpiY);
 
 
         public GeneralPageManager(HtmlDocument document, float dpiX, float dpiY)
@@ -393,11 +393,13 @@ namespace CSharpTextEditor
             ((IHTMLElement)activePageContainer.DomElement).insertAdjacentHTML("afterend", CreatePageHTMLWithContent(header.InnerHtml, "", footer.InnerHtml));
         }
 
-        public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled, bool bordersEnabled)
+        public void SetGlobalPageStyles(int headerHeight, int bodyHeight, int footerHeight, int pageWidth, bool headerEnabled, bool footerEnabled, bool bordersEnabled, int xmargins, int ymargins)
         {
             this.headerEnabledInternal = headerEnabled;
             this.footerEnabledInternal = footerEnabled;
             this.bordersEnabledInternal = bordersEnabled;
+            this.xmarginsInternal = (int)UnitConverter.MMToPixels(xmargins, dpiX);
+            this.ymarginsInternal = (int)UnitConverter.MMToPixels(ymargins, dpiY);
 
             if (headerEnabled)
                 this.headerHeightInternal = (int)UnitConverter.MMToPixels(headerHeight, dpiY);

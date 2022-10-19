@@ -42,7 +42,7 @@ namespace CSharpTextEditor
         {
             InitializeComponent();
 
-            fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.JPEG)|*.BMP;*.JPG;*.JPEG";
+            fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.JPEG; .*PNG)|*.BMP;*.JPG;*.JPEG;*.PNG";
             fileDialog.RestoreDirectory = true;
 
             this.dpiX = dpiX;
@@ -53,16 +53,6 @@ namespace CSharpTextEditor
         {
             if (fileDialog.ShowDialog() == DialogResult.OK)
                 urlTextBox.Text = fileDialog.FileName;
-        }
-
-        private decimal PixelsToMM(int pixel, float dpi)
-        {
-            return (decimal)Math.Round(((float)pixel / dpi) * mmPerInch);
-        }
-
-        private decimal MMToPixels(decimal mm, float dpi)
-        {
-            return (decimal)Math.Round(((float)mm / mmPerInch) * dpi);
         }
 
         private void ApplyButton_Click(object sender, EventArgs e)
@@ -102,7 +92,7 @@ namespace CSharpTextEditor
             {
                 StringBuilder sb = new StringBuilder(outputHTMLInternal);
                 sb.Remove(0, 4);
-                sb.Insert(0, "<img width=\"" + UnitConverter.MMToPixels(imageWidthInput.Value, dpiX).ToString() + "\" height=\"" + MMToPixels(imageHeightInput.Value, dpiY) + "\" ");
+                sb.Insert(0, "<img width=\"" + UnitConverter.MMToPixels(imageWidthInput.Value, dpiX).ToString() + "\" height=\"" + UnitConverter.MMToPixels(imageHeightInput.Value, dpiY) + "\" ");
                 outputHTMLInternal = sb.ToString();
                 DialogResult = DialogResult.OK;
             }

@@ -251,7 +251,9 @@ namespace CSharpTextEditor
                                                     pageSettingsDialog.pageWidth,
                                                     pageSettingsDialog.headerEnabled,
                                                     pageSettingsDialog.footerEnabled,
-                                                    pageSettingsDialog.bordersEnabled);
+                                                    pageSettingsDialog.bordersEnabled,
+                                                    pageSettingsDialog.xmargins,
+                                                    pageSettingsDialog.ymargins);
                 pageManager.RefreshGlobalPageStyles();
             }
         }
