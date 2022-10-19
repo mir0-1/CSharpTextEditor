@@ -36,19 +36,27 @@ namespace CSharpTextEditor
 
         public string headerCss
         {
-            get => headerEnabled ? ("height:" + UnitConverter.MMToPixels(headerHeightMM, dpiY) + "px;page-break-inside:avoid;page-break-before:avoid;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get
+            {
+                return headerEnabled ?
+                        ("height:" +
+                        UnitConverter.MMToPixels(headerHeightMM, dpiY) +
+                        "px;" +
+                        (bordersEnabled ? "border:1px dashed;" : "") /*+ "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;"*/)
+                        : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            }
         }
         public string footerCss
         {
-            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;page-break-inside:avoid;page-break-before:avoid;" + (bordersEnabled ? "border:1px dashed;" : "") + "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;") : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
+            get => footerEnabled ? ("height:" + UnitConverter.MMToPixels(footerHeightMM, dpiY) + "px;" + (bordersEnabled ? "border:1px dashed;" : "") /*+ "padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;"*/) : "position:relative;overflow-y:none;display:none;background-color:gray;border:0;";
         }
         public string bodyCss
         {
-            get => "height:" + UnitConverter.MMToPixels(bodyHeightMM, dpiY) + "px;padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";
+            get => "height:" + UnitConverter.MMToPixels(bodyHeightMM, dpiY) + "px;";/*padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";*/
         }
         public string pageContainerCss
         {
-            get => "width:" + UnitConverter.MMToPixels(pageWidthMM, dpiX) + "px;padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";
+            get => "width:" + UnitConverter.MMToPixels(pageWidthMM, dpiX) + "px;";/*padding:" + UnitConverter.MMToPixels(padding, dpiX) + "px;";*/
         }
 
         public int headerHeightMM
@@ -208,18 +216,17 @@ namespace CSharpTextEditor
             IList<IElement> elements = HtmlConverter.ConvertToElements(activePageSection.Document.Body.InnerHtml, properties);
             PdfDocument pdf = new PdfDocument(new PdfWriter("output.pdf"));
             pdf.SetTagged();
-            
-            
 
-            Document document = new Document(pdf, new PageSize(pageWidth * 0.0394f *72f, (headerHeight + bodyHeight +footerHeight)* 0.0394f * 72f));
+            Document document = new Document(pdf, new PageSize(pageWidth * 0.0394f *72f, (headerHeight + bodyHeight + footerHeight)* 0.0394f * 72f));
             document.SetMargins(0, 0, 0, 0);
+
 
             foreach (IElement element in elements)
             {
                 document.Add((IBlockElement)element);
             }
-            document.Close();
 
+            document.Close();
         }
 
         public bool IsFooterSection(HtmlElement pageSection)

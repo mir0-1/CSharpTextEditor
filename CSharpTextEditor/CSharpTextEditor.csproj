@@ -133,7 +133,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClipboardHTMLFilter.cs" />
     <Compile Include="CustomFontDialog.cs">
       <SubType>Component</SubType>
     </Compile>

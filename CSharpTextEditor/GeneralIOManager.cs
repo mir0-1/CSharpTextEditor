@@ -45,7 +45,6 @@ namespace CSharpTextEditor
         private HtmlDocument document;
         private GeneralPageManager pageManager;
         private DomEditGuard domEditGuard;
-        private ClipboardHTMLFilter clipboardFilter = new ClipboardHTMLFilter(@"<\s*\/{0,1}(?:style|script|iframe|video|input|form|button|select|embed)\s*(?:href=.*)*.*>");
         private CustomFontDialog fontDialog = new CustomFontDialog();
         private ImageInsertDialogForm dialogForm;
         private PageSearchDialog pageSearchDialog;
@@ -158,7 +157,7 @@ namespace CSharpTextEditor
             {
                 if (isPaste)
                 {
-                    string content = clipboardFilter.GetFilteredContent();
+                    string content = Clipboard.GetText(TextDataFormat.Text);
 
                     if (content == null)
                         return;
