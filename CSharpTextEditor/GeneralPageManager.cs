@@ -198,25 +198,25 @@ namespace CSharpTextEditor
 
         public void GeneratePDF()
         {
-            if (saveFileDialog.ShowDialog() != DialogResult.OK || activePageSection == null)
+            if (document == null || document.Body.InnerHtml == null || saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
 
             ConverterProperties properties = new ConverterProperties();
 
-            IList<IElement> elements = HtmlConverter.ConvertToElements(activePageSection.Document.Body.InnerHtml, properties);
+            IList<IElement> elements = HtmlConverter.ConvertToElements(document.Body.InnerHtml, properties);
             PdfDocument pdf = new PdfDocument(new PdfWriter(saveFileDialog.FileName));
             pdf.SetTagged();
 
-            Document document = new Document(pdf, new PageSize((pageWidthMM + 2*xmarginsMM) * 0.0394f *72f, (headerHeightMM + bodyHeightMM + footerHeightMM + 2*ymarginsMM)* 0.0394f * 72f));
-            document.SetMargins(0, 0, 0, 0);
+            Document genDoc = new Document(pdf, new PageSize((pageWidthMM + 2*xmarginsMM) * 0.0394f *72f, (headerHeightMM + bodyHeightMM + footerHeightMM + 2*ymarginsMM)* 0.0394f * 72f));
+            genDoc.SetMargins(0, 0, 0, 0);
 
 
             foreach (IElement element in elements)
             {
-                document.Add((IBlockElement)element);
+                genDoc.Add((IBlockElement)element);
             }
 
-            document.Close();
+            genDoc.Close();
         }
 
         public bool IsFooterSection(HtmlElement pageSection)
