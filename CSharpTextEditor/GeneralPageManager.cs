@@ -20,6 +20,7 @@ namespace CSharpTextEditor
         private HtmlDocument document;
         private HtmlElement activePageSection;
         private HtmlElement prevActivePageSection =  null;
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
 
         private int headerHeightInternal = 140;
         private int footerHeightInternal = 140;
@@ -81,6 +82,8 @@ namespace CSharpTextEditor
             this.document = document;
             this.dpiX = dpiX;
             this.dpiY = dpiY;
+
+            saveFileDialog.Filter = "PDF Document (*.PDF)|*.PDF";
         }
 
         public HtmlElement GetActivePageSection()
@@ -195,10 +198,13 @@ namespace CSharpTextEditor
 
         public void GeneratePDF()
         {
+            if (saveFileDialog.ShowDialog() != DialogResult.OK || activePageSection == null)
+                return;
+
             ConverterProperties properties = new ConverterProperties();
 
             IList<IElement> elements = HtmlConverter.ConvertToElements(activePageSection.Document.Body.InnerHtml, properties);
-            PdfDocument pdf = new PdfDocument(new PdfWriter("output.pdf"));
+            PdfDocument pdf = new PdfDocument(new PdfWriter(saveFileDialog.FileName));
             pdf.SetTagged();
 
             Document document = new Document(pdf, new PageSize((pageWidthMM + 2*xmarginsMM) * 0.0394f *72f, (headerHeightMM + bodyHeightMM + footerHeightMM + 2*ymarginsMM)* 0.0394f * 72f));
