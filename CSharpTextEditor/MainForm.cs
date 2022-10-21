@@ -55,7 +55,7 @@ namespace CSharpTextEditor
                     "word-wrap: break-word;" +
                     "background-color: white;" +
                     "width: 100%;" +
-                "}" + // best to isоlate the style string
+                "}" +
                 ".global-pages-container {" +
                     "position: relative;" +
                     "text-align: center" +

@@ -125,6 +125,46 @@ namespace CSharpTextEditor
             return CreatePageHTMLWithContent("", "", "");
         }
 
+        public bool IsPageOverflown(HtmlElement page)
+        {
+            if (!IsPageContainer(page))
+                return false;
+
+            HtmlElement header = GetPageContainerHeader(page);
+            HtmlElement footer = GetPageContainerFooter(page);
+            HtmlElement body = GetPageContainerBody(page);
+
+            if (header.ScrollRectangle.Height > header.ClientRectangle.Height)
+                return true;
+
+            if (footer.ScrollRectangle.Height > footer.ClientRectangle.Height)
+                return true;
+
+            if (body.ScrollRectangle.Height > body.ClientRectangle.Height)
+                return true;
+
+            return false;
+        }
+
+        public bool AreOverflownPagesPresent()
+        {
+            HtmlElement globalPageConatiner = GetGlobalPageContainer();
+
+            if (globalPageConatiner == null)
+                return false;
+
+            if (globalPageConatiner.Children == null || globalPageConatiner.Children.Count == 0)
+                return false;
+
+            foreach (HtmlElement pageContainer in globalPageConatiner.Children)
+            {
+                if (IsPageOverflown(pageContainer))
+                    return true;
+            }
+
+            return false;
+        }
+
         public void NewPageClearAll()
         {
             HtmlElement globalPageContainer = GetGlobalPageContainer();
@@ -198,6 +238,10 @@ namespace CSharpTextEditor
 
         public void GeneratePDF()
         {
+            if (AreOverflownPagesPresent())
+                if (MessageBox.Show("Документът съдържа препълнени страници, които няма да се правилно рендирани. Продължаване?", "Внимание", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+
             if (document == null || document.Body.InnerHtml == null || saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
 
