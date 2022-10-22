@@ -58,7 +58,7 @@ namespace CSharpTextEditor
                 "}" +
                 ".global-pages-container {" +
                     "position: relative;" +
-                    "text-align: center" +
+                    "text-align: center;" +
                 "}" +
                 ".editguard {" +
                     "-ms-user-select: none;" +
@@ -132,6 +132,11 @@ namespace CSharpTextEditor
         private void MainForm_DoubleClick(object sender, EventArgs e)
         {
             
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            ioManager.OnFormClosing(e);
         }
 
         private void PageSearchBtn_Click(object sender, EventArgs e)

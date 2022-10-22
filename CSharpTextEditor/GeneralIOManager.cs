@@ -279,7 +279,20 @@ namespace CSharpTextEditor
 
         public void NewMenuItem_Click(object sender, EventArgs e)
         {
+            if (sender != null)
+                if (MessageBox.Show("Създаване на нов документ? Текущите промени няма да бъдат запазени.", "Внимание", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+
             pageManager.NewPageClearAll();
+        }
+
+        public void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Затваряне? Всички незапазени промени ще бъдат премахнати.", "Внимание", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+                return;
+            }
         }
     }
 }

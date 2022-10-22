@@ -169,7 +169,6 @@
     <Compile Include="PageSettingsDialog.Designer.cs">
       <DependentUpon>PageSettingsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="SectionOverflowHandler.cs" />
     <Compile Include="PageSearchDialog.cs">
       <SubType>Form</SubType>
     </Compile>
