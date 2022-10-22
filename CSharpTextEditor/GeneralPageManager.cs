@@ -260,6 +260,15 @@ namespace CSharpTextEditor
                 genDoc.Add((IBlockElement)element);
             }
 
+            // copyright notice
+            genDoc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+            elements = HtmlConverter.ConvertToElements(CreatePageHTMLWithContent(null, "<br><br><br>&nbsp;&nbsp;Made using iText .NET<br>&nbsp;&nbsp;Copyright (c) 1998-2022 iText Group NV<br>&nbsp;&nbsp;Authors: Bruno Lowagie, Paulo Soares, et al.<br>", null));
+
+            foreach (IElement element in elements)
+            {
+                genDoc.Add((IBlockElement)element);
+            }
+
             genDoc.Close();
         }
 
